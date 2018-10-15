@@ -290,9 +290,8 @@ utilisées.
 
 \bigskip
 
-\hypertarget{introduction}{%
 \section{\texorpdfstring{Introduction
-\label{intro}}{Introduction }}\label{introduction}}
+\label{intro}}{Introduction }}\label{introduction}
 
 Au début de l'année 1943, la \emph{Economic Warfare Division} de
 l'ambassade américaine à Londres commença à analyser divers marquages
@@ -316,12 +315,10 @@ Dans cet article, nous nous intéresserons à l'estimation du nombre
 d'items \(N\) à partir d'un échantillon aléatoire dans le cas où les
 items sont numérotés de façon séquentielle.
 
-\hypertarget{les-mathematiques}{%
 \section{\texorpdfstring{Les mathématiques
-\label{maths}}{Les mathématiques }}\label{les-mathematiques}}
+\label{maths}}{Les mathématiques }}\label{les-mathematiques}
 
-\hypertarget{prealables}{%
-\subsection{Préalables}\label{prealables}}
+\subsection{Préalables}\label{prealables}
 
 Supposons que nous avons une population d'objets numérotés de la façon
 suivante : \(1\), \(2\), \(3\), \ldots{} , \(N\), où \(N\) est
@@ -375,9 +372,8 @@ allons maintenant trouverquatre estimés de \(N\) en utilisant simplement
 notre ``gros bon sens''. La structure des prochaines sections est
 calquée sur \cite{Johnson}.
 
-\hypertarget{les-trois-situations-possibles}{%
 \subsection{Les trois situations
-possibles}\label{les-trois-situations-possibles}}
+possibles}\label{les-trois-situations-possibles}
 
 Supposons que nous avons une population d'objets numérotés de la façon
 suivante : \(s+1\), \(s+2\), \(s+3\), \ldots{} , \(s+N\). Trois
@@ -397,17 +393,15 @@ situations distinctes peuvent se produire:
 
 Nous étudierons, dans l'ordre, les trois situations précédentes.
 
-\hypertarget{la-situation-ou-s-est-connu-et-egal-a-0-et-n-est-inconnu}{%
 \subsection{\texorpdfstring{La situation où \(s\) est \textbf{connu} et
 égal à \(0\) et \(N\) est
-\textbf{inconnu}}{La situation où s est connu et égal à 0 et N est inconnu}}\label{la-situation-ou-s-est-connu-et-egal-a-0-et-n-est-inconnu}}
+\textbf{inconnu}}{La situation où s est connu et égal à 0 et N est inconnu}}\label{la-situation-ou-s-est-connu-et-egal-a-0-et-n-est-inconnu}
 
 Puisque \(s\) est connu et égal à \(0\), nous nous trouvons dans la
 situations où notre liste est numérotée de la façon suivante : \(1\),
 \(2\), \ldots{}, \(N\).
 
-\hypertarget{le-milieu-de-la-liste}{%
-\subsubsection{Le milieu de la liste}\label{le-milieu-de-la-liste}}
+\subsubsection{Le milieu de la liste}\label{le-milieu-de-la-liste}
 
 Supposons que nous connaissons la valeur milieu \(m\) de la liste \(1\),
 \(2\), \ldots{}, \(N\). Nous nous retrouvons dans la situation
@@ -428,14 +422,15 @@ premiers estimateurs.
 
 TODO: EST-CE QUE JE CALCULE LES VARIANCES AUSSI????????
 
-\hypertarget{la-mediane}{%
-\subsubsection{La médiane}\label{la-mediane}}
+\subsubsection{La médiane}\label{la-mediane}
 
 Notre premier estimateur est \(\widehat{N_1}=2\widetilde{X}-1\), où
 \(\widetilde{X}\) représente la médiane de notre échantillon. Rappelons
 que pour \(k\) données discrètes, la médiane se calcule de deux façons
 différentes, dépendamment du fait que le nombre de données soit pair ou
-impair. \begin{align}
+impair.
+
+\begin{align}
 \widetilde{X} &= 
 \begin{cases}
 \dfrac{X_{\left(\tfrac{k}{2}\right)}+X_{\left(\tfrac{k}{2}+1\right)}}{2} & \text{ si $k$ est pair} \\
@@ -455,10 +450,11 @@ E\lr{\widehat{N_1}} &= E\lr{2\widetilde{X}-1} \\
 Pour continuer, nous devons distinguer le cas pair du cas impair et
 utiliser l'équation \ref{eq:mediane}.
 
-\hypertarget{le-cas-pair}{%
-\paragraph{Le cas pair}\label{le-cas-pair}}
+\paragraph{Le cas pair}\label{le-cas-pair}
 
-Dans le cas pair, nous avons: \begin{align*}
+Dans le cas pair, nous avons:
+
+\begin{align*}
 E\lr{\widehat{N_1}} &= 2E\lr{\widetilde{X}}-1 \\
 &= 2E\lr{\dfrac{X_{\left(\tfrac{n}{2}\right)}+X_{\left(\tfrac{n}{2}+1\right)}}{2}}-1 \\
 &= E\lr{X_{\lr{\tfrac{n}{2}}}}+E\lr{X_{\lr{\tfrac{n}{2}+1}}}-1 \\
@@ -470,10 +466,11 @@ E\lr{\widehat{N_1}} &= 2E\lr{\widetilde{X}}-1 \\
 Nous avons donc bien que l'espérance de cet estimateur correspond à la
 valeur de \(N\) que nous désirons trouver.
 
-\hypertarget{le-cas-impair}{%
-\paragraph{Le cas impair}\label{le-cas-impair}}
+\paragraph{Le cas impair}\label{le-cas-impair}
 
-Dans le cas impair, nous avons: \begin{align*}
+Dans le cas impair, nous avons:
+
+\begin{align*}
 E\lr{\widehat{N_1}} &= 2E\lr{\widetilde{X}}-1 \\
 &= 2E\lr{X_{\left(\tfrac{n+1}{2}\right)} }-1 \\
 &= 2\dfrac{\lr{\tfrac{n+1}{2}}(N+1)}{n+1}-1 \\
@@ -484,19 +481,22 @@ E\lr{\widehat{N_1}} &= 2E\lr{\widetilde{X}}-1 \\
 Nous avons donc bien que l'espérance de cet estimateur correspond à la
 valeur de \(N\) que nous désirons trouver.
 
-\hypertarget{la-moyenne}{%
-\subsubsection{La moyenne}\label{la-moyenne}}
+\subsubsection{La moyenne}\label{la-moyenne}
 
 Notre second estimateur est \(\widehat{N_2}=2\overline{X}-1\), où
 \(\overline{X}\) représente la moyenne de notre échantillon. Rappelons
 que pour \(k\) données discrètes, la moyenne se calcule de la façon
-suivante: \begin{align}
+suivante:
+
+\begin{align}
 \overline{X} &= \dfrac{X_{(1)}+X_{(2)}+\ldots +X_{(k-1)}+X_{(k)}}{k}
 \label{eq:moyenne}
 \end{align}
 
 En utlisant les mesures du tableau \ref{tab:mesures_stat} et l'équation
-\ref{eq:moyenne}, nous obtenons: \begin{align*}
+\ref{eq:moyenne}, nous obtenons:
+
+\begin{align*}
 E\lr{\widehat{N_2}} &= 2E\lr{\overline{X}}-1 \\
 &= 2E\lr{\dfrac{X_{(1)}+X_{(2)}+\ldots +X_{(n-1)}+X_{(n)}}{n}}-1 \\
 &= 
@@ -519,19 +519,16 @@ Malheureusement, nous savons que \(N\) est supérieur ou égal à 10, le
 maximum de notre échantillon. Ces deux estimateurs ne sont donc pas
 adéquats, nous devrons en trouver d'autres.
 
-\hypertarget{la-situation-ou-s-est-connu-mais-different-de-0-et-n-est-inconnu}{%
 \subsection{\texorpdfstring{La situation où \(s\) est \textbf{connu}
 mais différent de \(0\) et \(N\) est
-\textbf{inconnu}}{La situation où s est connu mais différent de 0 et N est inconnu}}\label{la-situation-ou-s-est-connu-mais-different-de-0-et-n-est-inconnu}}
+\textbf{inconnu}}{La situation où s est connu mais différent de 0 et N est inconnu}}\label{la-situation-ou-s-est-connu-mais-different-de-0-et-n-est-inconnu}
 
-\hypertarget{la-situation-ou-s-est-inconnu-et-n-est-inconnu}{%
 \subsection{\texorpdfstring{La situation où \(s\) est \textbf{inconnu}
 et \(N\) est
-\textbf{inconnu}}{La situation où s est inconnu et N est inconnu}}\label{la-situation-ou-s-est-inconnu-et-n-est-inconnu}}
+\textbf{inconnu}}{La situation où s est inconnu et N est inconnu}}\label{la-situation-ou-s-est-inconnu-et-n-est-inconnu}
 
-\hypertarget{quelques-simulations}{%
 \section{\texorpdfstring{Quelques simulations
-\label{simul}}{Quelques simulations }}\label{quelques-simulations}}
+\label{simul}}{Quelques simulations }}\label{quelques-simulations}
 
 Pour visualiser les différences entre les quatre estimateurs trouvés,
 nous allons effectuer des simulations avec le logiciel \texttt{R}. Pour
@@ -570,19 +567,61 @@ N4(ech)
 ## [1] 418
 \end{verbatim}
 
-Nous simulons 5 000 échantillons de taille 5 à partir d'une population
-de taille 500. Nous calculons pour chacun de ces échantillons nos quatre
-estimés. La figure \ref{fig:ech-taille-5}
+Pour bien visualiser les différences entre nos quatre estimateurs, nous
+effectuerons trois simulations distinctes. La figure
+\ref{fig:ech-taille-5} représente une simulation de 5 000 échantillons
+de taille 5 à partir d'une population de taille 500.
 
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{serial_number_amq_files/figure-latex/ech-taille-5-1} \caption{Représentation sous forme d'histogrammes de 5 000 échantillons de taille 5, pour les quatres estimateurs}\label{fig:ech-taille-5}
+
+{\centering \includegraphics[width=0.9\linewidth]{serial_number_amq_files/figure-latex/ech-taille-5-1} 
+
+}
+
+\caption{Représentation sous forme d'histogrammes de 5 000 échantillons de taille 5, pour les quatres estimateurs}\label{fig:ech-taille-5}
+\end{figure}
+
+La figure \ref{fig:ech-taille-25} représente une simulation de 5 000
+échantillons de taille 25 à partir d'une population de taille 500.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{serial_number_amq_files/figure-latex/ech-taille-25-1} 
+
+}
+
+\caption{Représentation sous forme d'histogrammes de 5 000 échantillons de taille 25, pour les quatres estimateurs}\label{fig:ech-taille-25}
+\end{figure}
+
+La figure \ref{fig:ech-taille-50} représente une simulation de 5 000
+échantillons de taille 50 à partir d'une population de taille 500.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{serial_number_amq_files/figure-latex/ech-taille-50-1} 
+
+}
+
+\caption{Représentation sous forme d'histogrammes de 5 000 échantillons de taille 50, pour les quatres estimateurs}\label{fig:ech-taille-50}
+\end{figure}
+
+Nous simulons des populations de tailles 10 à 1 000. Pour chacune
+d'entre elles, nous choisissons 50 échantillons de taille 5 et nous
+calculons les quatre estimations.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{serial_number_amq_files/figure-latex/ech-10-1000-1} 
+
+}
+
+\caption{Représentation de 50 échantillons de taille 5 pigés pour des populations de tailles 10 à 1 000, pour les quatre estimateurs}\label{fig:ech-10-1000}
 \end{figure}
 
 \appendix
 
-\hypertarget{rappels}{%
 \section{\texorpdfstring{Rappels
-\label{rappel_esperance}}{Rappels }}\label{rappels}}
+\label{rappel_esperance}}{Rappels }}\label{rappels}
 
 Voici quelques propriétés élémentaires concernant l'espérance, la
 variance et la covariance de variables aléatoires.
@@ -606,20 +645,22 @@ variance et la covariance de variables aléatoires.
 
 TODO
 
-\hypertarget{calcul-de-probabilites}{%
 \section{\texorpdfstring{Calcul de probabilités
-\label{calculs_proba}}{Calcul de probabilités }}\label{calcul-de-probabilites}}
+\label{calculs_proba}}{Calcul de probabilités }}\label{calcul-de-probabilites}
 
 TODO
 
 Nous voulons calculer la probabilité reliée à l'événement \(X_{(A)}=i\),
 c'est-à-dire l'événement où l'unité statistique \(X_{(A)}=i\). Pour bien
 comprendre la situation, nous allons utiliser le schéma ci-dessous:
+
 \begin{align*}
 \underbrace{X_{(1)} <  X_{(2)} < \ldots < X_{(A-1)}}_{A-1 \text{ éléments}} 
 < X_{(A)} 
 < \underbrace{X_{(A+1)} < \ldots < X_{(n-1)} < X_{(n)}}_{n-A \text{ éléments}}
-\end{align*} Nous remarquons que \(A\in\set{1,2,3,\ldots, n}\) et
+\end{align*}
+
+Nous remarquons que \(A\in\set{1,2,3,\ldots, n}\) et
 \(i\in\set{A,A+1,A+2,\ldots,N-n+A}\). En effet, la valeur de \(i\) ne
 peut pas être plus petite que \(A\) car il y a toujours \(A-1\) valeurs
 plus petites que \(A\). De plus, \(A\) ne peut pas être plus grande que
@@ -632,16 +673,21 @@ choisir \(A-1\) éléments parmi \(i-1\), ce qui correspond à
 parmi \(N-i\), ce qui correspond à \(\binom{N-i}{n-A}\). Enfin, nous
 choisissons un échantillon de taille \(n\) parmi une population de
 taille \(N\), ce qui correspond à \(\binom{N}{n}\). Nous avons donc:
+
 \begin{align*}
 P(X_{(A)}=i) &= \dfrac{\binom{i-1}{A-1}\binom{N-i}{n-A}}{\binom{N}{n}} \qquad \text{où } i=A,A+1,\ldots,N-n+A
-\end{align*} Puisque les probabilités précédentes doivent sommer à un,
-nous avons: \begin{align}
+\end{align*}
+
+Puisque les probabilités précédentes doivent sommer à un, nous avons:
+
+\begin{align}
 \sum_{i=A}^{N-n+A} P(X_{(A)}=i) &= 1 \nonumber\\
 \sum_{i=A}^{N-n+A} \dfrac{\binom{i-1}{A-1}\binom{N-i}{n-A}}{\binom{N}{n}} &= 1 \nonumber\\
 \sum_{i=A}^{N-n+A} \binom{i-1}{A-1}\binom{N-i}{n-A} &= \binom{N}{n} \label{eq:sumxA}
 \end{align}
 
 Nous pouvons maintenant calculer l'espérance de \(X_{(A)}\). Nous avons:
+
 \begin{align}
 E(X_{(A)}) &= \sum_{i=A}^{N-n+A} iP(X_{(A)}=i) \nonumber\\
 &= \sum_{i=A}^{N-n+A} i\dfrac{\binom{i-1}{A-1}\binom{N-i}{n-A}}{\binom{N}{n}} \nonumber\\

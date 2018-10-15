@@ -225,9 +225,9 @@ N2(ech)
 N3(ech)
 N4(ech)
 ```
-Nous simulons 5 000 échantillons de taille 5 à partir d'une population de taille 500. Nous calculons pour chacun de ces échantillons nos quatre estimés. La figure \ref{fig:ech-taille-5} représente ces échantillons.
+Pour bien visualiser les différences entre nos quatre estimateurs, nous effectuerons trois simulations distinctes. La figure \ref{fig:ech-taille-5} représente une simulation de 5 000 échantillons de taille 5 à partir d'une population de taille 500.
 
-```{r ech-taille-5, echo = FALSE, fig.cap="Représentation sous forme d'histogrammes de 5 000 échantillons de taille 5, pour les quatres estimateurs", out.width="90%"}
+```{r ech-taille-5, echo = FALSE, fig.cap="Représentation sous forme d'histogrammes de 5 000 échantillons de taille 5, pour les quatres estimateurs", out.width="90%", fig.align='center'}
 N <- 500
 n <- 5
 iter <- 5000
@@ -250,6 +250,84 @@ ggplot(data = ech5, mapping = aes(x = valeur))+
     y = "Fréquence"
   )
 ```
+
+La figure \ref{fig:ech-taille-25} représente une simulation de 5 000 échantillons de taille 25 à partir d'une population de taille 500.
+
+```{r ech-taille-25, echo = FALSE, fig.cap="Représentation sous forme d'histogrammes de 5 000 échantillons de taille 25, pour les quatres estimateurs", out.width="90%", fig.align='center'}
+N <- 500
+n <- 25
+iter <- 5000
+pop <- c(1:N)
+
+ech25 <- tibble(id = map(1:iter, ~sample(pop, n, replace = TRUE)))
+ech25 <- ech25 %>%
+  mutate(N1 = map_dbl(id, N1)) %>%
+  mutate(N2 = map_dbl(id, N2)) %>%
+  mutate(N3 = map_dbl(id, N3)) %>%
+  mutate(N4 = map_dbl(id, N4)) %>%
+  gather(estimateur, valeur, N1, N2, N3, N4)
+
+ggplot(data = ech25, mapping = aes(x = valeur))+
+  geom_histogram(bins = 50, fill = "lightblue", color = "darkblue")+
+  facet_grid(estimateur ~ .)+
+  geom_vline(xintercept=N,linetype=2,color="black")+
+  labs(
+    x = "Estimations",
+    y = "Fréquence"
+  )
+```
+
+La figure \ref{fig:ech-taille-50} représente une simulation de 5 000 échantillons de taille 50 à partir d'une population de taille 500.
+
+```{r ech-taille-50, echo = FALSE, fig.cap="Représentation sous forme d'histogrammes de 5 000 échantillons de taille 50, pour les quatres estimateurs", out.width="90%", fig.align='center'}
+N <- 500
+n <- 50
+iter <- 5000
+pop <- c(1:N)
+
+ech50 <- tibble(id = map(1:iter, ~sample(pop, n, replace = TRUE)))
+ech50 <- ech50 %>%
+  mutate(N1 = map_dbl(id, N1)) %>%
+  mutate(N2 = map_dbl(id, N2)) %>%
+  mutate(N3 = map_dbl(id, N3)) %>%
+  mutate(N4 = map_dbl(id, N4)) %>%
+  gather(estimateur, valeur, N1, N2, N3, N4)
+
+ggplot(data = ech50, mapping = aes(x = valeur))+
+  geom_histogram(bins = 50, fill = "lightblue", color = "darkblue")+
+  facet_grid(estimateur ~ .)+
+  geom_vline(xintercept=N,linetype=2,color="black")+
+  labs(
+    x = "Estimations",
+    y = "Fréquence"
+  )
+```
+
+Nous simulons des populations de tailles 10 à 1 000. Pour chacune d'entre elles, nous choisissons 50 échantillons de taille 5 et nous calculons les quatre estimations.
+
+```{r ech-10-1000, echo = FALSE, fig.cap="Représentation de 50 échantillons de taille 5 pigés pour des populations de tailles 10 à 1 000, pour les quatre estimateurs", out.width="90%", fig.align='center'}
+ech1000 <- tibble(
+  pop = rep(seq(10, 1000, 5), 50),
+  id = map(pop, ~sample(.x, 5, replace = FALSE))
+  )
+ech1000 <- ech1000 %>%
+  mutate(N1 = map_dbl(id, N1)) %>%
+  mutate(N2 = map_dbl(id, N2)) %>%
+  mutate(N3 = map_dbl(id, N3)) %>%
+  mutate(N4 = map_dbl(id, N4)) %>%
+  gather(estimateur, valeur, N1, N2, N3, N4) %>%
+  select(-id)
+
+ggplot(data = ech1000, aes(x = pop, y = valeur, color = estimateur))+
+  geom_jitter(alpha=0.5)+
+  labs(
+    x = "Nombre de chars produits",
+    y = "Estimation"
+  )+
+  geom_abline(intercept = 0, slope=1, color = "red") +
+  scale_colour_discrete(name="Estimateur")
+```
+
 
 \appendix
 
