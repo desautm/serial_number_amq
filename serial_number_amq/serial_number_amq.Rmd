@@ -1,0 +1,303 @@
+---
+title: Le problème du char d'assaut allemand
+
+author: Marc-André Désautels
+affiliation: département de mathématiques
+establishment: Cégep de Saint-Jean-sur-Richelieu
+email: \href{mailto:marc-andre.desautels@cstjean.qc.ca}{marc-andre.desautels@cstjean.qc.ca}
+website: \href{https://www.cstjean.qc.ca/}{https://www.cstjean.qc.ca/}
+
+abstract: |
+  Durant la seconde guerre mondiale, les alliés avaient un besoin criant d’estimer avec précision la quantité de matériel militaire que l’Allemagne nazie produisait. Les estimations provenant des services de renseignements habituels étaient contradictoires et incertaines. Les gouvernements Britanniques et Américains se tournèrent donc vers des statisticiens pour savoir si leurs estimations pouvaient être améliorées. Nous présenterons une introduction aux notions mathématiques utilisées.
+  
+keywords: Statistiques, Estimation, Simulation
+
+output: rticles::amq_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+set.seed(39894095)
+
+library(mosaic)
+library(purrr)
+library(tidyr)
+library(reshape2)
+library(tidyverse)
+
+# Définition des fonctions pour le calcul des mesures sur les numéros de série.
+
+N1 <- function(ech){
+  return(round(2*median(ech)-1))
+}
+
+N2 <- function(ech){
+  return(round(2*mean(ech)-1))
+}
+
+N3 <- function(ech){
+  if (length(ech) == 1) return(ech)
+  else return(round(max(ech)+min(ech)-1))
+}
+
+N4 <- function(ech){
+  if (length(ech) == 1) return(ech)
+  else{
+    l <- length(unique(ech))
+  return(round((l+1)/l*max(ech)-1))
+  }
+}
+
+N5 <- function(ech){
+  if (length(ech) == 1) return(ech)
+  else{
+    l <- length(unique(ech))
+    return(round((max(ech)-min(ech))*(l+1)/(l-1)-1))
+  }
+}
+```
+
+
+# Introduction \label{intro}
+
+Au début de l'année 1943, la *Economic Warfare Division* de l'ambassade américaine à Londres commença à analyser divers marquages obtenus à partir d'équipements allemands capturés ou détruits sur le front. Plus particulièrement, les numéros de séries ont été utilisés pour estimer la force de production de la machine de guerre allemande. L'article *An Empirical Approach to Economic Intelligence in World War II* \cite{Ruggles1947} explique en grand détail le développement des techniques utilisés pour faire cette estimation, les problèmes rencontrés et les solutions qui y ont remédiés. Nous invitons le lecteur intéressé par l'aspect pratico-pratique de ces techniques à lire cet article.
+
+Le problème du char d'assaut allemand est nommé d'après son application par les alliés à l'estimation du nombre de chars d'assaut produits par l'Allemagne. Mais en fait, ce problème regroupe l'estimation du nombre de nombreux produits de guerre allemands, par exemple les camions, les fusils, les bombes et les fusées.
+
+Dans cet article, nous nous intéresserons à l'estimation du nombre d'items $N$ à partir d'un échantillon aléatoire dans le cas où les items sont numérotés de façon séquentielle.
+
+# Les mathématiques \label{maths}
+
+## Préalables
+
+Supposons que nous avons une population d'objets numérotés de la façon suivante : $1$, $2$, $3$, ... , $N$, où $N$ est **inconnu**. Nous pigeons, **__sans remise__**, un échantillon $X_1$, $X_2$, $X_3$, ..., $X_n$, de taille $n$ à partir de la population. Nous voulons estimer la valeur de $N$ à partir de l'échantillon prélevé.
+
+Pour calculer les diverses mesures statistiques dont nous aurons besoin, nous allons classer les unités statistiques de notre échantillon en ordre croissant. Nous avons:
+
+$$X_{(1)} <  X_{(2)} < X_{(3)} < \ldots < X_{(n-1)} < X_{(n)}$$
+
+où les valeurs $X_{(1)}$, $X_{(2)}$, $X_{(3)}$, ..., $X_{(n)}$ sont les valeurs ordonnées de l'échantillon $X_1$, $X_2$, $X_3$, ..., $X_n$. En particulier, $X_{(1)}$ est la plus petite valeur de l'échantillon et $X_{(n)}$ est la plus grande.
+
+À partir de nos définitions précédentes, il est possible de calculer l'espérance de la valeur $X_{(A)}$ ($E(X_{(A)})$), la variance de la valeur $X_{(A)}$ ($Var(X_{(A)})$) et enfin la covariance des valeurs $X_{(A)}$ et $X_{(B)}$ ($Cov(X_{(A)},X_{(B)})$). Nous utiliserons ces mesures statistiques pour calculer l'espérance et la variance des estimateurs que nous construirons. Malheureusement, retrouver ces mesures statistiques nécessite des identités combinatoires et de fastidieux calculs. Pour ne pas alourdir le texte, nous donnerons ces mesures sans démonstration. Par contre, pour la lectrice ou le lecteur intéressé, vous pourrez trouver à l'annexe \ref{calculs_proba} une idée de la technique utilisée ainsi que la démonstration de $E(X_{(A)})$.
+
+Nous avons donc les trois mesures à la table \ref{tab:mesures_stat}.
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{|r|c|}
+\hline
+Mesure & Formule \\
+\hline
+\hline
+$E(X_{(A)})$ & $\dfrac{A(N+1)}{n+1}$ \\ \hline
+$Var(X_{(A)})$ & $\dfrac{A(n+1-A)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\ \hline
+$Cov(X_{(A)},X_{(B)})$ & $\dfrac{A(n+1-B)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\ \hline
+\end{tabular}
+\end{center}
+\caption{\label{tab:mesures_stat} {Les mesures de l'espérance, de la variance et de la covariance.} }
+\end{table}
+
+À l'aide des trois mesures de la table \ref{tab:mesures_stat}, nous allons maintenant trouverquatre estimés de $N$ en utilisant simplement notre "gros bon sens". La structure des prochaines sections est calquée sur \cite{Johnson}.
+
+## Les trois situations possibles
+
+Supposons que nous avons une population d'objets numérotés de la façon suivante : $s+1$, $s+2$, $s+3$, ... , $s+N$. Trois situations distinctes peuvent se produire:
+
+1. $s$ est **connu** et égal à $0$ et $N$ est **inconnu**.
+
+1. $s$ est **connu** mais différent de $0$ et $N$ est **inconnu**.
+
+1. $s$ est **inconnu** et $N$ est **inconnu**.
+
+Nous étudierons, dans l'ordre, les trois situations précédentes.
+
+## La situation où $s$ est **connu** et égal à $0$ et $N$ est **inconnu**
+
+Puisque $s$ est connu et égal à $0$, nous nous trouvons dans la situations où notre liste est numérotée de la façon suivante : $1$, $2$, ..., $N$. 
+
+### Le milieu de la liste
+
+Supposons que nous connaissons la valeur milieu $m$ de la liste $1$, $2$, ..., $N$. Nous nous retrouvons dans la situation ci-dessous:
+
+$$\underbrace{1,2,3,\ldots,m-1}_{m-1 \text{ éléments}},m,\underbrace{m+1,\ldots,N-2,N-1,N}_{m-1 \text{ éléments}}$$
+
+Il y aura donc $m-1$ valeurs en-dessous de $m$ et $m-1$ valeurs au-dessus de $m$. Donc, si nous incluons la valeur milieu $m$, nous avons:
+
+$$N=(m-1)+1+(m-1)=2m-1$$ 
+
+Puisque nous ne connaissons pas $m$, il est raisonnable de le remplacer par une estimation, par exemple la médiane $\widetilde{X}$ ou la moyenne $\overline{X}$. Nous pouvons maintenant obtenir nos deux premiers estimateurs.
+
+TODO: EST-CE QUE JE CALCULE LES VARIANCES AUSSI????????
+
+### La médiane
+
+Notre premier estimateur est $\widehat{N_1}=2\widetilde{X}-1$, où $\widetilde{X}$ représente la médiane de notre échantillon. Rappelons que pour $k$ données discrètes, la médiane se calcule de deux façons différentes, dépendamment du fait que le nombre de données soit pair ou impair.
+\begin{align}
+\widetilde{X} &= 
+\begin{cases}
+\dfrac{X_{\left(\tfrac{k}{2}\right)}+X_{\left(\tfrac{k}{2}+1\right)}}{2} & \text{ si $k$ est pair} \\
+X_{\left(\tfrac{k+1}{2}\right)} & \text{ si $k$ est impair}
+\end{cases}
+\label{eq:mediane}
+\end{align}
+
+En utlisant les mesures du tableau \ref{tab:mesures_stat}, nous obtenons:
+
+\begin{align*}
+E\lr{\widehat{N_1}} &= E\lr{2\widetilde{X}-1} \\
+&= 2E\lr{\widetilde{X}}-1 \quad \text{par propriétés des espérances}
+\end{align*}
+
+Pour continuer, nous devons distinguer le cas pair du cas impair et utiliser l'équation \ref{eq:mediane}.
+
+#### Le cas pair
+
+Dans le cas pair, nous avons:
+\begin{align*}
+E\lr{\widehat{N_1}} &= 2E\lr{\widetilde{X}}-1 \\
+&= 2E\lr{\dfrac{X_{\left(\tfrac{n}{2}\right)}+X_{\left(\tfrac{n}{2}+1\right)}}{2}}-1 \\
+&= E\lr{X_{\lr{\tfrac{n}{2}}}}+E\lr{X_{\lr{\tfrac{n}{2}+1}}}-1 \\
+&= \dfrac{\lr{\tfrac{n}{2}}(N+1)}{n+1}+\dfrac{\lr{\tfrac{n}{2}+1}(N+1)}{n+1}-1 \\
+&= \dfrac{\cancel{(n+1)}(N+1)}{\cancel{n+1}}-1 \\
+&= N
+\end{align*}
+
+Nous avons donc bien que l'espérance de cet estimateur correspond à la valeur de $N$ que nous désirons trouver.
+
+#### Le cas impair
+
+Dans le cas impair, nous avons:
+\begin{align*}
+E\lr{\widehat{N_1}} &= 2E\lr{\widetilde{X}}-1 \\
+&= 2E\lr{X_{\left(\tfrac{n+1}{2}\right)} }-1 \\
+&= 2\dfrac{\lr{\tfrac{n+1}{2}}(N+1)}{n+1}-1 \\
+&= \dfrac{\cancel{(n+1)}(N+1)}{\cancel{n+1}}-1 \\
+&= N
+\end{align*}
+
+Nous avons donc bien que l'espérance de cet estimateur correspond à la valeur de $N$ que nous désirons trouver.
+
+### La moyenne
+
+Notre second estimateur est $\widehat{N_2}=2\overline{X}-1$, où $\overline{X}$ représente la moyenne de notre échantillon. Rappelons que pour $k$ données discrètes, la moyenne se calcule de la façon suivante:
+\begin{align}
+\overline{X} &= \dfrac{X_{(1)}+X_{(2)}+\ldots +X_{(k-1)}+X_{(k)}}{k}
+\label{eq:moyenne}
+\end{align}
+
+En utlisant les mesures du tableau \ref{tab:mesures_stat} et l'équation \ref{eq:moyenne}, nous obtenons:
+\begin{align*}
+E\lr{\widehat{N_2}} &= 2E\lr{\overline{X}}-1 \\
+&= 2E\lr{\dfrac{X_{(1)}+X_{(2)}+\ldots +X_{(n-1)}+X_{(n)}}{n}}-1 \\
+&= 
+\end{align*}
+
+Malheureusement, nos deux estimés $E\lr{\widehat{N_1}}$ et $E\lr{\widehat{N_2}}$ présentent un problème. Les valeurs de ces deux estimateurs peuvent être plus petites que le plus grand entier dans notre échantillon, c'est-à-dire $X_{(n)}$. Il est bien sûr impossible que la valeur $N$ que nous cherchons soit plus petite que la plus grande valeur de notre échantillon.
+
+Pour vous convaincre, étudions l'échantillon de taille $n=3$ suivant, tel que $X_1=2$, $X_2=10$ et $X_3=3$. Dans cette situation, la médiane de l'échantillon est 3 et la moyenne est 5. Nous obtenons donc:
+
+$$\widehat{N_1}=2\widetilde{X}-1=5 \qquad \text{et} \qquad \widehat{N_2}=2\overline{X}-1=9 $$
+
+Malheureusement, nous savons que $N$ est supérieur ou égal à 10, le maximum de notre échantillon. Ces deux estimateurs ne sont donc pas adéquats, nous devrons en trouver d'autres.
+
+## La situation où $s$ est **connu** mais différent de $0$ et $N$ est **inconnu**
+
+
+## La situation où $s$ est **inconnu** et $N$ est **inconnu**
+
+
+
+# Quelques simulations \label{simul}
+
+Pour visualiser les différences entre les quatre estimateurs trouvés, nous allons effectuer des simulations avec le logiciel `R`. Pour nos simulations, nous utiliserons une population de taille $N=500$. Nous pouvons créer cette population dans `R` de la façon suivante:
+```{r,label="creation-pop"}
+pop <- c(1:500)
+```
+Pour modéliser le problème qui nous intéresse, nous voulons piger, **sans remise**, un échantillon de notre population. Pour cette première simulation, nous pigerons un échantillon de taille $n=5$.
+```{r,label="ech-remise-5"}
+ech <- sample(pop, 5, replace = FALSE)
+ech
+```
+Le minimum de notre échantillon est `r min(ech)` et le maximum est `r max(ech)`. Nous pouvons calculer les quatres estimés associés à l'échantillon précédent:
+```{r,label="calcul-estimes-1",collapse=TRUE}
+N1(ech)
+N2(ech)
+N3(ech)
+N4(ech)
+```
+Nous simulons 5 000 échantillons de taille 5 à partir d'une population de taille 500. Nous calculons pour chacun de ces échantillons nos quatre estimés. La figure \ref{fig:ech-taille-5} représente ces échantillons.
+
+```{r ech-taille-5, echo = FALSE, fig.cap="Représentation sous forme d'histogrammes de 5 000 échantillons de taille 5, pour les quatres estimateurs", out.width="90%"}
+N <- 500
+n <- 5
+iter <- 5000
+pop <- c(1:N)
+
+ech5 <- tibble(id = map(1:iter, ~sample(pop, n, replace = TRUE)))
+ech5 <- ech5 %>%
+  mutate(N1 = map_dbl(id, N1)) %>%
+  mutate(N2 = map_dbl(id, N2)) %>%
+  mutate(N3 = map_dbl(id, N3)) %>%
+  mutate(N4 = map_dbl(id, N4)) %>%
+  gather(estimateur, valeur, N1, N2, N3, N4)
+
+ggplot(data = ech5, mapping = aes(x = valeur))+
+  geom_histogram(bins = 50, fill = "lightblue", color = "darkblue")+
+  facet_grid(estimateur ~ .)+
+  geom_vline(xintercept=N,linetype=2,color="black")+
+  labs(
+    x = "Estimations",
+    y = "Fréquence"
+  )
+```
+
+\appendix
+
+# Rappels \label{rappel_esperance}
+
+Voici quelques propriétés élémentaires concernant l'espérance, la variance et la covariance de variables aléatoires.
+
+- L'espérance d'une variable aléatoire constante est égale à cette constante; par exemple, si $k$ est une constante, alors $\mathbb{E}(k)=k$.
+
+- L'espérance est un opérateur linéaire. Pour deux variables aléatoires quelconques $X$ et $Y$ (définies sur le même espace probabiliste) et pour deux nombres réels $a$ et $b$ alors $\mathbb{E}(aX+bY)=a\mathbb{E}(X)+b\mathbb{E}(Y)$.
+
+- La variance d'une variable aléatoire peut être calculée de la façon suivante $Var(X)=\mathbb{E}(X^2)-\lr{\mathbb{E}(X)}^2$.
+
+- La variance 
+
+TODO
+
+# Calcul de probabilités \label{calculs_proba}
+
+TODO
+
+Nous voulons calculer la probabilité reliée à l'événement $X_{(A)}=i$, c'est-à-dire l'événement où l'unité statistique $X_{(A)}=i$. Pour bien comprendre la situation, nous allons utiliser le schéma ci-dessous:
+\begin{align*}
+\underbrace{X_{(1)} <  X_{(2)} < \ldots < X_{(A-1)}}_{A-1 \text{ éléments}} 
+< X_{(A)} 
+< \underbrace{X_{(A+1)} < \ldots < X_{(n-1)} < X_{(n)}}_{n-A \text{ éléments}}
+\end{align*}
+Nous remarquons que $A\in\set{1,2,3,\ldots, n}$ et $i\in\set{A,A+1,A+2,\ldots,N-n+A}$. En effet, la valeur de $i$ ne peut pas être plus petite que $A$ car il y a toujours $A-1$ valeurs plus petites que $A$. De plus, $A$ ne peut pas être plus grande  que $N-n+A$ car il y a toujours $N-n+A-1$ valeurs plus grandes que $A$.
+
+Pour calculer les probabilités, il faut se rappeler que nous devons choisir $A-1$ éléments parmi $i-1$, ce qui correspond à $\binom{i-1}{A-1}$. De plus, nous devons choisir $n-A$ éléments parmi $N-i$, ce qui correspond à $\binom{N-i}{n-A}$. Enfin, nous choisissons un échantillon de taille $n$ parmi une population de taille $N$, ce qui correspond à $\binom{N}{n}$. Nous avons donc:
+\begin{align*}
+P(X_{(A)}=i) &= \dfrac{\binom{i-1}{A-1}\binom{N-i}{n-A}}{\binom{N}{n}} \qquad \text{où } i=A,A+1,\ldots,N-n+A
+\end{align*}
+Puisque les probabilités précédentes doivent sommer à un, nous avons:
+\begin{align}
+\sum_{i=A}^{N-n+A} P(X_{(A)}=i) &= 1 \nonumber\\
+\sum_{i=A}^{N-n+A} \dfrac{\binom{i-1}{A-1}\binom{N-i}{n-A}}{\binom{N}{n}} &= 1 \nonumber\\
+\sum_{i=A}^{N-n+A} \binom{i-1}{A-1}\binom{N-i}{n-A} &= \binom{N}{n} \label{eq:sumxA}
+\end{align}
+
+Nous pouvons maintenant calculer l'espérance de $X_{(A)}$. Nous avons:
+\begin{align}
+E(X_{(A)}) &= \sum_{i=A}^{N-n+A} iP(X_{(A)}=i) \nonumber\\
+&= \sum_{i=A}^{N-n+A} i\dfrac{\binom{i-1}{A-1}\binom{N-i}{n-A}}{\binom{N}{n}} \nonumber\\
+&= \dfrac{1}{\binom{N}{n}}\sum_{i=A}^{N-n+A} i\binom{i-1}{A-1}\binom{N-i}{n-A} \nonumber\\
+&= \dfrac{1}{\binom{N}{n}}\sum_{i=A}^{N-n+A} A\binom{i}{A}\binom{N-i}{n-A} 
+\comeq{car $\binom{n}{k}=\dfrac{n}{k}\binom{n-1}{k-1}$} \nonumber\\
+&= \dfrac{A}{\binom{N}{n}}\sum_{i=A}^{N-n+A} \binom{i}{A}\binom{N-i}{n-A} \nonumber\\
+&= \dfrac{A}{\binom{N}{n}}\binom{N+1}{n+1} \comeq{par l'équation \ref{eq:sumxA} et changement d'indice} \nonumber\\
+&= \dfrac{A(N+1)}{n+1} \label{eq:esperancexA}
+\end{align}
