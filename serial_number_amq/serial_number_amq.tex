@@ -290,8 +290,9 @@ utilisées.
 
 \bigskip
 
+\hypertarget{introduction}{%
 \section{\texorpdfstring{Introduction
-\label{intro}}{Introduction }}\label{introduction}
+\label{intro}}{Introduction }}\label{introduction}}
 
 Au début de l'année 1943, la \emph{Economic Warfare Division} de
 l'ambassade américaine à Londres commença à analyser divers marquages
@@ -309,16 +310,20 @@ Le problème du char d'assaut allemand est nommé d'après son application
 par les alliés à l'estimation du nombre de chars d'assaut produits par
 l'Allemagne. Mais en fait, ce problème regroupe l'estimation du nombre
 de nombreux produits de guerre allemands, par exemple les camions, les
-fusils, les bombes et les fusées.
+fusils, les bombes et les fusées. Les russes ont également utilisé des
+techniques similaires pour estimer la production de char d'assaut
+allemands \cite{Volz2008}.
 
 Dans cet article, nous nous intéresserons à l'estimation du nombre
 d'items \(N\) à partir d'un échantillon aléatoire dans le cas où les
 items sont numérotés de façon séquentielle.
 
+\hypertarget{les-mathematiques}{%
 \section{\texorpdfstring{Les mathématiques
-\label{maths}}{Les mathématiques }}\label{les-mathematiques}
+\label{maths}}{Les mathématiques }}\label{les-mathematiques}}
 
-\subsection{Préalables}\label{prealables}
+\hypertarget{prealables}{%
+\subsection{Préalables}\label{prealables}}
 
 Supposons que nous avons une population d'objets numérotés de la façon
 suivante : \(1\), \(2\), \(3\), \ldots{} , \(N\), où \(N\) est
@@ -370,10 +375,12 @@ $Cov(X_{(A)},X_{(B)})$ & $\dfrac{A(n+1-B)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\ \hline
 À l'aide des trois mesures de la table \ref{tab:mesures_stat}, nous
 allons maintenant trouverquatre estimés de \(N\) en utilisant simplement
 notre ``gros bon sens''. La structure des prochaines sections est
-calquée sur \cite{Johnson}.
+calquée sur \cite{Johnson}. Nous utiliserons aussi les notions
+présentées en \cite{Goodman1952} et \cite{Goodman1954}.
 
+\hypertarget{les-trois-situations-possibles}{%
 \subsection{Les trois situations
-possibles}\label{les-trois-situations-possibles}
+possibles}\label{les-trois-situations-possibles}}
 
 Supposons que nous avons une population d'objets numérotés de la façon
 suivante : \(s+1\), \(s+2\), \(s+3\), \ldots{} , \(s+N\). Trois
@@ -393,15 +400,17 @@ situations distinctes peuvent se produire:
 
 Nous étudierons, dans l'ordre, les trois situations précédentes.
 
+\hypertarget{la-situation-ou-s-est-connu-et-egal-a-0-et-n-est-inconnu}{%
 \subsection{\texorpdfstring{La situation où \(s\) est \textbf{connu} et
 égal à \(0\) et \(N\) est
-\textbf{inconnu}}{La situation où s est connu et égal à 0 et N est inconnu}}\label{la-situation-ou-s-est-connu-et-egal-a-0-et-n-est-inconnu}
+\textbf{inconnu}}{La situation où s est connu et égal à 0 et N est inconnu}}\label{la-situation-ou-s-est-connu-et-egal-a-0-et-n-est-inconnu}}
 
 Puisque \(s\) est connu et égal à \(0\), nous nous trouvons dans la
 situations où notre liste est numérotée de la façon suivante : \(1\),
 \(2\), \ldots{}, \(N\).
 
-\subsubsection{Le milieu de la liste}\label{le-milieu-de-la-liste}
+\hypertarget{le-milieu-de-la-liste}{%
+\subsubsection{Le milieu de la liste}\label{le-milieu-de-la-liste}}
 
 Supposons que nous connaissons la valeur milieu \(m\) de la liste \(1\),
 \(2\), \ldots{}, \(N\). Nous nous retrouvons dans la situation
@@ -422,15 +431,14 @@ premiers estimateurs.
 
 TODO: EST-CE QUE JE CALCULE LES VARIANCES AUSSI????????
 
-\subsubsection{La médiane}\label{la-mediane}
+\hypertarget{la-mediane}{%
+\subsubsection{La médiane}\label{la-mediane}}
 
 Notre premier estimateur est \(\widehat{N_1}=2\widetilde{X}-1\), où
 \(\widetilde{X}\) représente la médiane de notre échantillon. Rappelons
 que pour \(k\) données discrètes, la médiane se calcule de deux façons
 différentes, dépendamment du fait que le nombre de données soit pair ou
-impair.
-
-\begin{align}
+impair. \begin{align}
 \widetilde{X} &= 
 \begin{cases}
 \dfrac{X_{\left(\tfrac{k}{2}\right)}+X_{\left(\tfrac{k}{2}+1\right)}}{2} & \text{ si $k$ est pair} \\
@@ -450,11 +458,10 @@ E\lr{\widehat{N_1}} &= E\lr{2\widetilde{X}-1} \\
 Pour continuer, nous devons distinguer le cas pair du cas impair et
 utiliser l'équation \ref{eq:mediane}.
 
-\paragraph{Le cas pair}\label{le-cas-pair}
+\hypertarget{le-cas-pair}{%
+\paragraph{Le cas pair}\label{le-cas-pair}}
 
-Dans le cas pair, nous avons:
-
-\begin{align*}
+Dans le cas pair, nous avons: \begin{align*}
 E\lr{\widehat{N_1}} &= 2E\lr{\widetilde{X}}-1 \\
 &= 2E\lr{\dfrac{X_{\left(\tfrac{n}{2}\right)}+X_{\left(\tfrac{n}{2}+1\right)}}{2}}-1 \\
 &= E\lr{X_{\lr{\tfrac{n}{2}}}}+E\lr{X_{\lr{\tfrac{n}{2}+1}}}-1 \\
@@ -466,11 +473,10 @@ E\lr{\widehat{N_1}} &= 2E\lr{\widetilde{X}}-1 \\
 Nous avons donc bien que l'espérance de cet estimateur correspond à la
 valeur de \(N\) que nous désirons trouver.
 
-\paragraph{Le cas impair}\label{le-cas-impair}
+\hypertarget{le-cas-impair}{%
+\paragraph{Le cas impair}\label{le-cas-impair}}
 
-Dans le cas impair, nous avons:
-
-\begin{align*}
+Dans le cas impair, nous avons: \begin{align*}
 E\lr{\widehat{N_1}} &= 2E\lr{\widetilde{X}}-1 \\
 &= 2E\lr{X_{\left(\tfrac{n+1}{2}\right)} }-1 \\
 &= 2\dfrac{\lr{\tfrac{n+1}{2}}(N+1)}{n+1}-1 \\
@@ -481,22 +487,19 @@ E\lr{\widehat{N_1}} &= 2E\lr{\widetilde{X}}-1 \\
 Nous avons donc bien que l'espérance de cet estimateur correspond à la
 valeur de \(N\) que nous désirons trouver.
 
-\subsubsection{La moyenne}\label{la-moyenne}
+\hypertarget{la-moyenne}{%
+\subsubsection{La moyenne}\label{la-moyenne}}
 
 Notre second estimateur est \(\widehat{N_2}=2\overline{X}-1\), où
 \(\overline{X}\) représente la moyenne de notre échantillon. Rappelons
 que pour \(k\) données discrètes, la moyenne se calcule de la façon
-suivante:
-
-\begin{align}
+suivante: \begin{align}
 \overline{X} &= \dfrac{X_{(1)}+X_{(2)}+\ldots +X_{(k-1)}+X_{(k)}}{k}
 \label{eq:moyenne}
 \end{align}
 
 En utlisant les mesures du tableau \ref{tab:mesures_stat} et l'équation
-\ref{eq:moyenne}, nous obtenons:
-
-\begin{align*}
+\ref{eq:moyenne}, nous obtenons: \begin{align*}
 E\lr{\widehat{N_2}} &= 2E\lr{\overline{X}}-1 \\
 &= 2E\lr{\dfrac{X_{(1)}+X_{(2)}+\ldots +X_{(n-1)}+X_{(n)}}{n}}-1 \\
 &= 
@@ -519,16 +522,116 @@ Malheureusement, nous savons que \(N\) est supérieur ou égal à 10, le
 maximum de notre échantillon. Ces deux estimateurs ne sont donc pas
 adéquats, nous devrons en trouver d'autres.
 
+\hypertarget{deux-autres-estimes}{%
+\subsubsection{Deux autres estimés}\label{deux-autres-estimes}}
+
+Nous voulons maintenant trouver d'autres estimés qui sont toujours
+supérieurs ou égaux au plus grand entier de notre échantillon. Par
+symétrie, nous pouvons supposer que le nombre de numéros de série
+non-observés au-dessus de \(X_{(n)}\) soit le même que le nombre de
+numéros de série non-observés en-dessous de \(X_{(1)}\). Nous avons
+donc:
+
+\begin{align*}
+N-X_{(n)} &= X_{(1)}-1 \\
+\widehat{N_3} &= X_{(n)}+X_{(1)}-1
+\end{align*}
+
+Si nous continuons le raisonnement précédent, il apparaît raisonnable de
+poser le nombre de numéros de série non-observés au-dessus de
+\(X_{(n)}\) comme étant la moyenne du:
+
+\begin{itemize}
+\item
+  nombre de numéros de série non-observés en-dessous de \(X_{(1)}\);
+\item
+  nombre de numéros de série non-observés entre \(X_{(1)}\) et
+  \(X_{(2)}\);
+\item
+  nombre de numéros de série non-observés entre \(X_{(2)}\) et
+  \(X_{(3)}\);
+\item
+  \ldots{}
+\item
+  nombre de numéros de série non-observés entre \(X_{(n-1)}\) et
+  \(X_{(n)}\).
+\end{itemize}
+
+Nous avons donc que \(N-X_{(n)}\) est égal à:
+
+\begin{align*}
+N-X_{(n)} &= \frac{1}{n}\left[ (X_{(1)}-1)+(X_{(2)}-X_{(1)}-1)+(X_{(3)}-X_{(2)}-1)+\ldots+(X_{(n)}-X_{(n-1)}-1) \right] \\
+&= \frac{X_{(n)}}{n}-1 \\
+\widehat{N_4} &= \left( \frac{n+1}{n}\right) X_{(n)}-1
+\end{align*}
+
+\hypertarget{la-situation-ou-s-est-connu-mais-different-de-0-et-n-est-inconnu}{%
 \subsection{\texorpdfstring{La situation où \(s\) est \textbf{connu}
 mais différent de \(0\) et \(N\) est
-\textbf{inconnu}}{La situation où s est connu mais différent de 0 et N est inconnu}}\label{la-situation-ou-s-est-connu-mais-different-de-0-et-n-est-inconnu}
+\textbf{inconnu}}{La situation où s est connu mais différent de 0 et N est inconnu}}\label{la-situation-ou-s-est-connu-mais-different-de-0-et-n-est-inconnu}}
 
+Supposons que nous avons une population d'objets numérotés de la façon
+suivante : \(s+1\), \(s+2\), \(s+3\), \ldots{} , \(s+N\), où \(N\) est
+inconnu mais \(s\) est \textbf{connu}.
+
+Nous pouvons résoudre ce problème en utilisant les estimés précédents et
+en soustrayant la valeur \(s\) aux numéros de série obtenus.
+
+Par exemple, si nous avons une population où les numéros de séries
+débutent à 500 et nous obtenons l'échantillon suivant:
+
+\begin{verbatim}
+## [1] 848 523 651 527 605
+\end{verbatim}
+
+Pour estimer la valeur de \(N\), nous soustrayons \(499\) à notre
+échantillon et nous utilisons notre estimé \(\hat{N_4}\). Nous avons
+donc:
+
+\begin{verbatim}
+ech-499
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 349  24 152  28 106
+\end{verbatim}
+
+\begin{verbatim}
+N4(ech-499)
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 418
+\end{verbatim}
+
+--
+
+La population est en fait de taille 500.
+
+\hypertarget{la-situation-ou-s-est-inconnu-et-n-est-inconnu}{%
 \subsection{\texorpdfstring{La situation où \(s\) est \textbf{inconnu}
 et \(N\) est
-\textbf{inconnu}}{La situation où s est inconnu et N est inconnu}}\label{la-situation-ou-s-est-inconnu-et-n-est-inconnu}
+\textbf{inconnu}}{La situation où s est inconnu et N est inconnu}}\label{la-situation-ou-s-est-inconnu-et-n-est-inconnu}}
 
+Supposons que nous avons une population d'objets numérotés de la façon
+suivante : \(s+1\), \(s+2\), \(s+3\), \ldots{} , \(s+N\), où \(N\) est
+inconnu mais \(s\) est \textbf{inconnu}.
+
+Nous allons étudier la différence \(d\) entre le plus grand
+\((X_{(n)})\) et le plus petit \((X_{(1)})\) des numéros de série, que
+nous notons \(d\).
+
+\begin{align*}
+X_{(n)}-X_{(1)} &= E(X_{(n)}-X_{(1)}) \\
+&= \dfrac{n\cdot(N+1)}{n+1}-\dfrac{1\cdot(N+1)}{n+1} \\
+&= \dfrac{(n-1)(N+1)}{n+1} \\
+N+1 &= \dfrac{(X_{(n)}-X_{(1)})(n+1)}{n-1} \\
+\widehat{N_5} &= \dfrac{(X_{(n)}-X_{(1)})(n+1)}{n-1}-1
+\end{align*}
+
+\hypertarget{quelques-simulations}{%
 \section{\texorpdfstring{Quelques simulations
-\label{simul}}{Quelques simulations }}\label{quelques-simulations}
+\label{simul}}{Quelques simulations }}\label{quelques-simulations}}
 
 Pour visualiser les différences entre les quatre estimateurs trouvés,
 nous allons effectuer des simulations avec le logiciel \texttt{R}. Pour
@@ -620,8 +723,9 @@ calculons les quatre estimations.
 
 \appendix
 
+\hypertarget{rappels}{%
 \section{\texorpdfstring{Rappels
-\label{rappel_esperance}}{Rappels }}\label{rappels}
+\label{rappel_esperance}}{Rappels }}\label{rappels}}
 
 Voici quelques propriétés élémentaires concernant l'espérance, la
 variance et la covariance de variables aléatoires.
@@ -645,22 +749,20 @@ variance et la covariance de variables aléatoires.
 
 TODO
 
+\hypertarget{calcul-de-probabilites}{%
 \section{\texorpdfstring{Calcul de probabilités
-\label{calculs_proba}}{Calcul de probabilités }}\label{calcul-de-probabilites}
+\label{calculs_proba}}{Calcul de probabilités }}\label{calcul-de-probabilites}}
 
 TODO
 
 Nous voulons calculer la probabilité reliée à l'événement \(X_{(A)}=i\),
 c'est-à-dire l'événement où l'unité statistique \(X_{(A)}=i\). Pour bien
 comprendre la situation, nous allons utiliser le schéma ci-dessous:
-
 \begin{align*}
 \underbrace{X_{(1)} <  X_{(2)} < \ldots < X_{(A-1)}}_{A-1 \text{ éléments}} 
 < X_{(A)} 
 < \underbrace{X_{(A+1)} < \ldots < X_{(n-1)} < X_{(n)}}_{n-A \text{ éléments}}
-\end{align*}
-
-Nous remarquons que \(A\in\set{1,2,3,\ldots, n}\) et
+\end{align*} Nous remarquons que \(A\in\set{1,2,3,\ldots, n}\) et
 \(i\in\set{A,A+1,A+2,\ldots,N-n+A}\). En effet, la valeur de \(i\) ne
 peut pas être plus petite que \(A\) car il y a toujours \(A-1\) valeurs
 plus petites que \(A\). De plus, \(A\) ne peut pas être plus grande que
@@ -673,21 +775,16 @@ choisir \(A-1\) éléments parmi \(i-1\), ce qui correspond à
 parmi \(N-i\), ce qui correspond à \(\binom{N-i}{n-A}\). Enfin, nous
 choisissons un échantillon de taille \(n\) parmi une population de
 taille \(N\), ce qui correspond à \(\binom{N}{n}\). Nous avons donc:
-
 \begin{align*}
 P(X_{(A)}=i) &= \dfrac{\binom{i-1}{A-1}\binom{N-i}{n-A}}{\binom{N}{n}} \qquad \text{où } i=A,A+1,\ldots,N-n+A
-\end{align*}
-
-Puisque les probabilités précédentes doivent sommer à un, nous avons:
-
-\begin{align}
+\end{align*} Puisque les probabilités précédentes doivent sommer à un,
+nous avons: \begin{align}
 \sum_{i=A}^{N-n+A} P(X_{(A)}=i) &= 1 \nonumber\\
 \sum_{i=A}^{N-n+A} \dfrac{\binom{i-1}{A-1}\binom{N-i}{n-A}}{\binom{N}{n}} &= 1 \nonumber\\
 \sum_{i=A}^{N-n+A} \binom{i-1}{A-1}\binom{N-i}{n-A} &= \binom{N}{n} \label{eq:sumxA}
 \end{align}
 
 Nous pouvons maintenant calculer l'espérance de \(X_{(A)}\). Nous avons:
-
 \begin{align}
 E(X_{(A)}) &= \sum_{i=A}^{N-n+A} iP(X_{(A)}=i) \nonumber\\
 &= \sum_{i=A}^{N-n+A} i\dfrac{\binom{i-1}{A-1}\binom{N-i}{n-A}}{\binom{N}{n}} \nonumber\\

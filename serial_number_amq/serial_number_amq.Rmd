@@ -62,7 +62,7 @@ N5 <- function(ech){
 
 Au début de l'année 1943, la *Economic Warfare Division* de l'ambassade américaine à Londres commença à analyser divers marquages obtenus à partir d'équipements allemands capturés ou détruits sur le front. Plus particulièrement, les numéros de séries ont été utilisés pour estimer la force de production de la machine de guerre allemande. L'article *An Empirical Approach to Economic Intelligence in World War II* \cite{Ruggles1947} explique en grand détail le développement des techniques utilisés pour faire cette estimation, les problèmes rencontrés et les solutions qui y ont remédiés. Nous invitons le lecteur intéressé par l'aspect pratico-pratique de ces techniques à lire cet article.
 
-Le problème du char d'assaut allemand est nommé d'après son application par les alliés à l'estimation du nombre de chars d'assaut produits par l'Allemagne. Mais en fait, ce problème regroupe l'estimation du nombre de nombreux produits de guerre allemands, par exemple les camions, les fusils, les bombes et les fusées.
+Le problème du char d'assaut allemand est nommé d'après son application par les alliés à l'estimation du nombre de chars d'assaut produits par l'Allemagne. Mais en fait, ce problème regroupe l'estimation du nombre de nombreux produits de guerre allemands, par exemple les camions, les fusils, les bombes et les fusées. Les russes ont également utilisé des techniques similaires pour estimer la production de char d'assaut allemands \cite{Volz2008}.
 
 Dans cet article, nous nous intéresserons à l'estimation du nombre d'items $N$ à partir d'un échantillon aléatoire dans le cas où les items sont numérotés de façon séquentielle.
 
@@ -97,7 +97,7 @@ $Cov(X_{(A)},X_{(B)})$ & $\dfrac{A(n+1-B)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\ \hline
 \caption{\label{tab:mesures_stat} {Les mesures de l'espérance, de la variance et de la covariance.} }
 \end{table}
 
-À l'aide des trois mesures de la table \ref{tab:mesures_stat}, nous allons maintenant trouverquatre estimés de $N$ en utilisant simplement notre "gros bon sens". La structure des prochaines sections est calquée sur \cite{Johnson}.
+À l'aide des trois mesures de la table \ref{tab:mesures_stat}, nous allons maintenant trouverquatre estimés de $N$ en utilisant simplement notre "gros bon sens". La structure des prochaines sections est calquée sur \cite{Johnson}. Nous utiliserons aussi les notions présentées en \cite{Goodman1952} et \cite{Goodman1954}.
 
 ## Les trois situations possibles
 
@@ -200,12 +200,72 @@ $$\widehat{N_1}=2\widetilde{X}-1=5 \qquad \text{et} \qquad \widehat{N_2}=2\overl
 
 Malheureusement, nous savons que $N$ est supérieur ou égal à 10, le maximum de notre échantillon. Ces deux estimateurs ne sont donc pas adéquats, nous devrons en trouver d'autres.
 
+### Deux autres estimés
+
+Nous voulons maintenant trouver d'autres estimés qui sont toujours supérieurs ou égaux au plus grand entier de notre échantillon. Par symétrie, nous pouvons supposer que le nombre de numéros de série non-observés au-dessus de $X_{(n)}$ soit le même que le nombre de numéros de série non-observés en-dessous de $X_{(1)}$. Nous avons donc:
+
+\begin{align*}
+N-X_{(n)} &= X_{(1)}-1 \\
+\widehat{N_3} &= X_{(n)}+X_{(1)}-1
+\end{align*}
+
+Si nous continuons le raisonnement précédent, il apparaît raisonnable de poser le nombre de numéros de série non-observés au-dessus de $X_{(n)}$ comme étant la moyenne du:
+
+- nombre de numéros de série non-observés en-dessous de $X_{(1)}$;
+
+- nombre de numéros de série non-observés entre $X_{(1)}$ et $X_{(2)}$;
+
+- nombre de numéros de série non-observés entre $X_{(2)}$ et $X_{(3)}$;
+
+- ...
+
+- nombre de numéros de série non-observés entre $X_{(n-1)}$ et $X_{(n)}$.
+
+Nous avons donc que $N-X_{(n)}$ est égal à:
+
+\begin{align*}
+N-X_{(n)} &= \frac{1}{n}\left[ (X_{(1)}-1)+(X_{(2)}-X_{(1)}-1)+(X_{(3)}-X_{(2)}-1)+\ldots+(X_{(n)}-X_{(n-1)}-1) \right] \\
+&= \frac{X_{(n)}}{n}-1 \\
+\widehat{N_4} &= \left( \frac{n+1}{n}\right) X_{(n)}-1
+\end{align*}
+
 ## La situation où $s$ est **connu** mais différent de $0$ et $N$ est **inconnu**
 
+Supposons que nous avons une population d'objets numérotés de la façon suivante : $s+1$, $s+2$, $s+3$, ... , $s+N$, où $N$ est inconnu mais $s$ est **connu**.
+
+Nous pouvons résoudre ce problème en utilisant les estimés précédents et en soustrayant la valeur $s$ aux numéros de série obtenus.
+
+Par exemple, si nous avons une population où les numéros de séries débutent à 500 et nous obtenons l'échantillon suivant:
+
+```{r, echo = FALSE}
+ech = sample(500:1000, 5)
+ech
+```
+
+Pour estimer la valeur de $N$, nous soustrayons $499$ à notre échantillon et nous utilisons notre estimé $\hat{N_4}$. Nous avons donc:
+
+```{r}
+ech-499
+N4(ech-499)
+```
+
+--
+
+La population est en fait de taille 500.
 
 ## La situation où $s$ est **inconnu** et $N$ est **inconnu**
 
+Supposons que nous avons une population d'objets numérotés de la façon suivante : $s+1$, $s+2$, $s+3$, ... , $s+N$, où $N$ est inconnu mais $s$ est **inconnu**.
 
+Nous allons étudier la différence $d$ entre le plus grand $(X_{(n)})$ et le plus petit $(X_{(1)})$ des numéros de série, que nous notons $d$.
+
+\begin{align*}
+X_{(n)}-X_{(1)} &= E(X_{(n)}-X_{(1)}) \\
+&= \dfrac{n\cdot(N+1)}{n+1}-\dfrac{1\cdot(N+1)}{n+1} \\
+&= \dfrac{(n-1)(N+1)}{n+1} \\
+N+1 &= \dfrac{(X_{(n)}-X_{(1)})(n+1)}{n-1} \\
+\widehat{N_5} &= \dfrac{(X_{(n)}-X_{(1)})(n+1)}{n-1}-1
+\end{align*}
 
 # Quelques simulations \label{simul}
 
