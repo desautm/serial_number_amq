@@ -313,9 +313,23 @@ Le problème du char d'assaut allemand est nommé d'après son application
 par les alliés à l'estimation du nombre de chars d'assaut produits par
 l'Allemagne. Mais en fait, ce problème regroupe l'estimation du nombre
 de nombreux produits de guerre allemands, par exemple les camions, les
-fusils, les bombes et les fusées. Les russes ont également utilisé des
-techniques similaires pour estimer la production de char d'assaut
-allemands \cite{Volz2008}.
+fusils, les bombes et les fusées, voir \cite{Ruggles1947}. Les russes
+ont également utilisé des techniques similaires pour estimer la
+production de char d'assaut allemands \cite{Volz2008}. Durant les années
+80, des militaires Américains ont eu accès aux lignes de production de
+chars d'assaut \emph{Merkava} israéliens. Le nombre de chars produits
+était confidentiel, mais le colone Dupuy indique que puisque chaque
+chars possédait un numéro de série, il aurait pu estimer la production,
+voir \cite{Johnson}
+
+Les formules développées dans cet article ont aussi été utilisées dans
+des contextes non-militaires. Par exemple, elles ont été utilisées pour
+estimer le nombre de \emph{Commodore 64} produits, voir
+\cite{commodore64}. Le premier modèle de iPhone, commercialisé en 2007
+aux États-Unis, a été vendu au nombre de 9 190 680, suite à des
+estimations faites à partir des codes IMEI (\emph{The International
+Mobile Equipment Identity}) de nombreux utilisateurs, voir
+\cite{iphone}.
 
 Dans cet article, nous nous intéresserons à l'estimation du nombre
 d'items \(N\) à partir d'un échantillon aléatoire dans le cas où les
@@ -330,35 +344,41 @@ items sont numérotés de façon séquentielle.
 
 Supposons que nous avons une population d'objets numérotés de la façon
 suivante : \(1\), \(2\), \(3\), \ldots{} , \(N\), où \(N\) est
-\textbf{inconnu}. Nous pigeons, \textbf{\textbf{sans remise}}, un
-échantillon \(X_1\), \(X_2\), \(X_3\), \ldots{}, \(X_n\), de taille
-\(n\) à partir de la population. Nous voulons estimer la valeur de \(N\)
-à partir de l'échantillon prélevé.
+\textbf{inconnu}. En d'autres mots, les objets de notre population
+doivent être numérotés de façon \emph{séquentielle}. Nous pigeons,
+\textbf{sans remise}, un échantillon \(X_1\), \(X_2\), \(X_3\),
+\ldots{}, \(X_n\), de taille \(n\) à partir de la population. Nous
+voulons estimer la valeur de \(N\) à partir de l'échantillon prélevé.
 
 Pour calculer les diverses mesures statistiques dont nous aurons besoin,
 nous allons classer les unités statistiques de notre échantillon en
 ordre croissant. Nous avons:
-
-\[X_{(1)} <  X_{(2)} < X_{(3)} < \ldots < X_{(n-1)} < X_{(n)}\]
-
-où les valeurs \(X_{(1)}\), \(X_{(2)}\), \(X_{(3)}\), \ldots{},
-\(X_{(n)}\) sont les valeurs ordonnées de l'échantillon \(X_1\),
-\(X_2\), \(X_3\), \ldots{}, \(X_n\). En particulier, \(X_{(1)}\) est la
-plus petite valeur de l'échantillon et \(X_{(n)}\) est la plus grande.
+\[X_{(1)} <  X_{(2)} < X_{(3)} < \ldots < X_{(n-1)} < X_{(n)}\] où les
+valeurs \(X_{(1)}\), \(X_{(2)}\), \(X_{(3)}\), \ldots{}, \(X_{(n)}\)
+sont les valeurs ordonnées de l'échantillon \(X_1\), \(X_2\), \(X_3\),
+\ldots{}, \(X_n\). En particulier, \(X_{(1)}\) est la plus petite valeur
+de l'échantillon et \(X_{(n)}\) est la plus grande.
 
 À partir de nos définitions précédentes, il est possible de calculer
-l'espérance de la valeur \(X_{(A)}\) (\(E(X_{(A)})\)), la variance de la
-valeur \(X_{(A)}\) (\(Var(X_{(A)})\)) et enfin la covariance des valeurs
-\(X_{(A)}\) et \(X_{(B)}\) (\(Cov(X_{(A)},X_{(B)})\)). Nous utiliserons
-ces mesures statistiques pour calculer l'espérance et la variance des
-estimateurs que nous construirons. Malheureusement, retrouver ces
-mesures statistiques nécessite des identités combinatoires et de
-fastidieux calculs. Pour ne pas alourdir le texte, nous donnerons ces
-mesures sans démonstration. Par contre, pour la lectrice ou le lecteur
-intéressé, vous pourrez trouver à l'annexe \ref{calculs_proba} une idée
-de la technique utilisée ainsi que la démonstration de \(E(X_{(A)})\).
+l'espérance de la valeur \(X_{(A)}\) (\(\esp (X_{(A)})\)), la variance
+de la valeur \(X_{(A)}\) (\(\var(X_{(A)})\)) et enfin la covariance des
+valeurs \(X_{(A)}\) et \(X_{(B)}\) (\(\cov(X_{(A)},X_{(B)})\)). Nous
+utiliserons ces mesures statistiques pour calculer l'espérance et la
+variance des estimateurs que nous construirons. Malheureusement,
+retrouver ces mesures statistiques nécessite des identités combinatoires
+et de fastidieux calculs. Pour ne pas alourdir le texte, nous donnerons
+ces mesures sans démonstration. Par contre, pour la lectrice ou le
+lecteur intéressé, vous pourrez trouver à l'annexe \ref{calculs_proba}
+une idée de la technique utilisée ainsi que la démonstration de
+\(\esp(X_{(A)})\).
 
-Nous avons donc les trois mesures à la table \ref{tab:mesures_stat}.
+Nous utiliserons donc, sans démonstration, les trois mesures du tableau
+\ref{tab:mesures_stat}. La lectrice ou le lecteur curieux pourront aller
+aux annexes \ref{rappel_esperance} et \ref{calculs_proba} pour quelques
+rappels sur les notions d'espérance, de variance et de covariance ainsi
+que la démonstration de \(E(X_{(A)})\). Les démonstrations de
+\(\var(X_{(A)})\) et \(\cov(X_{(A)},X_{(B)})\) se font d'une manière
+similaire.
 
 \begin{table}[ht]
 \begin{center}
@@ -367,18 +387,18 @@ Nous avons donc les trois mesures à la table \ref{tab:mesures_stat}.
 Mesure & Formule \\
 \hline
 \hline
-$E(X_{(A)})$ & $\dfrac{A(N+1)}{n+1}$ \\ \hline
-$Var(X_{(A)})$ & $\dfrac{A(n+1-A)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\ \hline
-$Cov(X_{(A)},X_{(B)})$ & $\dfrac{A(n+1-B)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\ \hline
+$\esp (X_{(A)})$ & $\frac{A(N+1)}{n+1}$ \\ \hline
+$\var(X_{(A)})$ & $\frac{A(n+1-A)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\ \hline
+$\cov(X_{(A)},X_{(B)})$ & $\frac{A(n+1-B)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\ \hline
 \end{tabular}
 \end{center}
-\caption{\label{tab:mesures_stat} {Les mesures de l'espérance, de la variance et de la covariance.} }
+\caption{\label{tab:mesures_stat} {Les mesures de l'espérance, de la variance et de la covariance pour une valeur $X_{(A)}$ de notre échantillon.} }
 \end{table}
 
-À l'aide des trois mesures de la table \ref{tab:mesures_stat}, nous
-allons maintenant trouverquatre estimés de \(N\) en utilisant simplement
-notre ``gros bon sens''. La structure des prochaines sections est
-calquée sur \cite{Johnson}. Nous utiliserons aussi les notions
+À l'aide des trois mesures du tableau \ref{tab:mesures_stat}, nous
+allons maintenant trouver quatre estimés de \(N\) en utilisant
+simplement notre ``gros bon sens''. La structure des prochaines sections
+est calquée sur \cite{Johnson}. Nous utiliserons aussi les notions
 présentées en \cite{Goodman1952} et \cite{Goodman1954}.
 
 \hypertarget{les-trois-situations-possibles}{%
@@ -409,57 +429,70 @@ Nous étudierons, dans l'ordre, les trois situations précédentes.
 \textbf{inconnu}}{La situation où s est connu et égal à 0 et N est inconnu}}\label{la-situation-ou-s-est-connu-et-egal-a-0-et-n-est-inconnu}}
 
 Puisque \(s\) est connu et égal à \(0\), nous nous trouvons dans la
-situations où notre liste est numérotée de la façon suivante : \(1\),
-\(2\), \ldots{}, \(N\).
+situation où notre liste est numérotée de la façon suivante : \(1\),
+\(2\), \ldots{}, \(N\). Cette situation est en fait un cas particulier
+d'une loi uniforme discrète de la forme \(\unif(1,N)\).
 
 \hypertarget{le-milieu-de-la-liste}{%
 \subsubsection{Le milieu de la liste}\label{le-milieu-de-la-liste}}
 
-Supposons que nous connaissons la valeur milieu \(m\) de la liste \(1\),
+Pour trouver nos deux premiers estimateurs, nous allons débuter en
+supposant que nous connaissons la valeur milieu \(m\) de la liste \(1\),
 \(2\), \ldots{}, \(N\). Nous nous retrouvons dans la situation
 ci-dessous:
-
 \[\underbrace{1,2,3,\ldots,m-1}_{m-1 \text{ éléments}},m,\underbrace{m+1,\ldots,N-2,N-1,N}_{m-1 \text{ éléments}}\]
-
 Il y aura donc \(m-1\) valeurs en-dessous de \(m\) et \(m-1\) valeurs
 au-dessus de \(m\). Donc, si nous incluons la valeur milieu \(m\), nous
-avons:
-
-\[N=(m-1)+1+(m-1)=2m-1\]
-
-Puisque nous ne connaissons pas \(m\), il est raisonnable de le
-remplacer par une estimation, par exemple la médiane \(\widetilde{X}\)
-ou la moyenne \(\overline{X}\). Nous pouvons maintenant obtenir nos deux
-premiers estimateurs.
-
-TODO: EST-CE QUE JE CALCULE LES VARIANCES AUSSI????????
+avons \(N=(m-1)+1+(m-1)=2m-1\). Puisque nous ne connaissons pas la
+valeur milieu \(m\), il est raisonnable de le remplacer par une
+estimation, par exemple la médiane \(\widetilde{X}\) ou la moyenne
+\(\overline{X}\). Nous pouvons maintenant obtenir nos deux premiers
+estimateurs.
 
 \hypertarget{la-mediane}{%
 \subsubsection{La médiane}\label{la-mediane}}
 
-Notre premier estimateur est \(\widehat{N_1}=2\widetilde{X}-1\), où
-\(\widetilde{X}\) représente la médiane de notre échantillon. Rappelons
-que pour \(k\) données discrètes, la médiane se calcule de deux façons
-différentes, dépendamment du fait que le nombre de données soit pair ou
-impair. \begin{align}
+Nous noterons notre premier estimateur
+\(\widehat{N_1}=2\widetilde{X}-1\), où \(\widetilde{X}\) représente la
+médiane de notre échantillon. Rappelons que pour \(k\) données
+discrètes, la médiane se calcule de deux façons différentes,
+dépendamment du fait que le nombre de données soit pair ou impair.
+\begin{align}
 \widetilde{X} &= 
 \begin{cases}
-\dfrac{X_{\left(\tfrac{k}{2}\right)}+X_{\left(\tfrac{k}{2}+1\right)}}{2} & \text{ si $k$ est pair} \\
-X_{\left(\tfrac{k+1}{2}\right)} & \text{ si $k$ est impair}
+\frac{1}{2}\lr{X_{\lr{\tfrac{k}{2}}}+X_{\lr{\tfrac{k}{2}+1}}} & \text{ si $k$ est pair} \\
+X_{\lr{\tfrac{k+1}{2}}} & \text{ si $k$ est impair} \\
 \end{cases}
 \label{eq:mediane}
-\end{align}
+\end{align} Nous voulons vérifier si l'estimateur \(\widehat{N_1}\) est
+non-biaisé, c'est-à-dire si l'espérance de \(\widehat{N_1}\) est égale à
+\(N\) (\(\esp (\widehat{N_1})=N\)). Nous voulons également calculer la
+variance de \(\widehat{N_1}\). Pour éviter d'alourdir le texte, nous
+avons mis un exemple de calcul d'espérance et de variance à l'annexe
+\ref{calculs_estimateurs}. Nous obtenons les résultats du tableau
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$i$ & $\widehat{N_i}$ & $\esp\lr{\widehat{N_i}}$ & $\var\lr{\widehat{N_i}}$ \\
+\hline
+\hline
+\multirow{2}{*}{1}  & \multirow{2}{*}{$2\widetilde{X}-1$} & \multirow{2}{*}{$N$} & 
+$\frac{(N-n)(N+1)}{n+2}$ pour $n$ impair \\
+& & & $\frac{(N-n)(N+1)}{n+2}$ pour $n$ pair \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{tab:estimateur_n1} {Les mesures de l'espérance, de la variance et de la covariance pour une valeur $X_{(A)}$ de notre échantillon.} }
+\end{table}
 
 En utlisant les mesures du tableau \ref{tab:mesures_stat}, nous
-obtenons:
-
-\begin{align*}
+obtenons: \begin{align*}
 E\lr{\widehat{N_1}} &= E\lr{2\widetilde{X}-1} \\
 &= 2E\lr{\widetilde{X}}-1 \quad \text{par propriétés des espérances}
-\end{align*}
-
-Pour continuer, nous devons distinguer le cas pair du cas impair et
-utiliser l'équation \ref{eq:mediane}.
+\end{align*} Pour continuer, nous devons distinguer le cas pair du cas
+impair et utiliser l'équation \ref{eq:mediane}.
 
 \hypertarget{le-cas-pair}{%
 \paragraph{Le cas pair}\label{le-cas-pair}}
@@ -575,7 +608,9 @@ mais différent de \(0\) et \(N\) est
 
 Supposons que nous avons une population d'objets numérotés de la façon
 suivante : \(s+1\), \(s+2\), \(s+3\), \ldots{} , \(s+N\), où \(N\) est
-inconnu mais \(s\) est \textbf{connu}.
+inconnu mais \(s\) est \textbf{connu}. Cette situation est en fait un
+cas particulier d'une loi uniforme discrète de la forme
+\(\unif(s+1,s+N)\).
 
 Nous pouvons résoudre ce problème en utilisant les estimés précédents et
 en soustrayant la valeur \(s\) aux numéros de série obtenus.
@@ -730,33 +765,60 @@ calculons les quatre estimations.
 \section{\texorpdfstring{Rappels
 \label{rappel_esperance}}{Rappels }}\label{rappels}}
 
-Voici quelques propriétés élémentaires concernant l'espérance, la
-variance et la covariance de variables aléatoires.
+\begin{definition}[Espérance d'une variable discrète prenant un nombre fini de valeurs]
+Soit $X$ une variable aléatoire discrète avec un nombre fini de valeurs $x_1$, $x_2$, ..., $x_k$ auxquelles sont associées les probabilités $p_1$, $p_2$, ..., $p_k$. L'espérance de $X$, notée $\esp (X)$ est définie comme:
+$$ \esp (X) = x_1p_1+x_2p_2+\ldots +x_kp_k = \sum_{i=1}^k x_i p_i $$
+\end{definition}
+
+Voici quelques propriétés élémentaires concernant l'espérance de
+variables aléatoires.
 
 \begin{itemize}
 \item
-  L'espérance d'une variable aléatoire constante est égale à cette
-  constante; par exemple, si \(k\) est une constante, alors
-  \(\mathbb{E}(k)=k\).
+  Soit \(k\in\mathbb{R}\), alors \(\esp(k)=k\).
 \item
-  L'espérance est un opérateur linéaire. Pour deux variables aléatoires
-  quelconques \(X\) et \(Y\) (définies sur le même espace probabiliste)
-  et pour deux nombres réels \(a\) et \(b\) alors
-  \(\mathbb{E}(aX+bY)=a\mathbb{E}(X)+b\mathbb{E}(Y)\).
-\item
-  La variance d'une variable aléatoire peut être calculée de la façon
-  suivante \(Var(X)=\mathbb{E}(X^2)-\lr{\mathbb{E}(X)}^2\).
-\item
-  La variance
+  Soit \(X_i\) où \(i\in\set{1,2,\ldots,n}\), \(n\) variables aléatoires
+  définies sur le même espace probabiliste et \(a_i\in\mathbb{R}\),
+  alors \(\esp\lr{\sum_{i=1}^na_iX_i}=\sum_{i=1}^n a_i\esp(X_i)\).
 \end{itemize}
 
-TODO
+\begin{definition}[Variance]
+Soit $X$ une variable aléatoire discrète avec un nombre fini de valeurs $x_1$, $x_2$, ..., $x_k$ auxquelles sont associées les probabilités $p_1$, $p_2$, ..., $p_k$. La variance de $X$, notée $\var (X)$ est définie comme:
+$$ \var (X) = \esp\crochet{\lr{X-\esp(X)}^2} $$
+\end{definition}
+
+\begin{definition}[Covariance]
+Soit $X$ et $Y$ deux variables aléatoires définies sur le même espace probabiliste et ayant chacune une variance finie. La covariance de $X$ et $Y$, notée $\cov(X,Y)$ est définie comme:
+$$ \cov(X,Y)=\esp\crochet{\lr{X-\esp(X)}\lr{Y-\esp(Y)}} $$
+\end{definition}
+
+Voici quelques propriétés élémentaires concernant la variance et la
+covariance de variables aléatoires.
+
+\begin{itemize}
+\item
+  Le théorème de König-Huygens donne la formule de variance alternative
+  suivante: \(\var(X)=\esp(X^2)-\lr{\esp(X)}^2\).
+\item
+  Soit \(X\) une variable aléatoire et \(a,b\in\mathbb{R}\), alors
+  \(\var(aX+b)=a^2\var(X)\).
+\item
+  Soit \(X_i\) où \(i\in\set{1,2,\ldots,n}\), \(n\) variables aléatoires
+  définies sur le même espace probabiliste et \(a_i\in\mathbb{R}\),
+  alors
+  \(\var\lr{\sum_{i=1}^n a_iX_i}=\sum_{i=1}^n a_i^2\var(X_i)+2\sum_{1\leq i< j\leq n} a_ia_j\cov(X_i,X_j)\).
+\item
+  Une généralisation du théorème de König-Huygens pour la variance
+  implique: \(\cov(X,Y)=\esp(XY)-\esp(X)\esp(Y)\).
+\item
+  \(\cov(X,X)=\var(X)\)
+\item
+  \(\cov(X,Y)=\cov(Y,X)\)
+\end{itemize}
 
 \hypertarget{calcul-de-probabilites}{%
 \section{\texorpdfstring{Calcul de probabilités
 \label{calculs_proba}}{Calcul de probabilités }}\label{calcul-de-probabilites}}
-
-TODO
 
 Nous voulons calculer la probabilité reliée à l'événement \(X_{(A)}=i\),
 c'est-à-dire l'événement où l'unité statistique \(X_{(A)}=i\). Pour bien
@@ -787,8 +849,10 @@ nous avons: \begin{align}
 \sum_{i=A}^{N-n+A} \binom{i-1}{A-1}\binom{N-i}{n-A} &= \binom{N}{n} \label{eq:sumxA}
 \end{align}
 
-Nous pouvons maintenant calculer l'espérance de \(X_{(A)}\). Nous avons:
-\begin{align}
+À l'aide de l'équation (\ref{eq:sumxA}), nous pouvons démontrer les
+résultats du tableau \ref{tab:mesures_stat}. Pour montrer au lecteur la
+façon de faire, nous présenterons la façon de démontrer l'espérance de
+\(X_{(A)}\). Nous avons: \begin{align}
 E(X_{(A)}) &= \sum_{i=A}^{N-n+A} iP(X_{(A)}=i) \nonumber\\
 &= \sum_{i=A}^{N-n+A} i\dfrac{\binom{i-1}{A-1}\binom{N-i}{n-A}}{\binom{N}{n}} \nonumber\\
 &= \dfrac{1}{\binom{N}{n}}\sum_{i=A}^{N-n+A} i\binom{i-1}{A-1}\binom{N-i}{n-A} \nonumber\\
@@ -798,6 +862,50 @@ E(X_{(A)}) &= \sum_{i=A}^{N-n+A} iP(X_{(A)}=i) \nonumber\\
 &= \dfrac{A}{\binom{N}{n}}\binom{N+1}{n+1} \comeq{par l'équation \ref{eq:sumxA} et changement d'indice} \nonumber\\
 &= \dfrac{A(N+1)}{n+1} \label{eq:esperancexA}
 \end{align}
+
+Les démonstrations de \(\var(X_{(A)})\) et \(\cov(X_{(A)},X_{(B)})\) se
+font d'une manière similaire.
+
+\hypertarget{calculs-desperance-et-de-variance-destimateurs}{%
+\section{\texorpdfstring{Calculs d'espérance et de variance
+d'estimateurs
+\label{calculs_estimateurs}}{Calculs d'espérance et de variance d'estimateurs }}\label{calculs-desperance-et-de-variance-destimateurs}}
+
+Nous démontrons ici le calcul de l'espérance et de la variance de
+l'estimateur \(\widehat{N_1}\), pour donner une idée à la lectrice ou au
+lecteur des idées à utiliser lors de la démonstration des espérances et
+des variances des autres estimateurs. Nous étudierons le cas où \(n\)
+est pair.
+
+\hypertarget{calcul-de-lesperance}{%
+\subsection{Calcul de l'espérance}\label{calcul-de-lesperance}}
+
+Puisque \(n\) est pair, la médiane est donnée par
+\(\frac{1}{2}\lr{X_{\lr{n/2}}+X_{\lr{n/2+1}}}\) Ainsi: \begin{align*}
+\esp(\widehat{N_1}) &= \esp(2\widetilde{X}-1) \\
+&= 2\esp(\widetilde{X})-1 \\
+&= 2\esp\lr{\frac{1}{2}\lr{X_{\lr{n/2}}+X_{\lr{n/2+1}}}}-1 \\
+&= \esp\lr{X_{\lr{n/2}}}+\esp\lr{X_{\lr{n/2+1}}}-1 \\
+&= \frac{(\rfrac{n}{2})(N+1)}{n+1}+ \frac{(\rfrac{n}{2}+1)(N+1)}{n+1}-1 \\
+&= \frac{(n+1)(N+1)}{n+1}-1 \\
+&= N
+\end{align*}
+
+\hypertarget{calcul-de-la-variance}{%
+\subsection{Calcul de la variance}\label{calcul-de-la-variance}}
+
+Puisque \(n\) est pair, la médiane est donnée par
+\(\frac{1}{2}\lr{X_{\lr{n/2}}+X_{\lr{n/2+1}}}\) Ainsi: \begin{align*}
+\var(\widehat{N_1}) &= \var(2\widetilde{X}-1) \\
+&= 4\var(\widetilde{X}) \\
+&= 4\var\lr{\frac{1}{2}\lr{X_{\lr{n/2}}+X_{\lr{n/2+1}}}} \\
+&= \var\lr{X_{\lr{n/2}}+X_{\lr{n/2+1}}} \\
+&= \var\lr{X_{\lr{n/2}}}+\var\lr{X_{\lr{n/2+1}}}+2\cov\lr{X_{\lr{n/2}},X_{\lr{n/2+1}}} \\
+&= \frac{(n/2)(n+1-n/2)(N+1)(N-n)}{(n+1)^2(n+2)}+\frac{(n/2+1)(n+1-(n/2+1))(N+1)(N-n)}{(n+1)^2(n+2)}+ \\
+&\qquad\qquad\qquad \ldots+2\frac{(n/2)(n+1-(n/2+1))(N+1)(N-n)}{(n+1)^2(n+2)} \\
+&= (n^2+n)\frac{(N+1)(N-n)}{(n+1)^2(n+2)} \\
+&= \frac{n}{n+1}\frac{(N+1)(N-n)}{(n+1)(n+2)}
+\end{align*}
 
 \input{mybibliography}
 
