@@ -17,42 +17,48 @@ output: rticles::amq_article
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = TRUE)
+
+## Pour obtenir les mêmes résultats malgré l'échantillonnage aléatoire
 set.seed(39894095)
 
-library(mosaic)
-library(purrr)
-library(tidyr)
-library(reshape2)
+## La librairie utilisée
+## Pour l'installer, décommenter la ligne suivante:
+## install.packages("tidyverse")
 library(tidyverse)
 
-# Définition des fonctions pour le calcul des mesures sur les numéros de série.
+## Définition des fonctions pour le calcul des mesures sur les numéros de série.
 
+## Estimateur N1
 N1 <- function(ech){
   return(round(2*median(ech)-1))
 }
 
+## Estimateur N2
 N2 <- function(ech){
   return(round(2*mean(ech)-1))
 }
 
+## Estimateur N3
 N3 <- function(ech){
   if (length(ech) == 1) return(ech)
   else return(round(max(ech)+min(ech)-1))
 }
 
+## Estimateur N4
 N4 <- function(ech){
   if (length(ech) == 1) return(ech)
   else{
-    l <- length(unique(ech))
-  return(round((l+1)/l*max(ech)-1))
+    n <- length(unique(ech))
+    return(round((n+1)/n*max(ech)-1))
   }
 }
 
+## Estimateur N5
 N5 <- function(ech){
   if (length(ech) == 1) return(ech)
   else{
-    l <- length(unique(ech))
-    return(round((max(ech)-min(ech))*(l+1)/(l-1)-1))
+    n <- length(unique(ech))
+    return(round((max(ech)-min(ech))*(n+1)/(n-1)-1))
   }
 }
 ```
@@ -64,7 +70,24 @@ TODO [https://rstudio-pubs-static.s3.amazonaws.com/59464_ce1bbf886d0841cd8ecc46c
 
 Au début de l'année 1943, la *Economic Warfare Division* de l'ambassade américaine à Londres commença à analyser divers marquages obtenus à partir d'équipements allemands capturés ou détruits sur le front. Plus particulièrement, les numéros de séries ont été utilisés pour estimer la force de production de la machine de guerre allemande. L'article *An Empirical Approach to Economic Intelligence in World War II* \cite{Ruggles1947} explique en grand détail le développement des techniques utilisés pour faire cette estimation, les problèmes rencontrés et les solutions qui y ont remédiés. Nous invitons le lecteur intéressé par l'aspect pratico-pratique de ces techniques à lire cet article.
 
-Le problème du char d'assaut allemand est nommé d'après son application par les alliés à l'estimation du nombre de chars d'assaut produits par l'Allemagne. Mais en fait, ce problème regroupe l'estimation du nombre de nombreux produits de guerre allemands, par exemple les camions, les fusils, les bombes et les fusées, voir \cite{Ruggles1947}. Les russes ont également utilisé des techniques similaires pour estimer la production de char d'assaut allemands \cite{Volz2008}. Durant les années 80, des militaires Américains ont eu accès aux lignes de production de chars d'assaut *Merkava* israéliens. Le nombre de chars produits était confidentiel, mais le colone Dupuy indique que puisque chaque chars possédait un numéro de série, il aurait pu estimer la production, voir \cite{Johnson}
+Le problème du char d'assaut allemand est nommé d'après son application par les alliés à l'estimation du nombre de chars d'assaut produits par l'Allemagne. Mais en fait, ce problème regroupe l'estimation du nombre de nombreux produits de guerre allemands, par exemple les camions, les fusils, les bombes et les fusées, voir \cite{Ruggles1947}. En particulier, nous présentons au tableau \ref{tab:estimation_ruggles} les estimations du nombre de chars d'assaut allemands en comparaison avec l'estimation par les services de renseignements et les archives allemandes, tel que présenté dans \cite{Ruggles1947}.
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{cccc}
+\multirow{2}{*}{Mois} & \multirow{2}{*}{Estimation statistique} & Estimation par les & Selon les archives \\
+& & services de renseignements &  allemandes \\
+\hline
+\hline
+Juin 1940 & 169 & 1 000 & 122 \\
+Juin 1941 & 244 & 1 550 & 271 \\
+Août 1942 & 327 & 1 550 & 342 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{tab:estimation_ruggles} {Comparaison des estimations produites par les estimateurs que nous présenterons, des estimations produites par les services de renseignements ainsi que de la production exacte selon les archives allemandes.} }
+\end{table}
+
+Les russes ont également utilisé des techniques similaires pour estimer la production de char d'assaut allemands \cite{Volz2008}. Durant les années 80, des militaires Américains ont eu accès aux lignes de production de chars d'assaut *Merkava* israéliens. Le nombre de chars produits était confidentiel, mais le colone Dupuy indique que puisque chaque chars possédait un numéro de série, il aurait pu estimer la production, voir \cite{Johnson}
 
 Les formules développées dans cet article ont aussi été utilisées dans des contextes non-militaires. Par exemple, elles ont été utilisées pour estimer le nombre de *Commodore 64* produits, voir \cite{commodore64}. Le premier modèle de iPhone, commercialisé en 2007 aux États-Unis, a été vendu au nombre de 9 190 680, suite à des estimations faites à partir des codes IMEI (*The International Mobile Equipment Identity*) de nombreux utilisateurs, voir \cite{iphone}. 
 
@@ -82,7 +105,7 @@ où les valeurs $X_{(1)}$, $X_{(2)}$, $X_{(3)}$, ..., $X_{(n)}$ sont les valeurs
 
 À partir de nos définitions précédentes, il est possible de calculer l'espérance de la valeur $X_{(A)}$ ($\esp (X_{(A)})$), la variance de la valeur $X_{(A)}$ ($\var(X_{(A)})$) et enfin la covariance des valeurs $X_{(A)}$ et $X_{(B)}$ ($\cov(X_{(A)},X_{(B)})$). Nous utiliserons ces mesures statistiques pour calculer l'espérance et la variance des estimateurs que nous construirons. Malheureusement, retrouver ces mesures statistiques nécessite des identités combinatoires et de fastidieux calculs. Pour ne pas alourdir le texte, nous donnerons ces mesures sans démonstration. Par contre, pour la lectrice ou le lecteur intéressé, vous pourrez trouver à l'annexe \ref{calculs_proba} une idée de la technique utilisée ainsi que la démonstration de $\esp(X_{(A)})$.
 
-Nous utiliserons donc, sans démonstration, les trois mesures du tableau \ref{tab:mesures_stat}. La lectrice ou le lecteur curieux pourront aller aux annexes \ref{rappel_esperance} et \ref{calculs_proba} pour quelques rappels sur les notions d'espérance, de variance et de covariance ainsi que la démonstration de $E(X_{(A)})$. Les démonstrations de $\var(X_{(A)})$ et $\cov(X_{(A)},X_{(B)})$ se font d'une manière similaire.
+Nous utiliserons donc, sans démonstration, les trois mesures du tableau \ref{tab:mesures_stat}. La lectrice ou le lecteur curieux pourront aller aux annexes \ref{rappel_esperance} et \ref{calculs_proba} pour quelques rappels sur les notions d'espérance, de variance et de covariance ainsi que la démonstration de $\esp(X_{(A)})$. Les démonstrations de $\var(X_{(A)})$ et $\cov(X_{(A)},X_{(B)})$ se font d'une manière similaire.
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{|r|c|}
@@ -90,9 +113,12 @@ Nous utiliserons donc, sans démonstration, les trois mesures du tableau \ref{ta
 Mesure & Formule \\
 \hline
 \hline
-$\esp (X_{(A)})$ & $\frac{A(N+1)}{n+1}$ \\ \hline
-$\var(X_{(A)})$ & $\frac{A(n+1-A)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\ \hline
-$\cov(X_{(A)},X_{(B)})$ & $\frac{A(n+1-B)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\ \hline
+$\esp (X_{(A)})$ & $\frac{A(N+1)}{n+1}$ \\ 
+\hline
+$\var(X_{(A)})$ & $\frac{A(n+1-A)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\
+\hline
+$\cov(X_{(A)},X_{(B)})$ & $\frac{A(n+1-B)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\
+\hline
 \end{tabular}
 \end{center}
 \caption{\label{tab:mesures_stat} {Les mesures de l'espérance, de la variance et de la covariance pour une valeur $X_{(A)}$ de notre échantillon.} }
@@ -119,21 +145,21 @@ Puisque $s$ est connu et égal à $0$, nous nous trouvons dans la situation où 
 
 Pour trouver nos deux premiers estimateurs, nous allons débuter en supposant que nous connaissons la valeur milieu $m$ de la liste $1$, $2$, ..., $N$. Nous nous retrouvons dans la situation ci-dessous:
 $$\underbrace{1,2,3,\ldots,m-1}_{m-1 \text{ éléments}},m,\underbrace{m+1,\ldots,N-2,N-1,N}_{m-1 \text{ éléments}}$$
-Il y aura donc $m-1$ valeurs en-dessous de $m$ et $m-1$ valeurs au-dessus de $m$. Donc, si nous incluons la valeur milieu $m$, nous avons $N=(m-1)+1+(m-1)=2m-1$. Puisque nous ne connaissons pas la valeur milieu $m$, il est raisonnable de le remplacer par une estimation, par exemple la médiane $\widetilde{X}$ ou la moyenne $\overline{X}$. Nous pouvons maintenant obtenir nos deux premiers estimateurs.
+Il y aura donc $m-1$ valeurs en-dessous de $m$ et $m-1$ valeurs au-dessus de $m$. Donc, si nous incluons la valeur milieu $m$, nous avons $N=(m-1)+1+(m-1)=2m-1$. Puisque nous ne connaissons pas la valeur milieu $m$, il est raisonnable de la remplacer par une estimation, par exemple la médiane $\widetilde{X}$ ou la moyenne $\overline{X}$. Nous pouvons maintenant obtenir nos deux premiers estimateurs.
+
+> À partir de maintenant, nous allons toujours supposer que nous arrondissons nos estimateurs à l'entier le plus près.
 
 ### La médiane
 
 Nous noterons notre premier estimateur $\widehat{N_1}=2\widetilde{X}-1$, où $\widetilde{X}$ représente la médiane de notre échantillon. Rappelons que pour $k$ données discrètes, la médiane se calcule de deux façons différentes, dépendamment du fait que le nombre de données soit pair ou impair.
-\begin{align}
+\begin{align*}
 \widetilde{X} &= 
 \begin{cases}
-\frac{1}{2}\lr{X_{\lr{\tfrac{k}{2}}}+X_{\lr{\tfrac{k}{2}+1}}} & \text{ si $k$ est pair} \\
-X_{\lr{\tfrac{k+1}{2}}} & \text{ si $k$ est impair} \\
+\frac{1}{2}\lr{X_{\lr{k/2}}+X_{\lr{k/2+1}}} & \text{ si $k$ est pair} \\
+X_{\lr{(k+1)/2}} & \text{ si $k$ est impair} \\
 \end{cases}
-\label{eq:mediane}
-\end{align}
-Nous voulons vérifier si l'estimateur $\widehat{N_1}$ est non-biaisé, c'est-à-dire si l'espérance de $\widehat{N_1}$ est égale à $N$ ($\esp (\widehat{N_1})=N$). Nous voulons également calculer la variance de $\widehat{N_1}$. Pour éviter d'alourdir le texte, nous avons mis un exemple de calcul d'espérance et de variance à l'annexe \ref{calculs_estimateurs}. Nous obtenons les résultats du tableau
-
+\end{align*}
+Nous voulons vérifier si l'estimateur $\widehat{N_1}$ est non-biaisé, c'est-à-dire si l'espérance de $\widehat{N_1}$ est égale à $N$ ($\esp (\widehat{N_1})=N$). Nous voulons également calculer la variance de $\widehat{N_1}$. Pour éviter d'alourdir le texte, nous avons mis un exemple de calcul d'espérance et de variance à l'annexe \ref{calculs_estimateurs}. En effectuant les calculs appropriés, nous obtenons les résultats du tableau \ref{tab:estimateur_n1}.
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
@@ -143,81 +169,62 @@ $i$ & $\widehat{N_i}$ & $\esp\lr{\widehat{N_i}}$ & $\var\lr{\widehat{N_i}}$ \\
 \hline
 \multirow{2}{*}{1}  & \multirow{2}{*}{$2\widetilde{X}-1$} & \multirow{2}{*}{$N$} & 
 $\frac{(N-n)(N+1)}{n+2}$ pour $n$ impair \\
-& & & $\frac{(N-n)(N+1)}{n+2}$ pour $n$ pair \\
+& & & $\frac{n}{n+1}\frac{(N-n)(N+1)}{n+2}$ pour $n$ pair \\
 \hline
 \end{tabular}
 \end{center}
-\caption{\label{tab:estimateur_n1} {Les mesures de l'espérance, de la variance et de la covariance pour une valeur $X_{(A)}$ de notre échantillon.} }
+\caption{\label{tab:estimateur_n1} {L'espérance et la variance de l'estimateur $\widehat{N_1}$.} }
 \end{table}
-
-
-En utlisant les mesures du tableau \ref{tab:mesures_stat}, nous obtenons:
-\begin{align*}
-E\lr{\widehat{N_1}} &= E\lr{2\widetilde{X}-1} \\
-&= 2E\lr{\widetilde{X}}-1 \quad \text{par propriétés des espérances}
-\end{align*}
-Pour continuer, nous devons distinguer le cas pair du cas impair et utiliser l'équation \ref{eq:mediane}.
-
-#### Le cas pair
-
-Dans le cas pair, nous avons:
-\begin{align*}
-E\lr{\widehat{N_1}} &= 2E\lr{\widetilde{X}}-1 \\
-&= 2E\lr{\dfrac{X_{\left(\tfrac{n}{2}\right)}+X_{\left(\tfrac{n}{2}+1\right)}}{2}}-1 \\
-&= E\lr{X_{\lr{\tfrac{n}{2}}}}+E\lr{X_{\lr{\tfrac{n}{2}+1}}}-1 \\
-&= \dfrac{\lr{\tfrac{n}{2}}(N+1)}{n+1}+\dfrac{\lr{\tfrac{n}{2}+1}(N+1)}{n+1}-1 \\
-&= \dfrac{\cancel{(n+1)}(N+1)}{\cancel{n+1}}-1 \\
-&= N
-\end{align*}
-
-Nous avons donc bien que l'espérance de cet estimateur correspond à la valeur de $N$ que nous désirons trouver.
-
-#### Le cas impair
-
-Dans le cas impair, nous avons:
-\begin{align*}
-E\lr{\widehat{N_1}} &= 2E\lr{\widetilde{X}}-1 \\
-&= 2E\lr{X_{\left(\tfrac{n+1}{2}\right)} }-1 \\
-&= 2\dfrac{\lr{\tfrac{n+1}{2}}(N+1)}{n+1}-1 \\
-&= \dfrac{\cancel{(n+1)}(N+1)}{\cancel{n+1}}-1 \\
-&= N
-\end{align*}
-
-Nous avons donc bien que l'espérance de cet estimateur correspond à la valeur de $N$ que nous désirons trouver.
 
 ### La moyenne
 
 Notre second estimateur est $\widehat{N_2}=2\overline{X}-1$, où $\overline{X}$ représente la moyenne de notre échantillon. Rappelons que pour $k$ données discrètes, la moyenne se calcule de la façon suivante:
-\begin{align}
-\overline{X} &= \dfrac{X_{(1)}+X_{(2)}+\ldots +X_{(k-1)}+X_{(k)}}{k}
-\label{eq:moyenne}
-\end{align}
-
-En utlisant les mesures du tableau \ref{tab:mesures_stat} et l'équation \ref{eq:moyenne}, nous obtenons:
 \begin{align*}
-E\lr{\widehat{N_2}} &= 2E\lr{\overline{X}}-1 \\
-&= 2E\lr{\dfrac{X_{(1)}+X_{(2)}+\ldots +X_{(n-1)}+X_{(n)}}{n}}-1 \\
-&= 
+\overline{X} &= \dfrac{X_{(1)}+X_{(2)}+\ldots +X_{(k-1)}+X_{(k)}}{k}
 \end{align*}
+En effectuant les calculs appropriés pour l'espérance et la variance, nous obtenons les résultats du tableau \ref{tab:estimateur_n2}.
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$i$ & $\widehat{N_i}$ & $\esp\lr{\widehat{N_i}}$ & $\var\lr{\widehat{N_i}}$ \\
+\hline
+\hline
+2 & $2\overline{X}-1$ & $N$ & $\frac{n+2}{3n}\frac{(N-n)(N+1)}{n+2}$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{tab:estimateur_n2} {L'espérance et la variance de l'estimateur $\widehat{N_2}$.} }
+\end{table}
 
-Malheureusement, nos deux estimés $E\lr{\widehat{N_1}}$ et $E\lr{\widehat{N_2}}$ présentent un problème. Les valeurs de ces deux estimateurs peuvent être plus petites que le plus grand entier dans notre échantillon, c'est-à-dire $X_{(n)}$. Il est bien sûr impossible que la valeur $N$ que nous cherchons soit plus petite que la plus grande valeur de notre échantillon.
+Malheureusement, nos deux estimés $\widehat{N_1}$ et $\widehat{N_2}$ présentent un problème. Les valeurs de ces deux estimateurs peuvent être plus petites que le plus grand entier dans notre échantillon, c'est-à-dire $X_{(n)}$. Il est bien sûr impossible que la valeur $N$ que nous cherchons soit plus petite que la plus grande valeur de notre échantillon.
 
-Pour vous convaincre, étudions l'échantillon de taille $n=3$ suivant, tel que $X_1=2$, $X_2=10$ et $X_3=3$. Dans cette situation, la médiane de l'échantillon est 3 et la moyenne est 5. Nous obtenons donc:
-
+Pour vous convaincre, étudions l'échantillon de taille $n=5$ suivant, tel que $X_1=2$, $X_2=10$, $X_3=3$, $X_4=1$ et $X_5=4$. Dans cette situation, la médiane de l'échantillon est 3 et la moyenne est 5. Nous obtenons donc:
 $$\widehat{N_1}=2\widetilde{X}-1=5 \qquad \text{et} \qquad \widehat{N_2}=2\overline{X}-1=9 $$
-
 Malheureusement, nous savons que $N$ est supérieur ou égal à 10, le maximum de notre échantillon. Ces deux estimateurs ne sont donc pas adéquats, nous devrons en trouver d'autres.
 
 ### Deux autres estimés
 
 Nous voulons maintenant trouver d'autres estimés qui sont toujours supérieurs ou égaux au plus grand entier de notre échantillon. Par symétrie, nous pouvons supposer que le nombre de numéros de série non-observés au-dessus de $X_{(n)}$ soit le même que le nombre de numéros de série non-observés en-dessous de $X_{(1)}$. Nous avons donc:
-
 \begin{align*}
 N-X_{(n)} &= X_{(1)}-1 \\
 \widehat{N_3} &= X_{(n)}+X_{(1)}-1
 \end{align*}
-
-Si nous continuons le raisonnement précédent, il apparaît raisonnable de poser le nombre de numéros de série non-observés au-dessus de $X_{(n)}$ comme étant la moyenne du:
+En effectuant les calculs appropriés pour l'espérance et la variance, nous obtenons les résultats du tableau \ref{tab:estimateur_n3}.
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$i$ & $\widehat{N_i}$ & $\esp\lr{\widehat{N_i}}$ & $\var\lr{\widehat{N_i}}$ \\
+\hline
+\hline
+3 & $X_{(n)}+X_{(1)}-1$ & $N$ & $\frac{2}{n+1}\frac{(N-n)(N+1)}{n+2}$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{tab:estimateur_n3} {L'espérance et la variance de l'estimateur $\widehat{N_3}$.} }
+\end{table}
+Nous pouvons continuer le raisonnement précédent. En effet, il apparaît raisonnable de poser le nombre de numéros de série non-observés au-dessus de $X_{(n)}$ comme étant la moyenne du:
 
 - nombre de numéros de série non-observés en-dessous de $X_{(1)}$;
 
@@ -229,13 +236,37 @@ Si nous continuons le raisonnement précédent, il apparaît raisonnable de pose
 
 - nombre de numéros de série non-observés entre $X_{(n-1)}$ et $X_{(n)}$.
 
-Nous avons donc que $N-X_{(n)}$ est égal à:
-
+Nous avons donc que le nombre de numéros de série non-observés au-dessus de $X_{(n)}$, c'est-à-dire $N-X_{(n)}$ est égal à:
 \begin{align*}
 N-X_{(n)} &= \frac{1}{n}\left[ (X_{(1)}-1)+(X_{(2)}-X_{(1)}-1)+(X_{(3)}-X_{(2)}-1)+\ldots+(X_{(n)}-X_{(n-1)}-1) \right] \\
 &= \frac{X_{(n)}}{n}-1 \\
-\widehat{N_4} &= \left( \frac{n+1}{n}\right) X_{(n)}-1
+\widehat{N_4} &= \lr{\frac{n+1}{n}} X_{(n)}-1
 \end{align*}
+En effectuant les calculs appropriés pour l'espérance et la variance, nous obtenons les résultats du tableau \ref{tab:estimateur_n4}.
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$i$ & $\widehat{N_i}$ & $\esp\lr{\widehat{N_i}}$ & $\var\lr{\widehat{N_i}}$ \\
+\hline
+\hline
+4 & $\lr{\frac{n+1}{n}} X_{(n)}-1$ & $N$ & $\frac{1}{n}\frac{(N-n)(N+1)}{n+2}$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{tab:estimateur_n4} {L'espérance et la variance de l'estimateur $\widehat{N_4}$.} }
+\end{table}
+Bien que la démonstration des résultats présentés aux tableaux \ref{tab:estimateur_n1}, \ref{tab:estimateur_n2}, \ref{tab:estimateur_n3} et \ref{tab:estimateur_n4} ne soit pas présentée, nous pouvons remarquer les résultats suivants:
+
+- Dans le cas où $n=1$, la variance des quatre estimateurs est la même. 
+
+- Dans le cas où la taille de notre échantillon est la même que celle de notre population, c'est-à-dire $n=N$, les variances de nos quatre estimateurs sont nulles.
+
+- Les variances de nos estimateurs diminuent lorsque $i$ augmente, ce qui indique que $\widehat{N_4}$  est l'estimateur ayant la variance la plus petite.
+
+- Il est possible d'utiliser le théorème de Lehmann-Scheffé pour démontrer que $\widehat{N_4}$ est l'estimateur non-biaisé ayant la plus petite variance.
+
+La lectrice ou le lecteur intéressé pourront utiliser les idées présentées à l'annexe \ref{calculs_estimateurs} pour démontrer les résultats des tableaux \ref{tab:estimateur_n1}, \ref{tab:estimateur_n2}, \ref{tab:estimateur_n3} et \ref{tab:estimateur_n4}.
 
 ## La situation où $s$ est **connu** mais différent de $0$ et $N$ est **inconnu**
 
@@ -243,159 +274,191 @@ Supposons que nous avons une population d'objets numérotés de la façon suivan
 
 Nous pouvons résoudre ce problème en utilisant les estimés précédents et en soustrayant la valeur $s$ aux numéros de série obtenus.
 
-Par exemple, si nous avons une population où les numéros de séries débutent à 500 et nous obtenons l'échantillon suivant:
-
-```{r, echo = FALSE}
-ech = sample(500:1000, 5)
-ech
-```
-
-Pour estimer la valeur de $N$, nous soustrayons $499$ à notre échantillon et nous utilisons notre estimé $\hat{N_4}$. Nous avons donc:
-
-```{r}
-ech-499
-N4(ech-499)
-```
-
---
-
-La population est en fait de taille 500.
-
 ## La situation où $s$ est **inconnu** et $N$ est **inconnu**
 
-Supposons que nous avons une population d'objets numérotés de la façon suivante : $s+1$, $s+2$, $s+3$, ... , $s+N$, où $N$ est inconnu mais $s$ est **inconnu**.
+Supposons que nous avons une population d'objets numérotés de la façon suivante : $s+1$, $s+2$, $s+3$, ... , $s+N$, où $N$ est inconnu mais $s$ est lui aussi **inconnu**. Cette situation était celle des numéros de séries sur les boîtes de transmissions des chars d'assaut *Panther V*, comme présenté en \cite{Ruggles1947}. Nous avons trouvé à l'annexe \ref{calculs_proba} les espérances des valeurs $X_{(A)}$ de notre échantillon, c'est-à-dire $\esp (X_{(A)})=\frac{A(N+1)}{n+1}$.
 
-Nous allons étudier la différence $d$ entre le plus grand $(X_{(n)})$ et le plus petit $(X_{(1)})$ des numéros de série, que nous notons $d$.
-
+Nous allons étudier l'espérance de la différence $d$ entre le plus grand $(X_{(n)})$ et le plus petit $(X_{(1)})$ des numéros de série de notre échantillon. Ce résultat reste vrai même dans la situation où $s$ est inconnu. Nous avons donc:
 \begin{align*}
-X_{(n)}-X_{(1)} &= E(X_{(n)}-X_{(1)}) \\
-&= \dfrac{n\cdot(N+1)}{n+1}-\dfrac{1\cdot(N+1)}{n+1} \\
+\esp(X_{(n)}-X_{(1)}) &= \esp(X_{(n)})-\esp(X_{(1)}) \\
+X_{(n)}-X_{(1)} &= \dfrac{n\cdot(N+1)}{n+1}-\dfrac{1\cdot(N+1)}{n+1} \\
 &= \dfrac{(n-1)(N+1)}{n+1} \\
 N+1 &= \dfrac{(X_{(n)}-X_{(1)})(n+1)}{n-1} \\
 \widehat{N_5} &= \dfrac{(X_{(n)}-X_{(1)})(n+1)}{n-1}-1
 \end{align*}
+Il est donc possible d'estimer la taille de la population, même si $s$ et $N$ sont inconnus. En effectuant les calculs appropriés pour l'espérance et la variance, nous obtenons les résultats du tableau \ref{tab:estimateur_n5}.
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$i$ & $\widehat{N_i}$ & $\esp\lr{\widehat{N_i}}$ & $\var\lr{\widehat{N_i}}$ \\
+\hline
+\hline
+5 & $\dfrac{(X_{(n)}-X_{(1)})(n+1)}{n-1}-1$ & $N$ & $\frac{2}{n-1}\frac{(N-n)(N+1)}{n+2}$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{tab:estimateur_n5} {L'espérance et la variance de l'estimateur $\widehat{N_5}$.} }
+\end{table}
 
 # Quelques simulations \label{simul}
 
-Pour visualiser les différences entre les quatre estimateurs trouvés, nous allons effectuer des simulations avec le logiciel `R`. Pour nos simulations, nous utiliserons une population de taille $N=500$. Nous pouvons créer cette population dans `R` de la façon suivante:
-```{r,label="creation-pop"}
+Pour visualiser les différences entre les cinq estimateurs trouvés, nous allons effectuer des simulations avec le logiciel `R`. Les commandes `R` utilisées seront précédées du symbole `>`, qui représente l'invite de commandes (*prompt* en anglais). Ce symbole indique que l'interface de `R` est prête à recevoir une commande. 
+
+Pour nos simulations, nous utiliserons une population de taille $N=500$. Nous pouvons créer cette population dans `R` de la façon suivante:
+```{r,label="creation-pop", prompt=T}
 pop <- c(1:500)
 ```
-Pour modéliser le problème qui nous intéresse, nous voulons piger, **sans remise**, un échantillon de notre population. Pour cette première simulation, nous pigerons un échantillon de taille $n=5$.
-```{r,label="ech-remise-5"}
+Pour modéliser le problème qui nous intéresse, nous voulons piger, sans remise (d'où l'ajout de l'option `replace=FALSE`), un échantillon de notre population. Pour cette première simulation, nous pigerons un échantillon de taille $n=5$.
+```{r,label="ech-remise-5", prompt=T}
 ech <- sample(pop, 5, replace = FALSE)
 ech
 ```
-Le minimum de notre échantillon est `r min(ech)` et le maximum est `r max(ech)`. Nous pouvons calculer les quatres estimés associés à l'échantillon précédent:
-```{r,label="calcul-estimes-1",collapse=TRUE}
+Le minimum de notre échantillon est `r min(ech)` et le maximum est `r max(ech)`. Nous pouvons calculer les cinq estimateurs associés à l'échantillon précédent:
+```{r,label="calcul-estimes-1",collapse=TRUE, prompt=T}
 N1(ech)
 N2(ech)
 N3(ech)
 N4(ech)
+N5(ech)
 ```
-Pour bien visualiser les différences entre nos quatre estimateurs, nous effectuerons trois simulations distinctes. La figure \ref{fig:ech-taille-5} représente une simulation de 5 000 échantillons de taille 5 à partir d'une population de taille 500.
+À partir d'ici, pour ne pas alourdir le texte, nous omettrons le code `R` utilisé pour produire les simulations qui suivent. Vous trouverez par contre à l'annexe \ref{code} le code complet utilisé.
 
-```{r ech-taille-5, echo = FALSE, fig.cap="Représentation sous forme d'histogrammes de 5 000 échantillons de taille 5, pour les quatres estimateurs", out.width="90%", fig.align='center'}
+Pour bien visualiser les différences entre nos cinq estimateurs, nous effectuerons quatre simulations distinctes. La figure \ref{fig:fig-ech} représente une simulation de 5 000 échantillons de tailles 5, 10, 25 et 50, à partir d'une population de taille 500. Nous calculons les mesures de nos cinq estimateurs pour ces 5 000 échantillons.
+```{r creation-ech, echo=FALSE}
 N <- 500
 n <- 5
 iter <- 5000
 pop <- c(1:N)
 
-ech5 <- tibble(id = map(1:iter, ~sample(pop, n, replace = TRUE)))
+ech5 <- tibble(id = map(1:iter, ~sample(pop, n, replace = FALSE)))
 ech5 <- ech5 %>%
-  mutate(N1 = map_dbl(id, N1)) %>%
-  mutate(N2 = map_dbl(id, N2)) %>%
-  mutate(N3 = map_dbl(id, N3)) %>%
-  mutate(N4 = map_dbl(id, N4)) %>%
-  gather(estimateur, valeur, N1, N2, N3, N4)
+  mutate(N1 = map_dbl(id, N1),
+         N2 = map_dbl(id, N2),
+         N3 = map_dbl(id, N3),
+         N4 = map_dbl(id, N4),
+         N5 = map_dbl(id, N5)) %>%
+  gather(estimateur, valeur, N1, N2, N3, N4, N5)
 
-ggplot(data = ech5, mapping = aes(x = valeur))+
-  geom_histogram(bins = 50, fill = "lightblue", color = "darkblue")+
-  facet_grid(estimateur ~ .)+
-  geom_vline(xintercept=N,linetype=2,color="black")+
-  labs(
-    x = "Estimations",
-    y = "Fréquence"
-  )
-```
+n <- 10
+ech10 <- tibble(id = map(1:iter, ~sample(pop, n, replace = FALSE)))
+ech10 <- ech10 %>%
+  mutate(N1 = map_dbl(id, N1),
+         N2 = map_dbl(id, N2),
+         N3 = map_dbl(id, N3),
+         N4 = map_dbl(id, N4),
+         N5 = map_dbl(id, N5)) %>%
+  gather(estimateur, valeur, N1, N2, N3, N4, N5)
 
-La figure \ref{fig:ech-taille-25} représente une simulation de 5 000 échantillons de taille 25 à partir d'une population de taille 500.
-
-```{r ech-taille-25, echo = FALSE, fig.cap="Représentation sous forme d'histogrammes de 5 000 échantillons de taille 25, pour les quatres estimateurs", out.width="90%", fig.align='center'}
-N <- 500
 n <- 25
-iter <- 5000
-pop <- c(1:N)
-
-ech25 <- tibble(id = map(1:iter, ~sample(pop, n, replace = TRUE)))
+ech25 <- tibble(id = map(1:iter, ~sample(pop, n, replace = FALSE)))
 ech25 <- ech25 %>%
-  mutate(N1 = map_dbl(id, N1)) %>%
-  mutate(N2 = map_dbl(id, N2)) %>%
-  mutate(N3 = map_dbl(id, N3)) %>%
-  mutate(N4 = map_dbl(id, N4)) %>%
-  gather(estimateur, valeur, N1, N2, N3, N4)
+  mutate(N1 = map_dbl(id, N1),
+         N2 = map_dbl(id, N2),
+         N3 = map_dbl(id, N3),
+         N4 = map_dbl(id, N4),
+         N5 = map_dbl(id, N5)) %>%
+  gather(estimateur, valeur, N1, N2, N3, N4, N5)
 
-ggplot(data = ech25, mapping = aes(x = valeur))+
-  geom_histogram(bins = 50, fill = "lightblue", color = "darkblue")+
-  facet_grid(estimateur ~ .)+
-  geom_vline(xintercept=N,linetype=2,color="black")+
-  labs(
-    x = "Estimations",
-    y = "Fréquence"
-  )
-```
-
-La figure \ref{fig:ech-taille-50} représente une simulation de 5 000 échantillons de taille 50 à partir d'une population de taille 500.
-
-```{r ech-taille-50, echo = FALSE, fig.cap="Représentation sous forme d'histogrammes de 5 000 échantillons de taille 50, pour les quatres estimateurs", out.width="90%", fig.align='center'}
-N <- 500
 n <- 50
-iter <- 5000
-pop <- c(1:N)
-
-ech50 <- tibble(id = map(1:iter, ~sample(pop, n, replace = TRUE)))
+ech50 <- tibble(id = map(1:iter, ~sample(pop, n, replace = FALSE)))
 ech50 <- ech50 %>%
-  mutate(N1 = map_dbl(id, N1)) %>%
-  mutate(N2 = map_dbl(id, N2)) %>%
-  mutate(N3 = map_dbl(id, N3)) %>%
-  mutate(N4 = map_dbl(id, N4)) %>%
-  gather(estimateur, valeur, N1, N2, N3, N4)
+  mutate(N1 = map_dbl(id, N1),
+         N2 = map_dbl(id, N2),
+         N3 = map_dbl(id, N3),
+         N4 = map_dbl(id, N4), 
+         N5 = map_dbl(id, N5)) %>%
+  gather(estimateur, valeur, N1, N2, N3, N4, N5)
+```
 
-ggplot(data = ech50, mapping = aes(x = valeur))+
+```{r creation-graphes, echo=FALSE}
+graphe_ech5 <- ggplot(data = ech5, mapping = aes(x = valeur))+
   geom_histogram(bins = 50, fill = "lightblue", color = "darkblue")+
   facet_grid(estimateur ~ .)+
   geom_vline(xintercept=N,linetype=2,color="black")+
   labs(
-    x = "Estimations",
+    x = "Estimations avec échantillons de taille 5",
+    y = "Fréquence"
+  )
+
+graphe_ech10 <- ggplot(data = ech10, mapping = aes(x = valeur))+
+  geom_histogram(bins = 50, fill = "lightblue", color = "darkblue")+
+  facet_grid(estimateur ~ .)+
+  geom_vline(xintercept=N,linetype=2,color="black")+
+  labs(
+    x = "Estimations avec échantillons de taille 10",
+    y = "Fréquence"
+  )
+
+graphe_ech25 <- ggplot(data = ech25, mapping = aes(x = valeur))+
+  geom_histogram(bins = 50, fill = "lightblue", color = "darkblue")+
+  facet_grid(estimateur ~ .)+
+  geom_vline(xintercept=N,linetype=2,color="black")+
+  labs(
+    x = "Estimations avec échantillons de taille 25",
+    y = "Fréquence"
+  )
+
+graphe_ech50 <- ggplot(data = ech50, mapping = aes(x = valeur))+
+  geom_histogram(bins = 50, fill = "lightblue", color = "darkblue")+
+  facet_grid(estimateur ~ .)+
+  geom_vline(xintercept=N,linetype=2,color="black")+
+  labs(
+    x = "Estimations avec échantillons de taille 50",
     y = "Fréquence"
   )
 ```
 
-Nous simulons des populations de tailles 10 à 1 000. Pour chacune d'entre elles, nous choisissons 50 échantillons de taille 5 et nous calculons les quatre estimations.
-
-```{r ech-10-1000, echo = FALSE, fig.cap="Représentation de 50 échantillons de taille 5 pigés pour des populations de tailles 10 à 1 000, pour les quatre estimateurs", out.width="90%", fig.align='center'}
+```{r fig-ech,echo=FALSE,fig.show='hold',out.width='48%',fig.cap="Représentation sous forme d'histogrammes de 5 000 échantillons de taille 5 (en haut à gauche), de taille 10 (en haut à droite), de taille 25 (en bas à gauche) et de taille 50 (en bas à droite) pour les cinq estimateurs.",fig.align="center",fig.pos="!htb"}
+graphe_ech5
+graphe_ech10
+graphe_ech25
+graphe_ech50
+```
+Pour représenter différemment les résultats de nos cinq estimateurs, nous ferons une dernière simulation. Nous allons faire varier la taille de la population de 10 à 1000, par bonds de 5. Pour chacunes de ces populations, nous choisissons un échantillon de taille 5 et nous calculons la valeur des cinq estimateurs. Pour être en mesure de bien visualiser les résultats, nous allons ajouter une petite variation aléatoire à la position des points. De cette façon, nous verrons mieux la dispersion de nos données. La figure \ref{fig:ech-10-1000} représente nos résultats obtenus à partir de nos échantillons pour les cinq estimateurs. La droite en rouge représente la taille véritable de la population.
+```{r ech-10-1000, echo = FALSE, fig.cap="Représentation de 50 échantillons de taille 5 pigés pour des populations de tailles 10 à 1 000, pour les cinq estimateurs. La droite en rouge représente la taille véritable de la population.", out.width="90%", fig.align='center',fig.pos="!htb"}
 ech1000 <- tibble(
   pop = rep(seq(10, 1000, 5), 50),
   id = map(pop, ~sample(.x, 5, replace = FALSE))
   )
 ech1000 <- ech1000 %>%
-  mutate(N1 = map_dbl(id, N1)) %>%
-  mutate(N2 = map_dbl(id, N2)) %>%
-  mutate(N3 = map_dbl(id, N3)) %>%
-  mutate(N4 = map_dbl(id, N4)) %>%
-  gather(estimateur, valeur, N1, N2, N3, N4) %>%
+  mutate(N1 = map_dbl(id, N1),
+         N2 = map_dbl(id, N2),
+         N3 = map_dbl(id, N3),
+         N4 = map_dbl(id, N4), 
+         N5 = map_dbl(id, N5)) %>%
+  gather(estimateur, valeur, N1, N2, N3, N4, N5) %>%
   select(-id)
 
-ggplot(data = ech1000, aes(x = pop, y = valeur, color = estimateur))+
-  geom_jitter(alpha=0.5)+
+ggplot(data = ech1000, aes(x = pop, y = valeur, color=estimateur))+
+  geom_jitter(alpha=0.1)+
   labs(
     x = "Nombre de chars produits",
     y = "Estimation"
   )+
   geom_abline(intercept = 0, slope=1, color = "red") +
-  scale_colour_discrete(name="Estimateur")
+  facet_wrap(estimateur ~ .) + 
+  theme(legend.position="none")
 ```
 
+# Une application \label{application}
+
+Nous trouvons en \cite{Goodman1954} une application concrète de l'utilisation de l'utilisation de nos estimateurs. On nous indique que le département des sciences sociales de l'Université de Chicago utilisaient de l'équipement (bureaux, chaises, etc.) sur lesquels étaient placés des numéros de série.
+```{r equipement-chicago, echo=F}
+equip = c(83, 135, 274, 380, 668, 895, 955, 964, 1113, 
+          1174, 1210, 1344, 1387, 1414, 1610, 1668, 1689, 
+          1756, 1865, 1874, 1880, 1936, 2005, 2006, 2065, 
+          2157, 2220, 2224, 2396, 2543, 2787)
+data <- tibble(
+  id = 1:length(equip),
+  equip = equip
+)
+```
+Les numéros de série de `r length(equip)` pièces d'équipement ont été observées. Les `r length(equip)` numéros de série étaient:
+```{r, echo=F}
+equip
+```
+Nous invitons les lectrices et les lecteurs intéressés à utiliser les cinq estimateurs présentés dans cet article pour estimer le nombre d'équipements achetés par l'Université de Chicago. Le minimum de l'échantillon est `r min(equip)` et le maximum de l'échantillon est `r max(equip)`. Les réponses des cinq estimateurs ainsi que la véritable valeur du nombre d'équipements seront donnés à l'annexe \ref{rep-application}.
 
 \appendix
 
@@ -500,5 +563,24 @@ Puisque $n$ est pair, la médiane est donnée par $\frac{1}{2}\lr{X_{\lr{n/2}}+X
 &= \frac{(n/2)(n+1-n/2)(N+1)(N-n)}{(n+1)^2(n+2)}+\frac{(n/2+1)(n+1-(n/2+1))(N+1)(N-n)}{(n+1)^2(n+2)}+ \\
 &\qquad\qquad\qquad \ldots+2\frac{(n/2)(n+1-(n/2+1))(N+1)(N-n)}{(n+1)^2(n+2)} \\
 &= (n^2+n)\frac{(N+1)(N-n)}{(n+1)^2(n+2)} \\
-&= \frac{n}{n+1}\frac{(N+1)(N-n)}{(n+1)(n+2)}
+&= \frac{n}{n+1}\frac{(N+1)(N-n)}{(n+2)}
 \end{align*}
+
+# Réponses de l'exercice de la section \ref{application} \label{rep-application}
+
+Les valeurs des cinq estimateurs  de l'application de la section \ref{application} sont:
+```{r, collapse=T}
+N1(equip)
+N2(equip)
+N3(equip)
+N4(equip)
+N5(equip)
+```
+Les équipement ayant été achetés entre 1928 et 1934, l'auteur de \cite{Goodman1954} indique qu'il lui a été particulièrement difficile d'obtenir la véritable valeur du nombre d'équipements achetés. Après plusieurs jours et de nombreuses questions aux personnes concernés, les archives pertinentes ont été trouvées et le nombre $N$ de pièces d'équipements était de $2885$.
+
+# Code `R` \label{code}
+
+Pour la lectrice ou le lecteur intéressé, vous trouverez le code `R` complet qui a servi à produire les diverses figures de cet article.
+
+```{r ref.label=knitr::all_labels(), echo = T, eval = F}
+```
