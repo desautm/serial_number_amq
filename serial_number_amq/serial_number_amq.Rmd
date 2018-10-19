@@ -66,8 +66,6 @@ N5 <- function(ech){
 
 # Introduction \label{intro}
 
-TODO [https://rstudio-pubs-static.s3.amazonaws.com/59464_ce1bbf886d0841cd8ecc46c1852b352e.html](https://rstudio-pubs-static.s3.amazonaws.com/59464_ce1bbf886d0841cd8ecc46c1852b352e.html)
-
 Au début de l'année 1943, la *Economic Warfare Division* de l'ambassade américaine à Londres commença à analyser divers marquages obtenus à partir d'équipements allemands capturés ou détruits sur le front. Plus particulièrement, les numéros de séries ont été utilisés pour estimer la force de production de la machine de guerre allemande. L'article *An Empirical Approach to Economic Intelligence in World War II* \cite{Ruggles1947} explique en grand détail le développement des techniques utilisés pour faire cette estimation, les problèmes rencontrés et les solutions qui y ont remédiés. Nous invitons le lecteur intéressé par l'aspect pratico-pratique de ces techniques à lire cet article.
 
 Le problème du char d'assaut allemand est nommé d'après son application par les alliés à l'estimation du nombre de chars d'assaut produits par l'Allemagne. Mais en fait, ce problème regroupe l'estimation du nombre de nombreux produits de guerre allemands, par exemple les camions, les fusils, les bombes et les fusées, voir \cite{Ruggles1947}. En particulier, nous présentons au tableau \ref{tab:estimation_ruggles} les estimations du nombre de chars d'assaut allemands en comparaison avec l'estimation par les services de renseignements et les archives allemandes, tel que présenté dans \cite{Ruggles1947}.
@@ -409,13 +407,13 @@ graphe_ech50 <- ggplot(data = ech50, mapping = aes(x = valeur))+
   )
 ```
 
-```{r fig-ech,echo=FALSE,fig.show='hold',out.width='48%',fig.cap="Représentation sous forme d'histogrammes de 5 000 échantillons de taille 5 (en haut à gauche), de taille 10 (en haut à droite), de taille 25 (en bas à gauche) et de taille 50 (en bas à droite) pour les cinq estimateurs.",fig.align="center",fig.pos="!htb"}
+```{r fig-ech,echo=FALSE,fig.show='hold',out.width='48%',fig.cap="Représentation sous forme d'histogrammes de 5 000 échantillons de taille 5 (en haut à gauche), de taille 10 (en haut à droite), de taille 25 (en bas à gauche) et de taille 50 (en bas à droite) pour les cinq estimateurs. La ligne pointillée correspond à la taille de la population, c'est-à-dire 500.",fig.align="center",fig.pos="!htb"}
 graphe_ech5
 graphe_ech10
 graphe_ech25
 graphe_ech50
 ```
-Pour représenter différemment les résultats de nos cinq estimateurs, nous ferons une dernière simulation. Nous allons faire varier la taille de la population de 10 à 1000, par bonds de 5. Pour chacunes de ces populations, nous choisissons un échantillon de taille 5 et nous calculons la valeur des cinq estimateurs. Pour être en mesure de bien visualiser les résultats, nous allons ajouter une petite variation aléatoire à la position des points. De cette façon, nous verrons mieux la dispersion de nos données. La figure \ref{fig:ech-10-1000} représente nos résultats obtenus à partir de nos échantillons pour les cinq estimateurs. La droite en rouge représente la taille véritable de la population.
+Pour représenter différemment les résultats de nos cinq estimateurs, nous ferons un autre type de simulation. Nous allons faire varier la taille de la population de 10 à 1000, par bonds de 5. Pour chacunes de ces populations, nous choisissons un échantillon de taille 5 et nous calculons la valeur des cinq estimateurs. Pour être en mesure de bien visualiser les résultats, nous allons ajouter une petite variation aléatoire à la position des points. De cette façon, nous verrons mieux la dispersion de nos données. La figure \ref{fig:ech-10-1000} représente nos résultats obtenus à partir de nos échantillons pour les cinq estimateurs. La droite en rouge représente la taille véritable de la population. Les idées utilisées pour obtenir les graphiques de la figure \ref{fig:ech-10-1000} sont basées sur \cite{Hinno}. 
 ```{r ech-10-1000, echo = FALSE, fig.cap="Représentation de 50 échantillons de taille 5 pigés pour des populations de tailles 10 à 1 000, pour les cinq estimateurs. La droite en rouge représente la taille véritable de la population.", out.width="90%", fig.align='center',fig.pos="!htb"}
 ech1000 <- tibble(
   pop = rep(seq(10, 1000, 5), 50),
@@ -427,8 +425,7 @@ ech1000 <- ech1000 %>%
          N3 = map_dbl(id, N3),
          N4 = map_dbl(id, N4), 
          N5 = map_dbl(id, N5)) %>%
-  gather(estimateur, valeur, N1, N2, N3, N4, N5) %>%
-  select(-id)
+  gather(estimateur, valeur, N1, N2, N3, N4, N5)
 
 ggplot(data = ech1000, aes(x = pop, y = valeur, color=estimateur))+
   geom_jitter(alpha=0.1)+
@@ -440,10 +437,34 @@ ggplot(data = ech1000, aes(x = pop, y = valeur, color=estimateur))+
   facet_wrap(estimateur ~ .) + 
   theme(legend.position="none")
 ```
+Nous allons maintenant partir d'une population de taille 500. Nous ferons varier la taille des échantillons de 1 à 500, par bonds de 1. Pour chacune de ces tailles, nous pigerons 50 échantillons sans remise. Nous représenterons ensuite l'estimation obtenu en fonction de la taille des échantillons. Pour être en mesure de bien visualiser les résultats, nous allons ajouter une petite variation aléatoire à la position des points. La figure \ref{fig:pop-1-500} représente nos résultats obtenus.
+```{r pop-1-500,echo = FALSE, fig.cap="Représentation de 50 échantillons de taille 1 à 500 pigés pour une population de taille 500, pour les cinq estimateurs. La droite en rouge représente la taille véritable de la population.", out.width="90%", fig.align='center',fig.pos="!htb"}
+pop100 <- tibble(
+  ech = rep(seq(1, 500, 1), 50),
+  id = map(ech, ~sample(1:500, .x, replace = FALSE))
+)
+pop100 <- pop100 %>%
+  mutate(N1 = map_dbl(id, N1),
+         N2 = map_dbl(id, N2),
+         N3 = map_dbl(id, N3),
+         N4 = map_dbl(id, N4),
+         N5 = map_dbl(id, N5)) %>%
+  gather(estimateur, valeur, N1, N2, N3, N4, N5)
+
+ggplot(data = pop100, aes(x = ech, y = valeur, color=estimateur))+
+  geom_jitter(alpha=0.1)+
+  labs(
+    x = "Taille de l'échantillon",
+    y = "Estimation"
+  )+
+  geom_abline(intercept = 500, slope=0, color = "red") +
+  facet_wrap(estimateur ~ .) +
+  theme(legend.position="none")
+```
 
 # Une application \label{application}
 
-Nous trouvons en \cite{Goodman1954} une application concrète de l'utilisation de l'utilisation de nos estimateurs. On nous indique que le département des sciences sociales de l'Université de Chicago utilisaient de l'équipement (bureaux, chaises, etc.) sur lesquels étaient placés des numéros de série.
+Nous trouvons en \cite{Goodman1954} une application concrète de l'utilisation de nos estimateurs. On nous indique que le département des sciences sociales de l'Université de Chicago utilisaient de l'équipement (bureaux, chaises, etc.) sur lesquels étaient placés des numéros de série.
 ```{r equipement-chicago, echo=F}
 equip = c(83, 135, 274, 380, 668, 895, 955, 964, 1113, 
           1174, 1210, 1344, 1387, 1414, 1610, 1668, 1689, 
@@ -569,18 +590,18 @@ Puisque $n$ est pair, la médiane est donnée par $\frac{1}{2}\lr{X_{\lr{n/2}}+X
 # Réponses de l'exercice de la section \ref{application} \label{rep-application}
 
 Les valeurs des cinq estimateurs  de l'application de la section \ref{application} sont:
-```{r, collapse=T}
-N1(equip)
-N2(equip)
-N3(equip)
-N4(equip)
-N5(equip)
-```
+\begin{align*}
+\widehat{N_1} &= `r N1(equip)` \\
+\widehat{N_2} &= `r N2(equip)` \\
+\widehat{N_3} &= `r N3(equip)` \\
+\widehat{N_4} &= `r N4(equip)` \\
+\widehat{N_5} &= `r N5(equip)`
+\end{align*}
 Les équipement ayant été achetés entre 1928 et 1934, l'auteur de \cite{Goodman1954} indique qu'il lui a été particulièrement difficile d'obtenir la véritable valeur du nombre d'équipements achetés. Après plusieurs jours et de nombreuses questions aux personnes concernés, les archives pertinentes ont été trouvées et le nombre $N$ de pièces d'équipements était de $2885$.
 
 # Code `R` \label{code}
 
-Pour la lectrice ou le lecteur intéressé, vous trouverez le code `R` complet qui a servi à produire les diverses figures de cet article.
+Pour la lectrice ou le lecteur intéressé, vous trouverez ci-dessous le code `R` complet qui a servi à produire les diverses figures de cet article.
 
 ```{r ref.label=knitr::all_labels(), echo = T, eval = F}
 ```
