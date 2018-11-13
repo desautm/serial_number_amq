@@ -101,9 +101,9 @@ Pour calculer les diverses mesures statistiques dont nous aurons besoin, nous al
 $$X_{(1)} <  X_{(2)} < X_{(3)} < \ldots < X_{(n-1)} < X_{(n)}$$
 où les valeurs $X_{(1)}$, $X_{(2)}$, $X_{(3)}$, ..., $X_{(n)}$ sont les valeurs ordonnées de l'échantillon $X_1$, $X_2$, $X_3$, ..., $X_n$. En particulier, $X_{(1)}$ est la plus petite valeur de l'échantillon et $X_{(n)}$ est la plus grande.
 
-À partir de nos définitions précédentes, il est possible de calculer l'espérance de la valeur $X_{(A)}$ ($\esp (X_{(A)})$), la variance de la valeur $X_{(A)}$ ($\var(X_{(A)})$) et enfin la covariance des valeurs $X_{(A)}$ et $X_{(B)}$ ($\cov(X_{(A)},X_{(B)})$). Nous utiliserons ces mesures statistiques pour calculer l'espérance et la variance des estimateurs que nous construirons. Malheureusement, retrouver ces mesures statistiques nécessite des identités combinatoires et de fastidieux calculs. Pour ne pas alourdir le texte, nous donnerons ces mesures sans démonstration. Par contre, pour la lectrice ou le lecteur intéressé, vous pourrez trouver à l'annexe \ref{calculs_proba} une idée de la technique utilisée ainsi que la démonstration de $\esp(X_{(A)})$.
+À partir de nos définitions précédentes, il est possible de calculer l'espérance de la valeur $X_{(A)}$ ($\esp (X_{(A)})$), la variance de la valeur $X_{(A)}$ ($\var(X_{(A)})$) et enfin la covariance des valeurs $X_{(A)}$ et $X_{(B)}$ ($\cov(X_{(A)},X_{(B)})$). Nous utiliserons ces mesures statistiques pour calculer l'espérance et la variance des estimateurs que nous construirons. Malheureusement, retrouver ces mesures statistiques nécessite des identités combinatoires et de fastidieux calculs. Pour ne pas alourdir le texte, nous donnerons ces mesures sans démonstration. 
 
-Nous utiliserons donc, sans démonstration, les trois mesures du tableau \ref{tab:mesures_stat}. La lectrice ou le lecteur curieux pourront aller aux annexes \ref{rappel_esperance} et \ref{calculs_proba} pour quelques rappels sur les notions d'espérance, de variance et de covariance ainsi que la démonstration de $\esp(X_{(A)})$. Les démonstrations de $\var(X_{(A)})$ et $\cov(X_{(A)},X_{(B)})$ se font d'une manière similaire.
+Par contre, pour la lectrice ou le lecteur intéressé, vous pourrez trouver aux annexes \ref{rappel_esperance} et \ref{calculs_proba} quelques rappels sur les notions d'espérance, de variance et de covariance ainsi que la démonstration de $\esp(X_{(A)})$. Les démonstrations de $\var(X_{(A)})$ et $\cov(X_{(A)},X_{(B)})$ se font d'une manière similaire. Nous utiliserons donc, sans démonstration, les trois mesures du tableau \ref{tab:mesures_stat}.
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{|r|c|}
@@ -459,7 +459,7 @@ ech1000 <- ech1000 %>%
 ggplot(data = ech1000, aes(x = pop, y = valeur, color=estimateur))+
   geom_jitter(alpha=0.1)+
   labs(
-    x = "Nombre de chars produits",
+    x = "Taille de l'échantillon",
     y = "Estimation"
   )+
   geom_abline(intercept = 0, slope=1, color = "red") +
@@ -504,11 +504,15 @@ data <- tibble(
   equip = equip
 )
 ```
-Les numéros de série de `r length(equip)` pièces d'équipement ont été observées. Les `r length(equip)` numéros de série étaient:
+Les numéros de série de `r length(equip)` pièces d'équipement ont été observés. Les `r length(equip)` numéros de série étaient:
 ```{r, echo=F}
 equip
 ```
 Nous invitons les lectrices et les lecteurs intéressés à utiliser les cinq estimateurs présentés dans cet article pour estimer le nombre d'équipements achetés par l'Université de Chicago. Le minimum de l'échantillon est `r min(equip)` et le maximum de l'échantillon est `r max(equip)`. Les réponses des cinq estimateurs ainsi que la véritable valeur du nombre d'équipements seront donnés à l'annexe \ref{rep-application}.
+
+# Conclusion \label{conclusion}
+
+TODO...
 
 \appendix
 
@@ -626,11 +630,11 @@ Les valeurs des cinq estimateurs  de l'application de la section \ref{applicatio
 \widehat{N_4} &= `r N4(equip)` \\
 \widehat{N_5} &= `r N5(equip)`
 \end{align*}
-Les équipement ayant été achetés entre 1928 et 1934, l'auteur de \cite{Goodman1954} indique qu'il lui a été particulièrement difficile d'obtenir la véritable valeur du nombre d'équipements achetés. Après plusieurs jours et de nombreuses questions aux personnes concernés, les archives pertinentes ont été trouvées et le nombre $N$ de pièces d'équipements était de $2885$.
+Les équipements ayant été achetés entre 1928 et 1934, l'auteur de \cite{Goodman1954} indique qu'il lui a été particulièrement difficile d'obtenir la véritable valeur du nombre d'équipements achetés. Après plusieurs jours et de nombreuses questions aux personnes concernés, les archives pertinentes ont été trouvées et le nombre $N$ de pièces d'équipements était de $2885$.
 
 # Code `R` \label{code}
 
-Pour la lectrice ou le lecteur intéressé, vous trouverez ci-dessous le code `R` complet qui a servi à produire les diverses figures de cet article.
+Pour la lectrice ou le lecteur intéressé, vous trouverez ci-dessous le code `R` complet qui a servi à produire les diverses figures de cet article. Vous trouverez également le code complet de cet article à l'adresse [https://github.com/desautm/serial_number_amq](https://github.com/desautm/serial_number_amq).
 
 ```{r ref.label=knitr::all_labels(), echo = T, eval = F}
 ```

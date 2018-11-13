@@ -385,18 +385,15 @@ utiliserons ces mesures statistiques pour calculer l'espérance et la
 variance des estimateurs que nous construirons. Malheureusement,
 retrouver ces mesures statistiques nécessite des identités combinatoires
 et de fastidieux calculs. Pour ne pas alourdir le texte, nous donnerons
-ces mesures sans démonstration. Par contre, pour la lectrice ou le
-lecteur intéressé, vous pourrez trouver à l'annexe \ref{calculs_proba}
-une idée de la technique utilisée ainsi que la démonstration de
-\(\esp(X_{(A)})\).
+ces mesures sans démonstration.
 
-Nous utiliserons donc, sans démonstration, les trois mesures du tableau
-\ref{tab:mesures_stat}. La lectrice ou le lecteur curieux pourront aller
-aux annexes \ref{rappel_esperance} et \ref{calculs_proba} pour quelques
-rappels sur les notions d'espérance, de variance et de covariance ainsi
-que la démonstration de \(\esp(X_{(A)})\). Les démonstrations de
-\(\var(X_{(A)})\) et \(\cov(X_{(A)},X_{(B)})\) se font d'une manière
-similaire.
+Par contre, pour la lectrice ou le lecteur intéressé, vous pourrez
+trouver aux annexes \ref{rappel_esperance} et \ref{calculs_proba}
+quelques rappels sur les notions d'espérance, de variance et de
+covariance ainsi que la démonstration de \(\esp(X_{(A)})\). Les
+démonstrations de \(\var(X_{(A)})\) et \(\cov(X_{(A)},X_{(B)})\) se font
+d'une manière similaire. Nous utiliserons donc, sans démonstration, les
+trois mesures du tableau \ref{tab:mesures_stat}.
 
 \begin{table}[ht]
 \begin{center}
@@ -734,7 +731,9 @@ Nous remarquons que les facteurs multiplicatifs des estimateurs
 \(\widehat{N_3}\), \(\widehat{N_4}\) et \(\widehat{N_5}\) s'approchent
 de \(0\) sensiblement à la même vitesse alors que celui pour
 \(\widehat{N_1}\) s'approche de \(1\) et celui de \(\widehat{N_2}\)
-s'approche de \(0\) beaucoup plus lentement.
+s'approche de \(1/3\). Nous pouvons donc supposer que les estimateurs
+\(\widehat{N_3}\), \(\widehat{N_4}\) et \(\widehat{N_5}\) sont meilleurs
+que les deux premiers.
 
 \hypertarget{quelques-simulations}{%
 \section{\texorpdfstring{Quelques simulations
@@ -854,7 +853,7 @@ sciences sociales de l'Université de Chicago utilisaient de l'équipement
 (bureaux, chaises, etc.) sur lesquels étaient placés des numéros de
 série.
 
-Les numéros de série de 31 pièces d'équipement ont été observées. Les 31
+Les numéros de série de 31 pièces d'équipement ont été observés. Les 31
 numéros de série étaient:
 
 \begin{verbatim}
@@ -869,6 +868,12 @@ d'équipements achetés par l'Université de Chicago. Le minimum de
 l'échantillon est 83 et le maximum de l'échantillon est 2787. Les
 réponses des cinq estimateurs ainsi que la véritable valeur du nombre
 d'équipements seront donnés à l'annexe \ref{rep-application}.
+
+\hypertarget{conclusion}{%
+\section{\texorpdfstring{Conclusion
+\label{conclusion}}{Conclusion }}\label{conclusion}}
+
+TODO\ldots{}
 
 \appendix
 
@@ -1030,7 +1035,7 @@ Les valeurs des cinq estimateurs de l'application de la section
 \widehat{N_3} &= 2869 \\
 \widehat{N_4} &= 2876 \\
 \widehat{N_5} &= 2883
-\end{align*} Les équipement ayant été achetés entre 1928 et 1934,
+\end{align*} Les équipements ayant été achetés entre 1928 et 1934,
 l'auteur de \cite{Goodman1954} indique qu'il lui a été particulièrement
 difficile d'obtenir la véritable valeur du nombre d'équipements achetés.
 Après plusieurs jours et de nombreuses questions aux personnes
@@ -1043,7 +1048,8 @@ de pièces d'équipements était de \(2885\).
 
 Pour la lectrice ou le lecteur intéressé, vous trouverez ci-dessous le
 code \texttt{R} complet qui a servi à produire les diverses figures de
-cet article.
+cet article. Vous trouverez également le code complet de cet article à
+l'adresse \url{https://github.com/desautm/serial_number_amq}.
 
 \begin{verbatim}
 knitr::opts_chunk$set(cache = TRUE)
@@ -1220,7 +1226,7 @@ ech1000 <- ech1000 %>%
 ggplot(data = ech1000, aes(x = pop, y = valeur, color=estimateur))+
   geom_jitter(alpha=0.1)+
   labs(
-    x = "Nombre de chars produits",
+    x = "Taille de l'échantillon",
     y = "Estimation"
   )+
   geom_abline(intercept = 0, slope=1, color = "red") +
