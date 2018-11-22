@@ -260,7 +260,7 @@
 \textsc{Marc-André Désautels, département de mathématiques} \\
 \textsc{Cégep de Saint-Jean-sur-Richelieu} \\
 \href{mailto:marc-andre.desautels@cstjean.qc.ca}{marc-andre.desautels@cstjean.qc.ca} \\
-\href{https://www.cstjean.qc.ca/}{https://www.cstjean.qc.ca/}
+\href{http://madesautels.rbind.io/}{http://madesautels.rbind.io/}
 \end{flushright}
 
 
@@ -714,9 +714,35 @@ Remarquons que les variances des tableaux \ref{tab:estimateur_n1},
 facteur commun, c'est-à-dire \(\frac{(N-n)(N+1)}{n+2}\). Nous pouvons
 donc visualiser l'effet de la taille de notre échantillon sur nos
 variances en étudiant seulement le facteur multiplicatif devant le terme
-\(\frac{(N-n)(N+1)}{n+2}\). La figure \ref{fig:fig-facteur} représente
-le facteur multiplicatif pour les variances des cinq estimateurs, en
-fonction de la taille de l'échantillon.
+\(\frac{(N-n)(N+1)}{n+2}\). Le tableau \ref{tab:facteur_multiplicatif}
+indique les facteurs multiplicatifs de nos cinq estimateurs.
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+$i$ & Facteur multiplicatif $\widehat{N_i}$ \\
+\hline
+\hline
+\multirow{2}{*}{1} & $1$ pour $n$ impair \\
+& $\frac{n}{n+1}$ pour $n$ pair \\
+\hline
+2 & $\frac{n+2}{3n}$ \\
+\hline
+3 & $\frac{2}{n+1}$ \\
+\hline
+4 & $\frac{1}{n}$ \\
+\hline
+5 & $\frac{2}{n-1}$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{tab:facteur_multiplicatif}{Les facteurs multiplicatifs des cinq estimateurs}}
+\end{table}
+
+La figure \ref{fig:fig-facteur} représente le facteur multiplicatif pour
+les variances des cinq estimateurs, en fonction de la taille de
+l'échantillon.
 
 \begin{figure}[!htb]
 
@@ -873,7 +899,25 @@ d'équipements seront donnés à l'annexe \ref{rep-application}.
 \section{\texorpdfstring{Conclusion
 \label{conclusion}}{Conclusion }}\label{conclusion}}
 
-TODO\ldots{}
+Dans cet article, nous avons étudié le problème de l'estimation de la
+taille d'une population à partir d'échantillons prélevés sans remise de
+cette population. Nous avons étudié le traitement statistique de ce
+problème d'un point de vue fréquentiste.Nous avons également introduit
+cinq estimateurs différents pouvant être utilisés dans un environnement
+pédagogique.
+
+Pour trouver un autre exemple d'utilisation des notions présentées dans
+cet article, je vous invite à consulter le site suivant
+\url{http://datagenetics.com/blog/march22014/index.html}, qui discute du
+problème d'estimer le nombre de participants à une course en utilisant
+les numéros des coureurs rencontrés.
+
+Il est également possible d'étudier ce problème d'un point de vue
+bayésien. Ce point de vue est partiellement utilisé par Roberts en
+\cite{Roberts1967}. Davantage d'information est par contre disponible en
+\cite{Hohle2006} et en \cite{WikiGermanTank}. Il est intéressant de voir
+les différences entres les estimations trouvées dans cet article et les
+estimations trouvées dans un contexte bayésien.
 
 \appendix
 
@@ -1117,7 +1161,7 @@ data <- data %>%
   gather(key = Estimateur, value = Facteur, -id)
 
 ggplot(data, aes(x=id, y=Facteur, color=Estimateur))+
-  geom_point(alpha=0.75) +
+  geom_point(alpha=0.5) +
   labs(
     x = "Taille de l'échantillon"
   )
