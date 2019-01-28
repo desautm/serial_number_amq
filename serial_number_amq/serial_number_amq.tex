@@ -301,7 +301,7 @@ front. Plus particulièrement, les numéros de séries ont été utilisés
 pour estimer la force de production de la machine de guerre allemande.
 L'article \emph{An Empirical Approach to Economic Intelligence in World
 War II} \cite{Ruggles1947} explique en grand détail le développement des
-techniques utilisés pour faire cette estimation, les problèmes
+techniques utilisées pour faire cette estimation, les problèmes
 rencontrés et les solutions qui y ont remédiés. Nous invitons le lecteur
 intéressé par l'aspect pratico-pratique de ces techniques à lire cet
 article.
@@ -314,7 +314,9 @@ fusils, les bombes et les fusées, voir \cite{Ruggles1947}. En
 particulier, nous présentons au tableau \ref{tab:estimation_ruggles} les
 estimations du nombre de chars d'assaut allemands en comparaison avec
 l'estimation par les services de renseignements et les archives
-allemandes, tel que présenté dans \cite{Ruggles1947}.
+allemandes, tel que présenté dans \cite{Ruggles1947}. Comme vous pouvez
+le constater, les estimations statistiques étaient beaucoup plus
+précises que les estimations provenant des services de renseignements.
 
 \begin{table}[ht]
 \begin{center}
@@ -338,7 +340,7 @@ années 80, des militaires Américains ont eu accès aux lignes de
 production de chars d'assaut \emph{Merkava} israéliens. Le nombre de
 chars produits était confidentiel, mais le colone Dupuy indique que
 puisque chaque chars possédait un numéro de série, il aurait pu estimer
-la production, voir \cite{Johnson}
+la production, voir \cite{Johnson}.
 
 Les formules développées dans cet article ont aussi été utilisées dans
 des contextes non-militaires. Par exemple, elles ont été utilisées pour
@@ -410,7 +412,7 @@ $\cov(X_{(A)},X_{(B)})$ & $\frac{A(n+1-B)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\
 \hline
 \end{tabular}
 \end{center}
-\caption{\label{tab:mesures_stat} {Les mesures de l'espérance, de la variance et de la covariance pour une valeur $X_{(A)}$ de notre échantillon.} }
+\caption{\label{tab:mesures_stat} {Les mesures de l'espérance, de la variance et de la covariance pour des valeurs $X_{(A)}$ et $X_{(B)}$ de notre échantillon.} }
 \end{table}
 
 À l'aide des trois mesures du tableau \ref{tab:mesures_stat}, nous
@@ -462,7 +464,7 @@ ci-dessous:
 Il y aura donc \(m-1\) valeurs en-dessous de \(m\) et \(m-1\) valeurs
 au-dessus de \(m\). Donc, si nous incluons la valeur milieu \(m\), nous
 avons \(N=(m-1)+1+(m-1)=2m-1\). Puisque nous ne connaissons pas la
-valeur milieu \(m\), il est raisonnable de la remplacer par une
+valeur milieu \(m\), il semble raisonnable de la remplacer par une
 estimation, par exemple la médiane \(\widetilde{X}\) ou la moyenne
 \(\overline{X}\). Nous pouvons maintenant obtenir nos deux premiers
 estimateurs.
@@ -647,9 +649,9 @@ présentée, nous pouvons remarquer les résultats suivants:
   plus petite variance.
 \end{itemize}
 
-La lectrice ou le lecteur intéressé pourront utiliser les idées
-présentées à l'annexe \ref{calculs_estimateurs} pour démontrer les
-résultats des tableaux \ref{tab:estimateur_n1}, \ref{tab:estimateur_n2},
+La lectrice ou le lecteur intéressé pourra utiliser les idées présentées
+à l'annexe \ref{calculs_estimateurs} pour démontrer les résultats des
+tableaux \ref{tab:estimateur_n1}, \ref{tab:estimateur_n2},
 \ref{tab:estimateur_n3} et \ref{tab:estimateur_n4}.
 
 \hypertarget{la-situation-ou-s-est-connu-mais-different-de-0-et-n-est-inconnu}{%
@@ -675,10 +677,12 @@ Supposons que nous avons une population d'objets numérotés de la façon
 suivante : \(s+1\), \(s+2\), \(s+3\), \ldots{} , \(s+N\), où \(N\) est
 inconnu mais \(s\) est lui aussi \textbf{inconnu}. Cette situation était
 celle des numéros de séries sur les boîtes de transmissions des chars
-d'assaut \emph{Panther V}, comme présenté en \cite{Ruggles1947}. Nous
-avons trouvé à l'annexe \ref{calculs_proba} les espérances des valeurs
+d'assaut \emph{Panther V}, comme présenté en \cite{Ruggles1947}.
+
+Pour pouvoir continuer, nous allons utiliser les espérances des valeurs
 \(X_{(A)}\) de notre échantillon, c'est-à-dire
-\(\esp (X_{(A)})=\frac{A(N+1)}{n+1}\).
+\(\esp (X_{(A)})=\frac{A(N+1)}{n+1}\), que nous avons trouvé à l'annexe
+\ref{calculs_proba}.
 
 Nous allons étudier l'espérance de la différence \(d\) entre le plus
 grand \((X_{(n)})\) et le plus petit \((X_{(1)})\) des numéros de série
@@ -686,7 +690,7 @@ de notre échantillon. Ce résultat reste vrai même dans la situation où
 \(s\) est inconnu. Nous avons donc: \begin{align*}
 \esp(X_{(n)}-X_{(1)}) &= \esp(X_{(n)})-\esp(X_{(1)}) \\
 X_{(n)}-X_{(1)} &= \dfrac{n\cdot(N+1)}{n+1}-\dfrac{1\cdot(N+1)}{n+1} \\
-&= \dfrac{(n-1)(N+1)}{n+1} \\
+X_{(n)}-X_{(1)} &= \dfrac{(n-1)(N+1)}{n+1} \\
 N+1 &= \dfrac{(X_{(n)}-X_{(1)})(n+1)}{n-1} \\
 \widehat{N_5} &= \dfrac{(X_{(n)}-X_{(1)})(n+1)}{n-1}-1
 \end{align*} Il est donc possible d'estimer la taille de la population,
@@ -813,13 +817,14 @@ précédent:
 
 À partir d'ici, pour ne pas alourdir le texte, nous omettrons le code
 \texttt{R} utilisé pour produire les simulations qui suivent. Vous
-trouverez par contre à l'annexe \ref{code} le code complet utilisé.
+trouverez par contre à l'annexe \ref{code} le code complet utilisé dans
+cet article.
 
 Pour bien visualiser les différences entre nos cinq estimateurs, nous
 effectuerons quatre simulations distinctes. La figure \ref{fig:fig-ech}
 représente une simulation de 5 000 échantillons de tailles 5, 10, 25 et
-50, à partir d'une population de taille 500. Nous calculons les mesures
-de nos cinq estimateurs pour ces 5 000 échantillons.
+50, pigés à partir d'une population de taille 500. Nous calculons les
+mesures de nos cinq estimateurs pour ces 5 000 échantillons.
 
 \begin{figure}[!htb]
 
@@ -902,7 +907,7 @@ d'équipements seront donnés à l'annexe \ref{rep-application}.
 Dans cet article, nous avons étudié le problème de l'estimation de la
 taille d'une population à partir d'échantillons prélevés sans remise de
 cette population. Nous avons étudié le traitement statistique de ce
-problème d'un point de vue fréquentiste.Nous avons également introduit
+problème d'un point de vue fréquentiste. Nous avons également introduit
 cinq estimateurs différents pouvant être utilisés dans un environnement
 pédagogique.
 
@@ -914,10 +919,10 @@ les numéros des coureurs rencontrés.
 
 Il est également possible d'étudier ce problème d'un point de vue
 bayésien. Ce point de vue est partiellement utilisé par Roberts en
-\cite{Roberts1967}. Davantage d'information est par contre disponible en
-\cite{Hohle2006} et en \cite{WikiGermanTank}. Il est intéressant de voir
-les différences entres les estimations trouvées dans cet article et les
-estimations trouvées dans un contexte bayésien.
+\cite{Roberts1967}. Davantage d'informations est par contre disponible
+en \cite{Hohle2006} et en \cite{WikiGermanTank}. Il est intéressant de
+voir les différences entres les estimations trouvées dans cet article et
+les estimations trouvées dans un contexte bayésien.
 
 \appendix
 
