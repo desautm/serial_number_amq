@@ -272,11 +272,11 @@
 
 \begin{abstract}
 
-Durant la seconde guerre mondiale, les alliés avaient un besoin criant
+Durant la Seconde Guerre mondiale, les Alliés avaient un besoin criant
 d'estimer avec précision la quantité de matériel militaire que
 l'Allemagne nazie produisait. Les estimations provenant des services de
 renseignements habituels étaient contradictoires et incertaines. Les
-gouvernements Britanniques et Américains se tournèrent donc vers des
+gouvernements britanniques et américains se tournèrent donc vers des
 statisticiens pour savoir si leurs estimations pouvaient être
 améliorées. Nous présenterons une introduction aux notions mathématiques
 utilisées.
@@ -297,26 +297,25 @@ utilisées.
 Au début de l'année 1943, la \emph{Economic Warfare Division} de
 l'ambassade américaine à Londres commença à analyser divers marquages
 obtenus à partir d'équipements allemands capturés ou détruits sur le
-front. Plus particulièrement, les numéros de séries ont été utilisés
-pour estimer la force de production de la machine de guerre allemande.
+front. Plus particulièrement, les numéros de série ont été utilisés pour
+estimer la force de production de la machine de guerre allemande.
 L'article \emph{An Empirical Approach to Economic Intelligence in World
-War II} \cite{Ruggles1947} explique en grand détail le développement des
+War II} \cite{Ruggles1947} explique en détail le développement des
 techniques utilisées pour faire cette estimation, les problèmes
-rencontrés et les solutions qui y ont remédiés. Nous invitons le lecteur
-intéressé par l'aspect pratico-pratique de ces techniques à lire cet
-article.
+rencontrés et les solutions qui y ont remédié. Nous invitons le lecteur
+intéressé par l'aspect pratique de ces techniques à lire cet article.
 
 Le problème du char d'assaut allemand est nommé d'après son application
-par les alliés à l'estimation du nombre de chars d'assaut produits par
+par les Alliés à l'estimation du nombre de chars d'assaut produits par
 l'Allemagne. Mais en fait, ce problème regroupe l'estimation du nombre
-de nombreux produits de guerre allemands, par exemple les camions, les
-fusils, les bombes et les fusées, voir \cite{Ruggles1947}. En
-particulier, nous présentons au tableau \ref{tab:estimation_ruggles} les
-estimations du nombre de chars d'assaut allemands en comparaison avec
-l'estimation par les services de renseignements et les archives
-allemandes, tel que présenté dans \cite{Ruggles1947}. Comme vous pouvez
-le constater, les estimations statistiques étaient beaucoup plus
-précises que les estimations provenant des services de renseignements.
+de divers produits de guerre allemands, comme par exemple les camions,
+les fusils, les bombes et les fusées \cite{Ruggles1947}. En particulier,
+nous présentons au tableau~\ref{tab:estimation_ruggles} les estimations
+du nombre de chars d'assaut allemands en comparaison avec l'estimation
+par les services de renseignements et les archives allemandes, tel que
+présenté dans \cite{Ruggles1947}. Comme vous pouvez le constater, les
+estimations statistiques étaient beaucoup plus précises que les
+estimations provenant des services de renseignements.
 
 \begin{table}[ht]
 \begin{center}
@@ -334,26 +333,26 @@ Août 1942 & 327 & 1 550 & 342 \\
 \caption{\label{tab:estimation_ruggles} {Comparaison des estimations produites par les estimateurs que nous présenterons, des estimations produites par les services de renseignements ainsi que de la production exacte selon les archives allemandes.} }
 \end{table}
 
-Les russes ont également utilisé des techniques similaires pour estimer
-la production de char d'assaut allemands \cite{Volz2008}. Durant les
-années 80, des militaires Américains ont eu accès aux lignes de
-production de chars d'assaut \emph{Merkava} israéliens. Le nombre de
-chars produits était confidentiel, mais le colone Dupuy indique que
-puisque chaque chars possédait un numéro de série, il aurait pu estimer
-la production, voir \cite{Johnson}.
+Les Soviétiques ont également utilisé des techniques similaires pour
+estimer la production de chars d'assaut allemands \cite{Volz2008}.
+Durant les années 80, des militaires américains ont eu accès aux lignes
+de production de chars d'assaut \emph{Merkava} israéliens. Le nombre de
+chars produits était confidentiel, mais le colonel Dupuy indique que
+puisque chaque char possédait un numéro de série, il aurait pu estimer
+la production \cite{Johnson}.
 
 Les formules développées dans cet article ont aussi été utilisées dans
-des contextes non-militaires. Par exemple, elles ont été utilisées pour
-estimer le nombre de \emph{Commodore 64} produits, voir
-\cite{commodore64}. Le premier modèle de iPhone, commercialisé en 2007
-aux États-Unis, a été vendu au nombre de 9 190 680, suite à des
-estimations faites à partir des codes IMEI (\emph{The International
-Mobile Equipment Identity}) de nombreux utilisateurs, voir
-\cite{iphone}.
+des contextes non militaires. Par exemple, elles ont été utilisées pour
+estimer le nombre d'ordinateurs \emph{Commodore 64} produits
+\cite{commodore64}. On estime que le premier modèle de \emph{iPhone},
+commercialisé en 2007 aux États-Unis, a été vendu au nombre de 9 190
+680, suite à des estimations faites à partir des codes IMEI
+(\emph{International Mobile Equipment Identity}) de nombreux
+utilisateurs \cite{iphone}.
 
-Dans cet article, nous nous intéresserons à l'estimation du nombre
-d'items \(N\) à partir d'un échantillon aléatoire dans le cas où les
-items sont numérotés de façon séquentielle.
+Dans cet article, nous nous intéresserons à l'estimation de la taille
+\(N\) d'une population à partir d'un échantillon aléatoire prélevé dans
+celle-ci, dans le cas où les items sont numérotés de façon séquentielle.
 
 \hypertarget{les-mathematiques}{%
 \section{\texorpdfstring{Les mathématiques
@@ -365,9 +364,11 @@ items sont numérotés de façon séquentielle.
 Supposons que nous avons une population d'objets numérotés de la façon
 suivante : \(1\), \(2\), \(3\), \ldots{} , \(N\), où \(N\) est
 \textbf{inconnu}. En d'autres mots, les objets de notre population
-doivent être numérotés de façon \emph{séquentielle}. Nous pigeons,
+doivent être numérotés de façon \emph{séquentielle}. Nous prélevons,
 \textbf{sans remise}, un échantillon \(X_1\), \(X_2\), \(X_3\),
-\ldots{}, \(X_n\), de taille \(n\) à partir de la population. Nous
+\ldots{}, \(X_n\), de taille \(n\) dans la population, où \(X_i\)
+représente le numéro de série de la ième unité sélectionnée de la
+population dans un tirage aléatoire de \(n\) unités sans remise. Nous
 voulons estimer la valeur de \(N\) à partir de l'échantillon prélevé.
 
 Pour calculer les diverses mesures statistiques dont nous aurons besoin,
@@ -379,18 +380,17 @@ sont les valeurs ordonnées de l'échantillon \(X_1\), \(X_2\), \(X_3\),
 \ldots{}, \(X_n\). En particulier, \(X_{(1)}\) est la plus petite valeur
 de l'échantillon et \(X_{(n)}\) est la plus grande.
 
-À partir de nos définitions précédentes, il est possible de calculer
-l'espérance de la valeur \(X_{(A)}\) (\(\esp (X_{(A)})\)), la variance
-de la valeur \(X_{(A)}\) (\(\var(X_{(A)})\)) et enfin la covariance des
-valeurs \(X_{(A)}\) et \(X_{(B)}\) (\(\cov(X_{(A)},X_{(B)})\)). Nous
-utiliserons ces mesures statistiques pour calculer l'espérance et la
-variance des estimateurs que nous construirons. Malheureusement,
-retrouver ces mesures statistiques nécessite des identités combinatoires
-et de fastidieux calculs. Pour ne pas alourdir le texte, nous donnerons
-ces mesures sans démonstration.
+À partir de nos définitions précédentes, pour tout entier \(A\) entre 1
+et \(n\), il est possible de calculer l'espérance de la valeur
+\(X_{(A)}\) (\(\esp (X_{(A)})\)), la variance de la valeur \(X_{(A)}\)
+(\(\var(X_{(A)})\)) et enfin la covariance des valeurs \(X_{(A)}\) et
+\(X_{(B)}\) (\(\cov(X_{(A)},X_{(B)})\)). Nous utiliserons ces mesures
+statistiques pour calculer l'espérance et la variance des estimateurs
+que nous construirons. Retrouver ces mesures statistiques nécessite des
+identités combinatoires et de fastidieux calculs. Pour ne pas alourdir
+le texte, nous donnerons les mesures sans démonstration.
 
-Par contre, pour la lectrice ou le lecteur intéressé, vous pourrez
-trouver aux annexes \ref{rappel_esperance} et \ref{calculs_proba}
+Les annexes \ref{rappel_esperance} et \ref{calculs_proba} contiennent
 quelques rappels sur les notions d'espérance, de variance et de
 covariance ainsi que la démonstration de \(\esp(X_{(A)})\). Les
 démonstrations de \(\var(X_{(A)})\) et \(\cov(X_{(A)},X_{(B)})\) se font
@@ -415,8 +415,7 @@ $\cov(X_{(A)},X_{(B)})$ & $\frac{A(n+1-B)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\
 \caption{\label{tab:mesures_stat} {Les mesures de l'espérance, de la variance et de la covariance pour des valeurs $X_{(A)}$ et $X_{(B)}$ de notre échantillon.} }
 \end{table}
 
-À l'aide des trois mesures du tableau \ref{tab:mesures_stat}, nous
-allons maintenant trouver quatre estimés de \(N\) en utilisant
+Nous allons maintenant trouver quatre estimateurs de \(N\) en utilisant
 simplement notre ``gros bon sens''. La structure des prochaines sections
 est calquée sur \cite{Johnson}. Nous utiliserons aussi les notions
 présentées en \cite{Goodman1952} et \cite{Goodman1954}.
@@ -469,10 +468,8 @@ estimation, par exemple la médiane \(\widetilde{X}\) ou la moyenne
 \(\overline{X}\). Nous pouvons maintenant obtenir nos deux premiers
 estimateurs.
 
-\begin{quote}
 À partir de maintenant, nous allons toujours supposer que nous
 arrondissons nos estimateurs à l'entier le plus près.
-\end{quote}
 
 \hypertarget{la-mediane}{%
 \subsubsection{La médiane}\label{la-mediane}}
@@ -480,16 +477,15 @@ arrondissons nos estimateurs à l'entier le plus près.
 Nous noterons notre premier estimateur
 \(\widehat{N_1}=2\widetilde{X}-1\), où \(\widetilde{X}\) représente la
 médiane de notre échantillon. Rappelons que pour \(k\) données
-discrètes, la médiane se calcule de deux façons différentes,
-dépendamment du fait que le nombre de données soit pair ou impair.
-\begin{align*}
+discrètes, la médiane se calcule de deux façons différentes, selon la
+parité du nombre de données. \begin{align*}
 \widetilde{X} &= 
 \begin{cases}
 \frac{1}{2}\lr{X_{\lr{k/2}}+X_{\lr{k/2+1}}} & \text{ si $k$ est pair} \\
 X_{\lr{(k+1)/2}} & \text{ si $k$ est impair} \\
 \end{cases}
 \end{align*} Nous voulons vérifier si l'estimateur \(\widehat{N_1}\) est
-non-biaisé, c'est-à-dire si l'espérance de \(\widehat{N_1}\) est égale à
+non biaisé, c'est-à-dire si l'espérance de \(\widehat{N_1}\) est égale à
 \(N\) (\(\esp (\widehat{N_1})=N\)). Nous voulons également calculer la
 variance de \(\widehat{N_1}\). Pour éviter d'alourdir le texte, nous
 avons mis un exemple de calcul d'espérance et de variance à l'annexe
@@ -558,11 +554,12 @@ adéquats, nous devrons en trouver d'autres.
 \subsubsection{Deux autres estimés}\label{deux-autres-estimes}}
 
 Nous voulons maintenant trouver d'autres estimés qui sont toujours
-supérieurs ou égaux au plus grand entier de notre échantillon. Par
-symétrie, nous pouvons supposer que le nombre de numéros de série
-non-observés au-dessus de \(X_{(n)}\) soit le même que le nombre de
-numéros de série non-observés en-dessous de \(X_{(1)}\). Nous avons
-donc: \begin{align*}
+supérieurs ou égaux au plus grand entier de notre échantillon.
+
+Par symétrie, il est raisonnable de s'attendre à ce qu'il y ait autant
+de numéros de série non observés supérieurs à \(X_{(n)}\) que de numéros
+de série non observés inférieurs à \(X_{(1)}\). Nous avons donc:
+\begin{align*}
 N-X_{(n)} &= X_{(1)}-1 \\
 \widehat{N_3} &= X_{(n)}+X_{(1)}-1
 \end{align*} En effectuant les calculs appropriés pour l'espérance et la
@@ -584,26 +581,26 @@ $i$ & $\widehat{N_i}$ & $\esp\lr{\widehat{N_i}}$ & $\var\lr{\widehat{N_i}}$ \\
 \end{table}
 
 Nous pouvons continuer le raisonnement précédent. En effet, il apparaît
-raisonnable de poser le nombre de numéros de série non-observés
+raisonnable de poser le nombre de numéros de série non observés
 au-dessus de \(X_{(n)}\) comme étant la moyenne du:
 
 \begin{itemize}
 \item
-  nombre de numéros de série non-observés en-dessous de \(X_{(1)}\);
+  nombre de numéros de série non observés en-dessous de \(X_{(1)}\);
 \item
-  nombre de numéros de série non-observés entre \(X_{(1)}\) et
+  nombre de numéros de série non observés entre \(X_{(1)}\) et
   \(X_{(2)}\);
 \item
-  nombre de numéros de série non-observés entre \(X_{(2)}\) et
+  nombre de numéros de série non observés entre \(X_{(2)}\) et
   \(X_{(3)}\);
 \item
   \ldots{}
 \item
-  nombre de numéros de série non-observés entre \(X_{(n-1)}\) et
+  nombre de numéros de série non observés entre \(X_{(n-1)}\) et
   \(X_{(n)}\).
 \end{itemize}
 
-Nous avons donc que le nombre de numéros de série non-observés au-dessus
+Nous avons donc que le nombre de numéros de série non observés au-dessus
 de \(X_{(n)}\), c'est-à-dire \(N-X_{(n)}\) est égal à: \begin{align*}
 N-X_{(n)} &= \frac{1}{n}\left[ (X_{(1)}-1)+(X_{(2)}-X_{(1)}-1)+(X_{(3)}-X_{(2)}-1)+\ldots+(X_{(n)}-X_{(n-1)}-1) \right] \\
 &= \frac{X_{(n)}}{n}-1 \\
@@ -676,18 +673,18 @@ et \(N\) est
 Supposons que nous avons une population d'objets numérotés de la façon
 suivante : \(s+1\), \(s+2\), \(s+3\), \ldots{} , \(s+N\), où \(N\) est
 inconnu mais \(s\) est lui aussi \textbf{inconnu}. Cette situation était
-celle des numéros de séries sur les boîtes de transmissions des chars
+celle des numéros de série sur les boîtes de transmissions des chars
 d'assaut \emph{Panther V}, comme présenté en \cite{Ruggles1947}.
 
 Pour pouvoir continuer, nous allons utiliser les espérances des valeurs
 \(X_{(A)}\) de notre échantillon, c'est-à-dire
-\(\esp (X_{(A)})=\frac{A(N+1)}{n+1}\), que nous avons trouvé à l'annexe
+\(\esp (X_{(A)})=\frac{A(N+1)}{n+1}\), tel que calculé à l'annexe
 \ref{calculs_proba}.
 
 Nous allons étudier l'espérance de la différence \(d\) entre le plus
 grand \((X_{(n)})\) et le plus petit \((X_{(1)})\) des numéros de série
-de notre échantillon. Ce résultat reste vrai même dans la situation où
-\(s\) est inconnu. Nous avons donc: \begin{align*}
+de notre échantillon. Le résultat suivant reste vrai même dans la
+situation où \(s\) est inconnu. Nous avons donc: \begin{align*}
 \esp(X_{(n)}-X_{(1)}) &= \esp(X_{(n)})-\esp(X_{(1)}) \\
 X_{(n)}-X_{(1)} &= \dfrac{n\cdot(N+1)}{n+1}-\dfrac{1\cdot(N+1)}{n+1} \\
 X_{(n)}-X_{(1)} &= \dfrac{(n-1)(N+1)}{n+1} \\
@@ -857,13 +854,14 @@ population. Les idées utilisées pour obtenir les graphiques de la figure
 \caption{Représentation de 50 échantillons de taille 5 pigés pour des populations de tailles 10 à 1 000, pour les cinq estimateurs. La droite en rouge représente la taille véritable de la population.}\label{fig:ech-10-1000}
 \end{figure}
 
-Nous allons maintenant partir d'une population de taille 500. Nous
-ferons varier la taille des échantillons de 1 à 500, par bonds de 1.
-Pour chacune de ces tailles, nous pigerons 50 échantillons sans remise.
-Nous représenterons ensuite l'estimation obtenu en fonction de la taille
-des échantillons. Pour être en mesure de bien visualiser les résultats,
-nous allons ajouter une petite variation aléatoire à la position des
-points. La figure \ref{fig:pop-1-500} représente nos résultats obtenus.
+Nous allons maintenant partir d'une population de taille 500 et faire un
+autre type de simulation. Nous ferons varier la taille des échantillons
+de 1 à 500, par bonds de 1. Pour chacune de ces tailles, nous pigerons
+50 échantillons sans remise. Nous représenterons ensuite l'estimation
+obtenue en fonction de la taille des échantillons. Pour être en mesure
+de bien visualiser les résultats, nous allons ajouter une petite
+variation aléatoire à la position des points. La figure
+\ref{fig:pop-1-500} représente nos résultats obtenus.
 
 \begin{figure}[!htb]
 
@@ -880,9 +878,8 @@ points. La figure \ref{fig:pop-1-500} représente nos résultats obtenus.
 
 Nous trouvons en \cite{Goodman1954} une application concrète de
 l'utilisation de nos estimateurs. On nous indique que le département des
-sciences sociales de l'Université de Chicago utilisaient de l'équipement
-(bureaux, chaises, etc.) sur lesquels étaient placés des numéros de
-série.
+sciences sociales de l'Université de Chicago utilisait de l'équipement
+(bureaux, chaises, etc.) sur lesquels était placés des numéros de série.
 
 Les numéros de série de 31 pièces d'équipement ont été observés. Les 31
 numéros de série étaient:
@@ -892,6 +889,11 @@ numéros de série étaient:
 ## [15] 1610 1668 1689 1756 1865 1874 1880 1936 2005 2006 2065 2157 2220 2224
 ## [29] 2396 2543 2787
 \end{verbatim}
+
+Les numéros entre crochets dans les lignes précédentes représente le
+numéro du premier élément de la ligne. Par exemple, à la deuxième ligne,
+le numéro {[}15{]} indique que la ligne débute avec le quinzième numéro
+de la liste.
 
 Nous invitons les lectrices et les lecteurs intéressés à utiliser les
 cinq estimateurs présentés dans cet article pour estimer le nombre
@@ -919,10 +921,10 @@ les numéros des coureurs rencontrés.
 
 Il est également possible d'étudier ce problème d'un point de vue
 bayésien. Ce point de vue est partiellement utilisé par Roberts en
-\cite{Roberts1967}. Davantage d'informations est par contre disponible
-en \cite{Hohle2006} et en \cite{WikiGermanTank}. Il est intéressant de
-voir les différences entres les estimations trouvées dans cet article et
-les estimations trouvées dans un contexte bayésien.
+\cite{Roberts1967}. La lectrice ou le lecteur intéressé peut trouver
+plus d'information en \cite{Hohle2006} et en \cite{WikiGermanTank}. Il
+est intéressant de voir les différences entres les estimations trouvées
+dans cet article et les estimations trouvées dans un contexte bayésien.
 
 \appendix
 
@@ -985,10 +987,9 @@ covariance de variables aléatoires.
 \section{\texorpdfstring{Calcul de probabilités
 \label{calculs_proba}}{Calcul de probabilités }}\label{calcul-de-probabilites}}
 
-Nous voulons calculer la probabilité reliée à l'événement \(X_{(A)}=i\),
-c'est-à-dire l'événement où l'unité statistique \(X_{(A)}=i\). Pour bien
-comprendre la situation, nous allons utiliser le schéma ci-dessous:
-\begin{align*}
+Nous voulons calculer la probabilité reliée à l'événement \(X_{(A)}=i\).
+Pour bien comprendre la situation, nous allons utiliser le schéma
+ci-dessous: \begin{align*}
 \underbrace{X_{(1)} <  X_{(2)} < \ldots < X_{(A-1)}}_{A-1 \text{ éléments}} 
 < X_{(A)} 
 < \underbrace{X_{(A+1)} < \ldots < X_{(n-1)} < X_{(n)}}_{n-A \text{ éléments}}
@@ -1016,7 +1017,7 @@ nous avons: \begin{align}
 
 À l'aide de l'équation (\ref{eq:sumxA}), nous pouvons démontrer les
 résultats du tableau \ref{tab:mesures_stat}. Pour montrer au lecteur la
-façon de faire, nous présenterons la façon de démontrer l'espérance de
+façon de faire, nous présenterons la façon de calculer l'espérance de
 \(X_{(A)}\). Nous avons: \begin{align}
 \esp(X_{(A)}) &= \sum_{i=A}^{N-n+A} iP(X_{(A)}=i) \nonumber\\
 &= \sum_{i=A}^{N-n+A} i\dfrac{\binom{i-1}{A-1}\binom{N-i}{n-A}}{\binom{N}{n}} \nonumber\\
@@ -1028,8 +1029,8 @@ façon de faire, nous présenterons la façon de démontrer l'espérance de
 &= \dfrac{A(N+1)}{n+1} \label{eq:esperancexA}
 \end{align}
 
-Les démonstrations de \(\var(X_{(A)})\) et \(\cov(X_{(A)},X_{(B)})\) se
-font d'une manière similaire.
+Les calculs de \(\var(X_{(A)})\) et \(\cov(X_{(A)},X_{(B)})\) se font
+d'une manière similaire.
 
 \hypertarget{calculs-desperance-et-de-variance-destimateurs}{%
 \section{\texorpdfstring{Calculs d'espérance et de variance
@@ -1095,223 +1096,9 @@ de pièces d'équipements était de \(2885\).
 \section{\texorpdfstring{Code \texttt{R}
 \label{code}}{Code R }}\label{code-r}}
 
-Pour la lectrice ou le lecteur intéressé, vous trouverez ci-dessous le
-code \texttt{R} complet qui a servi à produire les diverses figures de
-cet article. Vous trouverez également le code complet de cet article à
-l'adresse \url{https://github.com/desautm/serial_number_amq}.
-
-\begin{verbatim}
-knitr::opts_chunk$set(cache = TRUE)
-
-## Pour obtenir les mêmes résultats malgré l'échantillonnage aléatoire
-set.seed(39894095)
-
-## La librairie utilisée
-## Pour l'installer, décommenter la ligne suivante:
-## install.packages("tidyverse")
-library(tidyverse)
-
-## Définition des fonctions pour le calcul des mesures sur les numéros de série.
-
-## Estimateur N1
-N1 <- function(ech){
-  return(round(2*median(ech)-1))
-}
-
-## Estimateur N2
-N2 <- function(ech){
-  return(round(2*mean(ech)-1))
-}
-
-## Estimateur N3
-N3 <- function(ech){
-  if (length(ech) == 1) return(ech)
-  else return(round(max(ech)+min(ech)-1))
-}
-
-## Estimateur N4
-N4 <- function(ech){
-  if (length(ech) == 1) return(ech)
-  else{
-    n <- length(unique(ech))
-    return(round((n+1)/n*max(ech)-1))
-  }
-}
-
-## Estimateur N5
-N5 <- function(ech){
-  if (length(ech) == 1) return(ech)
-  else{
-    n <- length(unique(ech))
-    return(round((max(ech)-min(ech))*(n+1)/(n-1)-1))
-  }
-}
-n <- 500
-
-var_mediane <- function(x){
-  if (x %% 2 == 0) {return(x/(x+1))}
-  else {return(1)}
-}
-
-data <- tibble(
-  id = 10:n,
-  N1 = map_dbl(id, ~var_mediane(.x)),
-  N2 = map_dbl(id, ~(.x+2)/(3*.x)),
-  N3 = map_dbl(id, ~2/(.x+1)),
-  N4 = map_dbl(id, ~1/.x),
-  N5 = map_dbl(id, ~2/(.x-1))
-)
-
-data <- data %>% 
-  gather(key = Estimateur, value = Facteur, -id)
-
-ggplot(data, aes(x=id, y=Facteur, color=Estimateur))+
-  geom_point(alpha=0.5) +
-  labs(
-    x = "Taille de l'échantillon"
-  )
-pop <- c(1:500)
-ech <- sample(pop, 5, replace = FALSE)
-ech
-N1(ech)
-N2(ech)
-N3(ech)
-N4(ech)
-N5(ech)
-N <- 500
-n <- 5
-iter <- 5000
-pop <- c(1:N)
-
-ech5 <- tibble(id = map(1:iter, ~sample(pop, n, replace = FALSE)))
-ech5 <- ech5 %>%
-  mutate(N1 = map_dbl(id, N1),
-         N2 = map_dbl(id, N2),
-         N3 = map_dbl(id, N3),
-         N4 = map_dbl(id, N4),
-         N5 = map_dbl(id, N5)) %>%
-  gather(estimateur, valeur, N1, N2, N3, N4, N5)
-
-n <- 10
-ech10 <- tibble(id = map(1:iter, ~sample(pop, n, replace = FALSE)))
-ech10 <- ech10 %>%
-  mutate(N1 = map_dbl(id, N1),
-         N2 = map_dbl(id, N2),
-         N3 = map_dbl(id, N3),
-         N4 = map_dbl(id, N4),
-         N5 = map_dbl(id, N5)) %>%
-  gather(estimateur, valeur, N1, N2, N3, N4, N5)
-
-n <- 25
-ech25 <- tibble(id = map(1:iter, ~sample(pop, n, replace = FALSE)))
-ech25 <- ech25 %>%
-  mutate(N1 = map_dbl(id, N1),
-         N2 = map_dbl(id, N2),
-         N3 = map_dbl(id, N3),
-         N4 = map_dbl(id, N4),
-         N5 = map_dbl(id, N5)) %>%
-  gather(estimateur, valeur, N1, N2, N3, N4, N5)
-
-n <- 50
-ech50 <- tibble(id = map(1:iter, ~sample(pop, n, replace = FALSE)))
-ech50 <- ech50 %>%
-  mutate(N1 = map_dbl(id, N1),
-         N2 = map_dbl(id, N2),
-         N3 = map_dbl(id, N3),
-         N4 = map_dbl(id, N4), 
-         N5 = map_dbl(id, N5)) %>%
-  gather(estimateur, valeur, N1, N2, N3, N4, N5)
-graphe_ech5 <- ggplot(data = ech5, mapping = aes(x = valeur))+
-  geom_histogram(bins = 50, fill = "lightblue", color = "darkblue")+
-  facet_grid(estimateur ~ .)+
-  geom_vline(xintercept=N,linetype=2,color="black")+
-  labs(
-    x = "Estimations avec échantillons de taille 5",
-    y = "Fréquence"
-  )
-
-graphe_ech10 <- ggplot(data = ech10, mapping = aes(x = valeur))+
-  geom_histogram(bins = 50, fill = "lightblue", color = "darkblue")+
-  facet_grid(estimateur ~ .)+
-  geom_vline(xintercept=N,linetype=2,color="black")+
-  labs(
-    x = "Estimations avec échantillons de taille 10",
-    y = "Fréquence"
-  )
-
-graphe_ech25 <- ggplot(data = ech25, mapping = aes(x = valeur))+
-  geom_histogram(bins = 50, fill = "lightblue", color = "darkblue")+
-  facet_grid(estimateur ~ .)+
-  geom_vline(xintercept=N,linetype=2,color="black")+
-  labs(
-    x = "Estimations avec échantillons de taille 25",
-    y = "Fréquence"
-  )
-
-graphe_ech50 <- ggplot(data = ech50, mapping = aes(x = valeur))+
-  geom_histogram(bins = 50, fill = "lightblue", color = "darkblue")+
-  facet_grid(estimateur ~ .)+
-  geom_vline(xintercept=N,linetype=2,color="black")+
-  labs(
-    x = "Estimations avec échantillons de taille 50",
-    y = "Fréquence"
-  )
-graphe_ech5
-graphe_ech10
-graphe_ech25
-graphe_ech50
-ech1000 <- tibble(
-  pop = rep(seq(10, 1000, 5), 50),
-  id = map(pop, ~sample(.x, 5, replace = FALSE))
-  )
-ech1000 <- ech1000 %>%
-  mutate(N1 = map_dbl(id, N1),
-         N2 = map_dbl(id, N2),
-         N3 = map_dbl(id, N3),
-         N4 = map_dbl(id, N4), 
-         N5 = map_dbl(id, N5)) %>%
-  gather(estimateur, valeur, N1, N2, N3, N4, N5)
-
-ggplot(data = ech1000, aes(x = pop, y = valeur, color=estimateur))+
-  geom_jitter(alpha=0.1)+
-  labs(
-    x = "Taille de l'échantillon",
-    y = "Estimation"
-  )+
-  geom_abline(intercept = 0, slope=1, color = "red") +
-  facet_wrap(estimateur ~ .) + 
-  theme(legend.position="none")
-pop100 <- tibble(
-  ech = rep(seq(1, 500, 1), 25),
-  id = map(ech, ~sample(1:500, .x, replace = FALSE))
-)
-pop100 <- pop100 %>%
-  mutate(N1 = map_dbl(id, N1),
-         N2 = map_dbl(id, N2),
-         N3 = map_dbl(id, N3),
-         N4 = map_dbl(id, N4),
-         N5 = map_dbl(id, N5)) %>%
-  gather(estimateur, valeur, N1, N2, N3, N4, N5)
-
-ggplot(data = pop100, aes(x = ech, y = valeur, color=estimateur))+
-  geom_jitter(alpha=0.1)+
-  labs(
-    x = "Taille de l'échantillon",
-    y = "Estimation"
-  )+
-  geom_abline(intercept = 500, slope=0, color = "red") +
-  facet_wrap(estimateur ~ .) +
-  theme(legend.position="none")
-equip = c(83, 135, 274, 380, 668, 895, 955, 964, 1113, 
-          1174, 1210, 1344, 1387, 1414, 1610, 1668, 1689, 
-          1756, 1865, 1874, 1880, 1936, 2005, 2006, 2065, 
-          2157, 2220, 2224, 2396, 2543, 2787)
-data <- tibble(
-  id = 1:length(equip),
-  equip = equip
-)
-equip
-\end{verbatim}
+Pour la lectrice ou le lecteur intéressé, vous trouverez le code complet
+de cet article à l'adresse
+\url{https://github.com/desautm/serial_number_amq}.
 
 \input{mybibliography}
 
