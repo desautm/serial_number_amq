@@ -390,6 +390,9 @@ que nous construirons. Retrouver ces mesures statistiques nécessite des
 identités combinatoires et de fastidieux calculs. Pour ne pas alourdir
 le texte, nous donnerons les mesures sans démonstration.
 
+La distribution de la variable aléatoire \(X_{(A)}\) est souvent appelée
+loi hypergéométrique négative \cite{WikiHypergeometric}.
+
 Les annexes \ref{rappel_esperance} et \ref{calculs_proba} contiennent
 quelques rappels sur les notions d'espérance, de variance et de
 covariance ainsi que la démonstration de \(\esp(X_{(A)})\). Les
@@ -399,26 +402,25 @@ trois mesures du tableau \ref{tab:mesures_stat}.
 
 \begin{table}[ht]
 \begin{center}
-\begin{tabular}{|r|c|}
-\hline
+\begin{tabular}{rl}
+\toprule
 Mesure & Formule \\
-\hline
-\hline
+\midrule
 $\esp (X_{(A)})$ & $\frac{A(N+1)}{n+1}$ \\ 
-\hline
+\midrule
 $\var(X_{(A)})$ & $\frac{A(n+1-A)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\
-\hline
+\midrule
 $\cov(X_{(A)},X_{(B)})$ & $\frac{A(n+1-B)(N+1)(N-n)}{(n+1)^2(n+2)}$ \\
-\hline
+\bottomrule
 \end{tabular}
 \end{center}
 \caption{\label{tab:mesures_stat} {Les mesures de l'espérance, de la variance et de la covariance pour des valeurs $X_{(A)}$ et $X_{(B)}$ de notre échantillon.} }
 \end{table}
 
 Nous allons maintenant trouver quatre estimateurs de \(N\) en utilisant
-simplement notre ``gros bon sens''. La structure des prochaines sections
-est calquée sur \cite{Johnson}. Nous utiliserons aussi les notions
-présentées en \cite{Goodman1952} et \cite{Goodman1954}.
+simplement notre \og gros bon sens \fg{}. La structure des prochaines
+sections est calquée sur \cite{Johnson}. Nous utiliserons aussi les
+notions présentées en \cite{Goodman1952} et \cite{Goodman1954}.
 
 \hypertarget{les-trois-situations-possibles}{%
 \subsection{Les trois situations
@@ -494,19 +496,22 @@ obtenons les résultats du tableau \ref{tab:estimateur_n1}.
 
 \begin{table}[ht]
 \begin{center}
-\begin{tabular}{|c|c|c|c|}
-\hline
+\begin{tabular}{cccc}
+\toprule
 $i$ & $\widehat{N_i}$ & $\esp\lr{\widehat{N_i}}$ & $\var\lr{\widehat{N_i}}$ \\
-\hline
-\hline
+\midrule
 \multirow{2}{*}{1}  & \multirow{2}{*}{$2\widetilde{X}-1$} & \multirow{2}{*}{$N$} & 
-$1\cdot\frac{(N-n)(N+1)}{n+2}$ pour $n$ impair \\
+$1\cdot\frac{(N-n)(N+1)}{n+2}$ pour $n$ impair \\[5pt]
 & & & $\frac{n}{n+1}\cdot\frac{(N-n)(N+1)}{n+2}$ pour $n$ pair \\
-\hline
+\bottomrule
 \end{tabular}
 \end{center}
 \caption{\label{tab:estimateur_n1} {L'espérance et la variance de l'estimateur $\widehat{N_1}$.} }
 \end{table}
+
+L'estimateur que nous venons de trouver au tableau
+\ref{tab:estimateur_n1} est un estimateur non-biaisé. De plus, nous
+remarquons que sa variance diminue lorsque \(n\) augmente.
 
 \hypertarget{la-moyenne}{%
 \subsubsection{La moyenne}\label{la-moyenne}}
@@ -522,13 +527,12 @@ variance, nous obtenons les résultats du tableau
 
 \begin{table}[ht]
 \begin{center}
-\begin{tabular}{|c|c|c|c|}
-\hline
+\begin{tabular}{cccc}
+\toprule
 $i$ & $\widehat{N_i}$ & $\esp\lr{\widehat{N_i}}$ & $\var\lr{\widehat{N_i}}$ \\
-\hline
-\hline
+\midrule
 2 & $2\overline{X}-1$ & $N$ & $\frac{n+2}{3n}\cdot\frac{(N-n)(N+1)}{n+2}$ \\
-\hline
+\bottomrule
 \end{tabular}
 \end{center}
 \caption{\label{tab:estimateur_n2} {L'espérance et la variance de l'estimateur $\widehat{N_2}$.} }
@@ -550,6 +554,16 @@ Malheureusement, nous savons que \(N\) est supérieur ou égal à 10, le
 maximum de notre échantillon. Ces deux estimateurs ne sont donc pas
 adéquats, nous devrons en trouver d'autres.
 
+Il pourrait être naturel de définir deux nouveaux estimateurs à partir
+des estimateurs \(\widehat{N_1}\) et \(\widehat{N_2}\) pour éviter que
+leur valeur soit plus petite que le maximum de l'échantillon. Nous
+pouvons définir:
+
+\[ \widehat{N_{1 \text{ou} 2}} = \begin{cases}
+\widehat{N_{1 \text{ou} 2}} & \text{si } \widehat{N_{1 \text{ou} 2}} \geq X_{(n)} \\
+X_{(n)} & \text{sinon}
+\end{cases} \]
+
 \hypertarget{deux-autres-estimes}{%
 \subsubsection{Deux autres estimés}\label{deux-autres-estimes}}
 
@@ -568,13 +582,12 @@ variance, nous obtenons les résultats du tableau
 
 \begin{table}[ht]
 \begin{center}
-\begin{tabular}{|c|c|c|c|}
-\hline
+\begin{tabular}{cccc}
+\toprule
 $i$ & $\widehat{N_i}$ & $\esp\lr{\widehat{N_i}}$ & $\var\lr{\widehat{N_i}}$ \\
-\hline
-\hline
+\midrule
 3 & $X_{(n)}+X_{(1)}-1$ & $N$ & $\frac{2}{n+1}\cdot\frac{(N-n)(N+1)}{n+2}$ \\
-\hline
+\bottomrule
 \end{tabular}
 \end{center}
 \caption{\label{tab:estimateur_n3} {L'espérance et la variance de l'estimateur $\widehat{N_3}$.} }
@@ -611,13 +624,12 @@ variance, nous obtenons les résultats du tableau
 
 \begin{table}[ht]
 \begin{center}
-\begin{tabular}{|c|c|c|c|}
-\hline
+\begin{tabular}{cccc}
+\toprule
 $i$ & $\widehat{N_i}$ & $\esp\lr{\widehat{N_i}}$ & $\var\lr{\widehat{N_i}}$ \\
-\hline
-\hline
+\midrule
 4 & $\lr{\frac{n+1}{n}} X_{(n)}-1$ & $N$ & $\frac{1}{n}\cdot\frac{(N-n)(N+1)}{n+2}$ \\
-\hline
+\bottomrule
 \end{tabular}
 \end{center}
 \caption{\label{tab:estimateur_n4} {L'espérance et la variance de l'estimateur $\widehat{N_4}$.} }
@@ -637,13 +649,15 @@ présentée, nous pouvons remarquer les résultats suivants:
   notre population, c'est-à-dire \(n=N\), les variances de nos quatre
   estimateurs sont nulles.
 \item
+  Les variances de nos estimateurs diminuent lorsque \(n\) augmente.
+\item
   Les variances de nos estimateurs diminuent lorsque \(i\) augmente, ce
   qui indique que \(\widehat{N_4}\) est l'estimateur ayant la variance
   la plus petite.
 \item
-  Il est possible d'utiliser le théorème de Lehmann-Scheffé pour
-  démontrer que \(\widehat{N_4}\) est l'estimateur non-biaisé ayant la
-  plus petite variance.
+  Il est possible d'utiliser le théorème de Lehmann-Scheffé
+  (\cite{WikiLehmann}) pour démontrer que \(\widehat{N_4}\) est
+  l'estimateur non-biaisé ayant la plus petite variance.
 \end{itemize}
 
 La lectrice ou le lecteur intéressé pourra utiliser les idées présentées
@@ -697,13 +711,12 @@ du tableau \ref{tab:estimateur_n5}.
 
 \begin{table}[ht]
 \begin{center}
-\begin{tabular}{|c|c|c|c|}
-\hline
+\begin{tabular}{cccc}
+\toprule
 $i$ & $\widehat{N_i}$ & $\esp\lr{\widehat{N_i}}$ & $\var\lr{\widehat{N_i}}$ \\
-\hline
-\hline
+\midrule
 5 & $\dfrac{(X_{(n)}-X_{(1)})(n+1)}{n-1}-1$ & $N$ & $\frac{2}{n-1}\cdot\frac{(N-n)(N+1)}{n+2}$ \\
-\hline
+\bottomrule
 \end{tabular}
 \end{center}
 \caption{\label{tab:estimateur_n5} {L'espérance et la variance de l'estimateur $\widehat{N_5}$.} }
@@ -720,22 +733,21 @@ indique les facteurs multiplicatifs de nos cinq estimateurs.
 
 \begin{table}[ht]
 \begin{center}
-\begin{tabular}{|c|c|}
-\hline
+\begin{tabular}{rl}
+\toprule
 $i$ & Facteur multiplicatif $\widehat{N_i}$ \\
-\hline
-\hline
-\multirow{2}{*}{1} & $1$ pour $n$ impair \\
+\midrule
+\multirow{2}{*}{1} & $1$ pour $n$ impair \\[5pt]
 & $\frac{n}{n+1}$ pour $n$ pair \\
-\hline
+\midrule
 2 & $\frac{n+2}{3n}$ \\
-\hline
+\midrule
 3 & $\frac{2}{n+1}$ \\
-\hline
+\midrule
 4 & $\frac{1}{n}$ \\
-\hline
+\midrule
 5 & $\frac{2}{n-1}$ \\
-\hline
+\bottomrule
 \end{tabular}
 \end{center}
 \caption{\label{tab:facteur_multiplicatif}{Les facteurs multiplicatifs des cinq estimateurs}}
@@ -758,9 +770,12 @@ Nous remarquons que les facteurs multiplicatifs des estimateurs
 \(\widehat{N_3}\), \(\widehat{N_4}\) et \(\widehat{N_5}\) s'approchent
 de \(0\) sensiblement à la même vitesse alors que celui pour
 \(\widehat{N_1}\) s'approche de \(1\) et celui de \(\widehat{N_2}\)
-s'approche de \(1/3\). Nous pouvons donc supposer que les estimateurs
+s'approche de \(1/3\). Nous pouvons en conclure que les estimateurs
 \(\widehat{N_3}\), \(\widehat{N_4}\) et \(\widehat{N_5}\) sont meilleurs
-que les deux premiers.
+que les deux premiers. Ceci signifie en fait que les estimateurs
+\(\widehat{N_3}\), \(\widehat{N_4}\) et \(\widehat{N_5}\) sont
+convergents, c'est-à-dire qu'ils convergent vers vraie valeur de la
+taille de la population.
 
 \hypertarget{quelques-simulations}{%
 \section{\texorpdfstring{Quelques simulations
@@ -801,7 +816,7 @@ précédent:
 
 \begin{verbatim}
 > N1(ech)
-## [1] 209
+## [1] 349
 > N2(ech)
 ## [1] 262
 > N3(ech)
@@ -821,7 +836,10 @@ Pour bien visualiser les différences entre nos cinq estimateurs, nous
 effectuerons quatre simulations distinctes. La figure \ref{fig:fig-ech}
 représente une simulation de 5 000 échantillons de tailles 5, 10, 25 et
 50, pigés à partir d'une population de taille 500. Nous calculons les
-mesures de nos cinq estimateurs pour ces 5 000 échantillons.
+mesures de nos cinq estimateurs pour ces 5 000 échantillons. Nous
+pouvons remarquer que les estimateurs \(\widehat{N_4}\) et
+\(\widehat{N_5}\) sont asymétriques tandis que les autres sont
+symétriques.
 
 \begin{figure}[!htb]
 
@@ -843,7 +861,9 @@ la dispersion de nos données. La figure \ref{fig:ech-10-1000} représente
 nos résultats obtenus à partir de nos échantillons pour les cinq
 estimateurs. La droite en rouge représente la taille véritable de la
 population. Les idées utilisées pour obtenir les graphiques de la figure
-\ref{fig:ech-10-1000} sont basées sur \cite{Hinno}.
+\ref{fig:ech-10-1000} sont basées sur \cite{Hinno}. Nous pouvons
+remarquer que les estimateurs \(\widehat{N_4}\) et \(\widehat{N_5}\)
+sont asymétriques tandis que les autres sont symétriques.
 
 \begin{figure}[!htb]
 
@@ -871,36 +891,6 @@ variation aléatoire à la position des points. La figure
 
 \caption{Représentation de 50 échantillons de taille 1 à 500 pigés pour une population de taille 500, pour les cinq estimateurs. La droite en rouge représente la taille véritable de la population.}\label{fig:pop-1-500}
 \end{figure}
-
-\hypertarget{une-application}{%
-\section{\texorpdfstring{Une application
-\label{application}}{Une application }}\label{une-application}}
-
-Nous trouvons en \cite{Goodman1954} une application concrète de
-l'utilisation de nos estimateurs. On nous indique que le département des
-sciences sociales de l'Université de Chicago utilisait de l'équipement
-(bureaux, chaises, etc.) sur lesquels était placés des numéros de série.
-
-Les numéros de série de 31 pièces d'équipement ont été observés. Les 31
-numéros de série étaient:
-
-\begin{verbatim}
-##  [1]   83  135  274  380  668  895  955  964 1113 1174 1210 1344 1387 1414
-## [15] 1610 1668 1689 1756 1865 1874 1880 1936 2005 2006 2065 2157 2220 2224
-## [29] 2396 2543 2787
-\end{verbatim}
-
-Les numéros entre crochets dans les lignes précédentes représente le
-numéro du premier élément de la ligne. Par exemple, à la deuxième ligne,
-le numéro {[}15{]} indique que la ligne débute avec le quinzième numéro
-de la liste.
-
-Nous invitons les lectrices et les lecteurs intéressés à utiliser les
-cinq estimateurs présentés dans cet article pour estimer le nombre
-d'équipements achetés par l'Université de Chicago. Le minimum de
-l'échantillon est 83 et le maximum de l'échantillon est 2787. Les
-réponses des cinq estimateurs ainsi que la véritable valeur du nombre
-d'équipements seront donnés à l'annexe \ref{rep-application}.
 
 \hypertarget{conclusion}{%
 \section{\texorpdfstring{Conclusion
@@ -942,7 +932,7 @@ variables aléatoires.
 
 \begin{itemize}
 \item
-  Soit \(k\in\mathbb{R}\), alors \(\esp(k)=k\).
+  Soit \(B\) une variable aléatoire constante, alors \(\esp(B)=B\).
 \item
   Soit \(X_i\) où \(i\in\set{1,2,\ldots,n}\), \(n\) variables aléatoires
   définies sur le même espace probabiliste et \(a_i\in\mathbb{R}\),
@@ -998,7 +988,9 @@ ci-dessous: \begin{align*}
 peut pas être plus petite que \(A\) car il y a toujours \(A-1\) valeurs
 plus petites que \(A\). De plus, \(A\) ne peut pas être plus grande que
 \(N-n+A\) car il y a toujours \(N-n+A-1\) valeurs plus grandes que
-\(A\).
+\(A\). En d'autres mots, si \(i<A\) ou si \(i>N-n+A\) alors
+\(P(X_{(A)}=i)=0\). Pour le calcul qui suit, nous supposons que
+\(A \leq i \leq N-n+A\).
 
 Pour calculer les probabilités, il faut se rappeler que nous devons
 choisir \(A-1\) éléments parmi \(i-1\), ce qui correspond à
@@ -1072,25 +1064,6 @@ Puisque \(n\) est pair, la médiane est donnée par
 &= (n^2+n)\frac{(N+1)(N-n)}{(n+1)^2(n+2)} \\
 &= \frac{n}{n+1}\frac{(N+1)(N-n)}{(n+2)}
 \end{align*}
-
-\hypertarget{reponses-de-lexercice-de-la-section}{%
-\section{\texorpdfstring{Réponses de l'exercice de la section
-\ref{application}
-\label{rep-application}}{Réponses de l'exercice de la section  }}\label{reponses-de-lexercice-de-la-section}}
-
-Les valeurs des cinq estimateurs de l'application de la section
-\ref{application} sont: \begin{align*}
-\widehat{N_1} &= 3335 \\
-\widehat{N_2} &= 3010 \\
-\widehat{N_3} &= 2869 \\
-\widehat{N_4} &= 2876 \\
-\widehat{N_5} &= 2883
-\end{align*} Les équipements ayant été achetés entre 1928 et 1934,
-l'auteur de \cite{Goodman1954} indique qu'il lui a été particulièrement
-difficile d'obtenir la véritable valeur du nombre d'équipements achetés.
-Après plusieurs jours et de nombreuses questions aux personnes
-concernés, les archives pertinentes ont été trouvées et le nombre \(N\)
-de pièces d'équipements était de \(2885\).
 
 \hypertarget{code-r}{%
 \section{\texorpdfstring{Code \texttt{R}
