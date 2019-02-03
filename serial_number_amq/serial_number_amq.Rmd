@@ -68,22 +68,18 @@ N5 <- function(ech){
 
 Au début de l'année 1943, la *Economic Warfare Division* de l'ambassade américaine à Londres commença à analyser divers marquages obtenus à partir d'équipements allemands capturés ou détruits sur le front. Plus particulièrement, les numéros de série ont été utilisés pour estimer la force de production de la machine de guerre allemande. L'article *An Empirical Approach to Economic Intelligence in World War II* \cite{Ruggles1947} explique en détail le développement des techniques utilisées pour faire cette estimation, les problèmes rencontrés et les solutions qui y ont remédié. Nous invitons le lecteur intéressé par l'aspect pratique de ces techniques à lire cet article.
 
-<<<<<<< HEAD
 Le problème du char d'assaut allemand est nommé d'après son application par les Alliés à l'estimation du nombre de chars d'assaut produits par l'Allemagne. Mais en fait, ce problème regroupe l'estimation du nombre de divers produits de guerre allemands, comme par exemple les camions, les fusils, les bombes et les fusées \cite{Ruggles1947}. En particulier, nous présentons au tableau&nbsp;\ref{tab:estimation_ruggles} les estimations du nombre de chars d'assaut allemands en comparaison avec l'estimation par les services de renseignements et les archives allemandes, tel que présenté dans \cite{Ruggles1947}. Comme vous pouvez le constater, les estimations statistiques étaient beaucoup plus précises que les estimations provenant des services de renseignements.
-=======
-Le problème du char d'assaut allemand est nommé d'après son application par les Alliés à l'estimation du nombre de chars d'assaut produits par l'Allemagne. Mais en fait, ce problème regroupe l'estimation du nombre de divers produits de guerre allemands, comme par exemple les camions, les fusils, les bombes et les fusées, voir \cite{Ruggles1947}. En particulier, nous présentons au tableau\ref{tab:estimation_ruggles} les estimations du nombre de chars d'assaut allemands en comparaison avec l'estimation par les services de renseignements et les archives allemandes, tel que présenté dans \cite{Ruggles1947}. Comme vous pouvez le constater, les estimations statistiques étaient beaucoup plus précises que les estimations provenant des services de renseignements.
->>>>>>> b1c6d528b7eb2b0cc4bb195708f0b399803a6365
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{cccc}
+\toprule
 \multirow{2}{*}{Mois} & \multirow{2}{*}{Estimation statistique} & Estimation par les & Selon les archives \\
 & & services de renseignements &  allemandes \\
-\hline
-\hline
+\midrule
 Juin 1940 & 169 & 1 000 & 122 \\
 Juin 1941 & 244 & 1 550 & 271 \\
 Août 1942 & 327 & 1 550 & 342 \\
-\hline
+\bottomrule
 \end{tabular}
 \end{center}
 \caption{\label{tab:estimation_ruggles} {Comparaison des estimations produites par les estimateurs que nous présenterons, des estimations produites par les services de renseignements ainsi que de la production exacte selon les archives allemandes.} }
@@ -143,6 +139,8 @@ Nous étudierons, dans l'ordre, les trois situations précédentes.
 ## La situation où $s$ est **connu** et égal à $0$ et $N$ est **inconnu**
 
 Puisque $s$ est connu et égal à $0$, nous nous trouvons dans la situation où notre liste est numérotée de la façon suivante : $1$, $2$, ..., $N$. Cette situation est en fait un cas particulier d'une loi uniforme discrète de la forme $\unif(1,N)$.
+
+Dans cette section, nous allons trouver divers estimateurs. Nous cherchons l'estimateur de variance minimale.
 
 ### Le milieu de la liste
 
@@ -213,6 +211,7 @@ $$ \widehat{N_{1 \text{ou} 2}} = \begin{cases}
 X_{(n)} & \text{sinon}
 \end{cases} $$
 
+Pour les simulations qui suivront à la section \ref{simul}, nous n'utiliserons pas ces deux nouveaux estimateurs, car l'étude statistique théorique de ces deux estimateurs est plus complexe. Nous invitons par contre la lectrice et le lecteur intéressé à modifier le code que vous trouverez à l'annexe \ref{code} pour étudier ces estimateurs.
 
 ### Deux autres estimés
 
@@ -365,7 +364,9 @@ ggplot(data, aes(x=id, y=Facteur, color=Estimateur))+
     x = "Taille de l'échantillon"
   )
 ```
-Nous remarquons que les facteurs multiplicatifs des estimateurs $\widehat{N_3}$, $\widehat{N_4}$ et $\widehat{N_5}$ s'approchent de $0$ sensiblement à la même vitesse alors que celui pour $\widehat{N_1}$ s'approche de $1$ et celui de $\widehat{N_2}$ s'approche de $1/3$. Nous pouvons en conclure que les estimateurs $\widehat{N_3}$, $\widehat{N_4}$ et $\widehat{N_5}$ sont meilleurs que les deux premiers. Ceci signifie en fait que les estimateurs $\widehat{N_3}$, $\widehat{N_4}$ et $\widehat{N_5}$ sont convergents, c'est-à-dire qu'ils convergent vers vraie valeur de la taille de la population.
+Nous remarquons que les facteurs multiplicatifs des estimateurs $\widehat{N_3}$, $\widehat{N_4}$ et $\widehat{N_5}$ s'approchent de $0$ sensiblement à la même vitesse alors que celui pour $\widehat{N_1}$ s'approche de $1$ et celui de $\widehat{N_2}$ s'approche de $1/3$. Nous pouvons en conclure que les estimateurs $\widehat{N_3}$, $\widehat{N_4}$ et $\widehat{N_5}$ sont meilleurs que les deux premiers. Ceci signifie en fait que les estimateurs $\widehat{N_3}$, $\widehat{N_4}$ et $\widehat{N_5}$ sont convergents, c'est-à-dire qu'ils convergent vers la vraie valeur de la taille de la population. 
+
+Puisque l'espérance des cinq estimateurs convergent vers la taille de la population, ceux-ci sont tous non biaisés. Par contre, l'estimateur $\widehat{N_4}$ est l'estimateur à variance minimale car sa variance est plus petite que celle de tous les autres.
 
 # Quelques simulations \label{simul}
 
